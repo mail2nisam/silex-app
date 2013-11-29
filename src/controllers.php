@@ -5,17 +5,13 @@ use Silex\Application;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 
-
-
-
 $app['routes'] = $app->extend('routes', function (RouteCollection $routes, Application $app) {
     $loader     = new YamlFileLoader(new FileLocator('../resources/config'));
     $collection = $loader->load('routes.yml');
     $routes->addCollection($collection);
- 
+
     return $routes;
 });
-
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
@@ -33,10 +29,8 @@ $app->error(function (\Exception $e, $code) use ($app) {
     return new Response($message, $code);
 });
 
-
-
 //
-//$app->match('/form', function(Request $request) use ($app) {
+//$app->match('/form', function (Request $request) use ($app) {
 //
 //    $builder = $app['form.factory']->createBuilder('form');
 //    $choices = array('choice a', 'choice b', 'choice c');
@@ -124,14 +118,11 @@ $app->error(function (\Exception $e, $code) use ($app) {
 //    return $app['twig']->render('form.html.twig', array('form' => $form->createView()));
 //})->bind('form');
 
-
-
-//$app->get('/page-with-cache', function() use ($app) {
+//$app->get('/page-with-cache', function () use ($app) {
 //    $response = new Response($app['twig']->render('page-with-cache.html.twig', array('date' => date('Y-M-d h:i:s'))));
 //    $response->setTtl(10);
 //
 //    return $response;
 //})->bind('page_with_cache');
-
 
 return $app;

@@ -12,7 +12,6 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use SilexAssetic\AsseticServiceProvider;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
-use Symfony\Component\Routing\RouteCollection;
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
@@ -26,7 +25,6 @@ $app->register(new ValidatorServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 
-
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
         'default' => array(
@@ -34,11 +32,11 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
             'anonymous' => true,
             'form' => array('login_path' => '/login', 'check_path' => 'login_check'),
             'logout' => array('logout_path' => '/logout'),
-            'users' => $app->share(function() use ($app) {
+            'users' => $app->share(function () use ($app) {
                 return new Smart\User\UserProvider($app['db']);
             }),
         ),
-        
+
     ),
    $app['security.access_rules'] = array(
     array('^/admin', 'ROLE_ADMIN'),
@@ -46,15 +44,12 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 )
 ));
 
-            
-            
-            
 $app['security.encoder.digest'] = $app->share(function ($app) {
     return new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 1);
 });
 
 $app->register(new TranslationServiceProvider());
-$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+$app['translator'] = $app->share($app->extend('translator', function ($translator, $app) {
             $translator->addLoader('yaml', new YamlFileLoader());
 
             $translator->addResource('yaml', __DIR__ . '/../resources/locales/fr.yml', 'fr');
@@ -93,7 +88,7 @@ if (isset($app['assetic.enabled']) && $app['assetic.enabled']) {
     ));
 
     $app['assetic.filter_manager'] = $app->share(
-            $app->extend('assetic.filter_manager', function($fm, $app) {
+            $app->extend('assetic.filter_manager', function ($fm, $app) {
                 $fm->set('lessphp', new Assetic\Filter\LessphpFilter());
 
                 return $fm;
@@ -101,7 +96,7 @@ if (isset($app['assetic.enabled']) && $app['assetic.enabled']) {
     );
 
     $app['assetic.asset_manager'] = $app->share(
-            $app->extend('assetic.asset_manager', function($am, $app) {
+            $app->extend('assetic.asset_manager', function ($am, $app) {
                 $am->set('styles', new Assetic\Asset\AssetCache(
                         new Assetic\Asset\GlobAsset(
                         $app['assetic.input.path_to_css'], array($app['assetic.filter_manager']->get('lessphp'))

@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -90,6 +88,5 @@ class Timezones
      * @ORM\Column(name="dstEndDate", type="string", length=255, nullable=true)
      */
     private $dstenddate;
-
 
 }

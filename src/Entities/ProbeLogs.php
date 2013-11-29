@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -84,12 +82,10 @@ class ProbeLogs
      */
     private $probeId;
 
-
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -99,7 +95,7 @@ class ProbeLogs
     /**
      * Set temperatureHigh
      *
-     * @param float $temperatureHigh
+     * @param  float     $temperatureHigh
      * @return ProbeLogs
      */
     public function setTemperatureHigh($temperatureHigh)
@@ -112,7 +108,7 @@ class ProbeLogs
     /**
      * Get temperatureHigh
      *
-     * @return float 
+     * @return float
      */
     public function getTemperatureHigh()
     {
@@ -122,7 +118,7 @@ class ProbeLogs
     /**
      * Set temperatureLow
      *
-     * @param float $temperatureLow
+     * @param  float     $temperatureLow
      * @return ProbeLogs
      */
     public function setTemperatureLow($temperatureLow)
@@ -135,7 +131,7 @@ class ProbeLogs
     /**
      * Get temperatureLow
      *
-     * @return float 
+     * @return float
      */
     public function getTemperatureLow()
     {
@@ -145,7 +141,7 @@ class ProbeLogs
     /**
      * Set status1
      *
-     * @param string $status1
+     * @param  string    $status1
      * @return ProbeLogs
      */
     public function setStatus1($status1)
@@ -158,7 +154,7 @@ class ProbeLogs
     /**
      * Get status1
      *
-     * @return string 
+     * @return string
      */
     public function getStatus1()
     {
@@ -168,7 +164,7 @@ class ProbeLogs
     /**
      * Set status2
      *
-     * @param string $status2
+     * @param  string    $status2
      * @return ProbeLogs
      */
     public function setStatus2($status2)
@@ -181,7 +177,7 @@ class ProbeLogs
     /**
      * Get status2
      *
-     * @return string 
+     * @return string
      */
     public function getStatus2()
     {
@@ -191,7 +187,7 @@ class ProbeLogs
     /**
      * Set time
      *
-     * @param \DateTime $time
+     * @param  \DateTime $time
      * @return ProbeLogs
      */
     public function setTime($time)
@@ -204,7 +200,7 @@ class ProbeLogs
     /**
      * Get time
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTime()
     {
@@ -214,7 +210,7 @@ class ProbeLogs
     /**
      * Set date
      *
-     * @param \DateTime $date
+     * @param  \DateTime $date
      * @return ProbeLogs
      */
     public function setDate($date)
@@ -227,7 +223,7 @@ class ProbeLogs
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -237,7 +233,7 @@ class ProbeLogs
     /**
      * Set trip1
      *
-     * @param string $trip1
+     * @param  string    $trip1
      * @return ProbeLogs
      */
     public function setTrip1($trip1)
@@ -250,7 +246,7 @@ class ProbeLogs
     /**
      * Get trip1
      *
-     * @return string 
+     * @return string
      */
     public function getTrip1()
     {
@@ -260,7 +256,7 @@ class ProbeLogs
     /**
      * Set trip2
      *
-     * @param string $trip2
+     * @param  string    $trip2
      * @return ProbeLogs
      */
     public function setTrip2($trip2)
@@ -273,7 +269,7 @@ class ProbeLogs
     /**
      * Get trip2
      *
-     * @return string 
+     * @return string
      */
     public function getTrip2()
     {
@@ -283,7 +279,7 @@ class ProbeLogs
     /**
      * Set probeId
      *
-     * @param string $probeId
+     * @param  string    $probeId
      * @return ProbeLogs
      */
     public function setProbeId($probeId)
@@ -296,7 +292,7 @@ class ProbeLogs
     /**
      * Get probeId
      *
-     * @return string 
+     * @return string
      */
     public function getProbeId()
     {

@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -132,6 +130,5 @@ class Probes
      * @ORM\Column(name="loc_id", type="integer", nullable=false)
      */
     private $locId;
-
 
 }

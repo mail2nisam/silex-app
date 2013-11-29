@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +46,5 @@ class Organization
      * @ORM\Column(name="org_updated_on", type="datetime", nullable=false)
      */
     private $orgUpdatedOn;
-
 
 }

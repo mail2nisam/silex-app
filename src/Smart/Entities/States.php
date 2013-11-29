@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +39,5 @@ class States
      * @ORM\Column(name="stateStatus", type="string", nullable=false)
      */
     private $statestatus;
-
 
 }

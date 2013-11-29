@@ -15,17 +15,19 @@ namespace Smart\Models;
  */
 use Silex\Application;
 
-class userModel {
-
+class userModel
+{
     protected $_app;
     protected $_db;
 
-    function __construct(Application $_app) {
+    public function __construct(Application $_app)
+    {
         $this->_app = $_app;
         $this->_db = $this->_app['db'];
     }
 
-    public function fetchStates() {
+    public function fetchStates()
+    {
         return $this->_db->fetchAll('SELECT * FROM states');
     }
 

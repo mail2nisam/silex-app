@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -76,6 +74,5 @@ class Customize
      * @ORM\Column(name="dateFormat2", type="string", length=250, nullable=false)
      */
     private $dateformat2;
-
 
 }

@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -118,6 +116,5 @@ class Locations
      * @ORM\Column(name="time_zone", type="integer", nullable=false)
      */
     private $timeZone;
-
 
 }

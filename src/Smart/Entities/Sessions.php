@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,6 +32,5 @@ class Sessions
      * @ORM\Column(name="last_accessed", type="datetime", nullable=false)
      */
     private $lastAccessed = 'CURRENT_TIMESTAMP';
-
 
 }

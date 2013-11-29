@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -91,12 +89,10 @@ class Timezones
      */
     private $dstenddate;
 
-
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -106,7 +102,7 @@ class Timezones
     /**
      * Set timezonename
      *
-     * @param string $timezonename
+     * @param  string    $timezonename
      * @return Timezones
      */
     public function setTimezonename($timezonename)
@@ -119,7 +115,7 @@ class Timezones
     /**
      * Get timezonename
      *
-     * @return string 
+     * @return string
      */
     public function getTimezonename()
     {
@@ -129,7 +125,7 @@ class Timezones
     /**
      * Set timezonedetail
      *
-     * @param string $timezonedetail
+     * @param  string    $timezonedetail
      * @return Timezones
      */
     public function setTimezonedetail($timezonedetail)
@@ -142,7 +138,7 @@ class Timezones
     /**
      * Get timezonedetail
      *
-     * @return string 
+     * @return string
      */
     public function getTimezonedetail()
     {
@@ -152,7 +148,7 @@ class Timezones
     /**
      * Set timezoneabbreviation
      *
-     * @param string $timezoneabbreviation
+     * @param  string    $timezoneabbreviation
      * @return Timezones
      */
     public function setTimezoneabbreviation($timezoneabbreviation)
@@ -165,7 +161,7 @@ class Timezones
     /**
      * Get timezoneabbreviation
      *
-     * @return string 
+     * @return string
      */
     public function getTimezoneabbreviation()
     {
@@ -175,7 +171,7 @@ class Timezones
     /**
      * Set timezonediff
      *
-     * @param string $timezonediff
+     * @param  string    $timezonediff
      * @return Timezones
      */
     public function setTimezonediff($timezonediff)
@@ -188,7 +184,7 @@ class Timezones
     /**
      * Get timezonediff
      *
-     * @return string 
+     * @return string
      */
     public function getTimezonediff()
     {
@@ -198,7 +194,7 @@ class Timezones
     /**
      * Set timezonediffdst
      *
-     * @param string $timezonediffdst
+     * @param  string    $timezonediffdst
      * @return Timezones
      */
     public function setTimezonediffdst($timezonediffdst)
@@ -211,7 +207,7 @@ class Timezones
     /**
      * Get timezonediffdst
      *
-     * @return string 
+     * @return string
      */
     public function getTimezonediffdst()
     {
@@ -221,7 +217,7 @@ class Timezones
     /**
      * Set timezonediffdefault
      *
-     * @param string $timezonediffdefault
+     * @param  string    $timezonediffdefault
      * @return Timezones
      */
     public function setTimezonediffdefault($timezonediffdefault)
@@ -234,7 +230,7 @@ class Timezones
     /**
      * Get timezonediffdefault
      *
-     * @return string 
+     * @return string
      */
     public function getTimezonediffdefault()
     {
@@ -244,7 +240,7 @@ class Timezones
     /**
      * Set countryid
      *
-     * @param integer $countryid
+     * @param  integer   $countryid
      * @return Timezones
      */
     public function setCountryid($countryid)
@@ -257,7 +253,7 @@ class Timezones
     /**
      * Get countryid
      *
-     * @return integer 
+     * @return integer
      */
     public function getCountryid()
     {
@@ -267,7 +263,7 @@ class Timezones
     /**
      * Set daylightsavingsdiff
      *
-     * @param string $daylightsavingsdiff
+     * @param  string    $daylightsavingsdiff
      * @return Timezones
      */
     public function setDaylightsavingsdiff($daylightsavingsdiff)
@@ -280,7 +276,7 @@ class Timezones
     /**
      * Get daylightsavingsdiff
      *
-     * @return string 
+     * @return string
      */
     public function getDaylightsavingsdiff()
     {
@@ -290,7 +286,7 @@ class Timezones
     /**
      * Set dststartdate
      *
-     * @param string $dststartdate
+     * @param  string    $dststartdate
      * @return Timezones
      */
     public function setDststartdate($dststartdate)
@@ -303,7 +299,7 @@ class Timezones
     /**
      * Get dststartdate
      *
-     * @return string 
+     * @return string
      */
     public function getDststartdate()
     {
@@ -313,7 +309,7 @@ class Timezones
     /**
      * Set dstenddate
      *
-     * @param string $dstenddate
+     * @param  string    $dstenddate
      * @return Timezones
      */
     public function setDstenddate($dstenddate)
@@ -326,7 +322,7 @@ class Timezones
     /**
      * Get dstenddate
      *
-     * @return string 
+     * @return string
      */
     public function getDstenddate()
     {

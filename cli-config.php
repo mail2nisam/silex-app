@@ -2,7 +2,6 @@
 require_once 'vendor/autoload.php';
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
-
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 

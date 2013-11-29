@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -76,6 +74,5 @@ class NotificationLog
      * @ORM\Column(name="user_id", type="integer", nullable=false)
      */
     private $userId;
-
 
 }

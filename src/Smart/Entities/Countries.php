@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +53,5 @@ class Countries
      * @ORM\Column(name="countryAvailable", type="string", nullable=false)
      */
     private $countryavailable;
-
 
 }

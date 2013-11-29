@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,12 +47,10 @@ class Organization
      */
     private $orgUpdatedOn;
 
-
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -64,7 +60,7 @@ class Organization
     /**
      * Set orgName
      *
-     * @param string $orgName
+     * @param  string       $orgName
      * @return Organization
      */
     public function setOrgName($orgName)
@@ -77,7 +73,7 @@ class Organization
     /**
      * Get orgName
      *
-     * @return string 
+     * @return string
      */
     public function getOrgName()
     {
@@ -87,7 +83,7 @@ class Organization
     /**
      * Set orgDescription
      *
-     * @param string $orgDescription
+     * @param  string       $orgDescription
      * @return Organization
      */
     public function setOrgDescription($orgDescription)
@@ -100,7 +96,7 @@ class Organization
     /**
      * Get orgDescription
      *
-     * @return string 
+     * @return string
      */
     public function getOrgDescription()
     {
@@ -110,7 +106,7 @@ class Organization
     /**
      * Set orgCreatedAt
      *
-     * @param \DateTime $orgCreatedAt
+     * @param  \DateTime    $orgCreatedAt
      * @return Organization
      */
     public function setOrgCreatedAt($orgCreatedAt)
@@ -123,7 +119,7 @@ class Organization
     /**
      * Get orgCreatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getOrgCreatedAt()
     {
@@ -133,7 +129,7 @@ class Organization
     /**
      * Set orgUpdatedOn
      *
-     * @param \DateTime $orgUpdatedOn
+     * @param  \DateTime    $orgUpdatedOn
      * @return Organization
      */
     public function setOrgUpdatedOn($orgUpdatedOn)
@@ -146,7 +142,7 @@ class Organization
     /**
      * Get orgUpdatedOn
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getOrgUpdatedOn()
     {

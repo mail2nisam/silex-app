@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -97,6 +95,5 @@ class Users
      * @ORM\Column(name="roles", type="string", length=250, nullable=false)
      */
     private $roles;
-
 
 }

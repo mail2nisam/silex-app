@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -83,6 +81,5 @@ class ProbeLogs
      * @ORM\Column(name="probe_id", type="string", length=250, nullable=false)
      */
     private $probeId;
-
 
 }
