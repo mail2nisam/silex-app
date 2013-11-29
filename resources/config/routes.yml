@@ -1,0 +1,15 @@
+homepage:
+  path: /
+  defaults: { _controller: 'Smart\Controllers\IndexController::homeAction' }
+login:
+  path: /login
+  defaults: { _controller: 'Smart\Controllers\IndexController::loginAction' }
+register:
+  path: /register
+  defaults: { _controller: 'Smart\Controllers\IndexController::registerAction' }
+logout:
+  path: /logout
+  defaults: { _controller: 'Smart\Controllers\IndexController::logoutAction' }
+test:
+  path: /test
+  defaults: { _controller: 'Smart\Controllers\IndexController::testAction' }
