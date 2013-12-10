@@ -1,4 +1,6 @@
 <?php
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -54,10 +56,12 @@ class Countries
      */
     private $countryavailable;
 
+
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -67,7 +71,7 @@ class Countries
     /**
      * Set countryname
      *
-     * @param  string    $countryname
+     * @param string $countryname
      * @return Countries
      */
     public function setCountryname($countryname)
@@ -80,7 +84,7 @@ class Countries
     /**
      * Get countryname
      *
-     * @return string
+     * @return string 
      */
     public function getCountryname()
     {
@@ -90,7 +94,7 @@ class Countries
     /**
      * Set countryisoa2
      *
-     * @param  string    $countryisoa2
+     * @param string $countryisoa2
      * @return Countries
      */
     public function setCountryisoa2($countryisoa2)
@@ -103,7 +107,7 @@ class Countries
     /**
      * Get countryisoa2
      *
-     * @return string
+     * @return string 
      */
     public function getCountryisoa2()
     {
@@ -113,7 +117,7 @@ class Countries
     /**
      * Set countryisoa3
      *
-     * @param  string    $countryisoa3
+     * @param string $countryisoa3
      * @return Countries
      */
     public function setCountryisoa3($countryisoa3)
@@ -126,7 +130,7 @@ class Countries
     /**
      * Get countryisoa3
      *
-     * @return string
+     * @return string 
      */
     public function getCountryisoa3()
     {
@@ -136,7 +140,7 @@ class Countries
     /**
      * Set countryisonumber
      *
-     * @param  string    $countryisonumber
+     * @param string $countryisonumber
      * @return Countries
      */
     public function setCountryisonumber($countryisonumber)
@@ -149,7 +153,7 @@ class Countries
     /**
      * Get countryisonumber
      *
-     * @return string
+     * @return string 
      */
     public function getCountryisonumber()
     {
@@ -159,7 +163,7 @@ class Countries
     /**
      * Set countryavailable
      *
-     * @param  string    $countryavailable
+     * @param string $countryavailable
      * @return Countries
      */
     public function setCountryavailable($countryavailable)
@@ -172,7 +176,7 @@ class Countries
     /**
      * Get countryavailable
      *
-     * @return string
+     * @return string 
      */
     public function getCountryavailable()
     {

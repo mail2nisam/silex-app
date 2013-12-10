@@ -1,4 +1,6 @@
 <?php
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -75,10 +77,12 @@ class Customize
      */
     private $dateformat2;
 
+
+
     /**
      * Get id
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getId()
     {
@@ -88,7 +92,7 @@ class Customize
     /**
      * Set name
      *
-     * @param  string    $name
+     * @param string $name
      * @return Customize
      */
     public function setName($name)
@@ -101,7 +105,7 @@ class Customize
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -111,7 +115,7 @@ class Customize
     /**
      * Set descrip
      *
-     * @param  string    $descrip
+     * @param string $descrip
      * @return Customize
      */
     public function setDescrip($descrip)
@@ -124,7 +128,7 @@ class Customize
     /**
      * Get descrip
      *
-     * @return string
+     * @return string 
      */
     public function getDescrip()
     {
@@ -134,7 +138,7 @@ class Customize
     /**
      * Set navbarColor
      *
-     * @param  string    $navbarColor
+     * @param string $navbarColor
      * @return Customize
      */
     public function setNavbarColor($navbarColor)
@@ -147,7 +151,7 @@ class Customize
     /**
      * Get navbarColor
      *
-     * @return string
+     * @return string 
      */
     public function getNavbarColor()
     {
@@ -157,7 +161,7 @@ class Customize
     /**
      * Set primaryColor
      *
-     * @param  string    $primaryColor
+     * @param string $primaryColor
      * @return Customize
      */
     public function setPrimaryColor($primaryColor)
@@ -170,7 +174,7 @@ class Customize
     /**
      * Get primaryColor
      *
-     * @return string
+     * @return string 
      */
     public function getPrimaryColor()
     {
@@ -180,7 +184,7 @@ class Customize
     /**
      * Set buttonColor
      *
-     * @param  string    $buttonColor
+     * @param string $buttonColor
      * @return Customize
      */
     public function setButtonColor($buttonColor)
@@ -193,7 +197,7 @@ class Customize
     /**
      * Get buttonColor
      *
-     * @return string
+     * @return string 
      */
     public function getButtonColor()
     {
@@ -203,7 +207,7 @@ class Customize
     /**
      * Set logoExt
      *
-     * @param  string    $logoExt
+     * @param string $logoExt
      * @return Customize
      */
     public function setLogoExt($logoExt)
@@ -216,7 +220,7 @@ class Customize
     /**
      * Get logoExt
      *
-     * @return string
+     * @return string 
      */
     public function getLogoExt()
     {
@@ -226,7 +230,7 @@ class Customize
     /**
      * Set dateformat
      *
-     * @param  string    $dateformat
+     * @param string $dateformat
      * @return Customize
      */
     public function setDateformat($dateformat)
@@ -239,7 +243,7 @@ class Customize
     /**
      * Get dateformat
      *
-     * @return string
+     * @return string 
      */
     public function getDateformat()
     {
@@ -249,7 +253,7 @@ class Customize
     /**
      * Set dateformat2
      *
-     * @param  string    $dateformat2
+     * @param string $dateformat2
      * @return Customize
      */
     public function setDateformat2($dateformat2)
@@ -262,7 +266,7 @@ class Customize
     /**
      * Get dateformat2
      *
-     * @return string
+     * @return string 
      */
     public function getDateformat2()
     {

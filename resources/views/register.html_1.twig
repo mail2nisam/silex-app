@@ -1,0 +1,64 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'form' %}
+{%block subhead%}
+<h2>{{ 'Register New Business'|trans }}</h2>
+{%endblock%}
+{% block content %}
+
+
+
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+<div class="pull-left" style="padding-right: 35px">
+
+    <strong>{{ form_label(form.org_name)}}</strong>
+         {{ form_widget(form.org_name) }}
+    <strong>{{ form_label(form.username)}}</strong>
+        {{ form_widget(form.username) }}
+    {{ form_errors(form.username) }}
+
+        {% for passwordField in form.password_repeated %}
+    <strong>
+        {{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}</strong>
+        {{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}
+        {% endfor %}
+
+
+    <strong>{{ form_label(form.email)}}</strong>
+         {{ form_widget(form.email) }}
+
+
+    <strong>{{ form_label(form.org_description)}}</strong>
+         {{ form_widget(form.org_description) }}
+
+
+
+    {{ form_row(form.submit, { 'label': 'CREATE' }) }}
+</div>
+<div class="pull-left">
+    <strong>{{ form_label(form.address)}}</strong>
+         {{ form_widget(form.address) }}
+
+    <strong>{{ form_label(form.zip_code)}}</strong>
+         {{ form_widget(form.zip_code) }}
+
+    <strong>{{ form_label(form.country)}}</strong>
+         {{ form_widget(form.country) }}
+
+    <strong>{{ form_label(form.state)}}</strong>
+         {{ form_widget(form.state) }}
+
+    <strong>{{ form_label(form.office_phone)}}</strong>
+         {{ form_widget(form.office_phone) }}
+
+    <strong>{{ form_label(form.office_fax)}}</strong>
+         {{ form_widget(form.office_fax) }}
+
+    <strong>{{ form_label(form.moile_phone)}}</strong>
+         {{ form_widget(form.moile_phone) }}
+</div>
+
+{{ form_rest(form) }}
+{{ form_end(form) }}
+{% endblock %}

@@ -1,4 +1,6 @@
 <?php
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -48,9 +50,60 @@ class Organization
     private $orgUpdatedOn;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=500, nullable=false)
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zip_code", type="string", length=100, nullable=false)
+     */
+    private $zipCode;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="country", type="integer", nullable=false)
+     */
+    private $country;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="state", type="integer", nullable=false)
+     */
+    private $state;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="office_phone", type="string", length=100, nullable=false)
+     */
+    private $officePhone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="office_fax", type="string", length=100, nullable=false)
+     */
+    private $officeFax;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mobile_phone", type="string", length=100, nullable=false)
+     */
+    private $mobilePhone;
+
+
+
+    /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -60,7 +113,7 @@ class Organization
     /**
      * Set orgName
      *
-     * @param  string       $orgName
+     * @param string $orgName
      * @return Organization
      */
     public function setOrgName($orgName)
@@ -73,7 +126,7 @@ class Organization
     /**
      * Get orgName
      *
-     * @return string
+     * @return string 
      */
     public function getOrgName()
     {
@@ -83,7 +136,7 @@ class Organization
     /**
      * Set orgDescription
      *
-     * @param  string       $orgDescription
+     * @param string $orgDescription
      * @return Organization
      */
     public function setOrgDescription($orgDescription)
@@ -96,7 +149,7 @@ class Organization
     /**
      * Get orgDescription
      *
-     * @return string
+     * @return string 
      */
     public function getOrgDescription()
     {
@@ -106,7 +159,7 @@ class Organization
     /**
      * Set orgCreatedAt
      *
-     * @param  \DateTime    $orgCreatedAt
+     * @param \DateTime $orgCreatedAt
      * @return Organization
      */
     public function setOrgCreatedAt($orgCreatedAt)
@@ -119,7 +172,7 @@ class Organization
     /**
      * Get orgCreatedAt
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getOrgCreatedAt()
     {
@@ -129,7 +182,7 @@ class Organization
     /**
      * Set orgUpdatedOn
      *
-     * @param  \DateTime    $orgUpdatedOn
+     * @param \DateTime $orgUpdatedOn
      * @return Organization
      */
     public function setOrgUpdatedOn($orgUpdatedOn)
@@ -142,10 +195,171 @@ class Organization
     /**
      * Get orgUpdatedOn
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getOrgUpdatedOn()
     {
         return $this->orgUpdatedOn;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return Organization
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set zipCode
+     *
+     * @param string $zipCode
+     * @return Organization
+     */
+    public function setZipCode($zipCode)
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    /**
+     * Get zipCode
+     *
+     * @return string 
+     */
+    public function getZipCode()
+    {
+        return $this->zipCode;
+    }
+
+    /**
+     * Set country
+     *
+     * @param integer $country
+     * @return Organization
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return integer 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set state
+     *
+     * @param integer $state
+     * @return Organization
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return integer 
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set officePhone
+     *
+     * @param string $officePhone
+     * @return Organization
+     */
+    public function setOfficePhone($officePhone)
+    {
+        $this->officePhone = $officePhone;
+
+        return $this;
+    }
+
+    /**
+     * Get officePhone
+     *
+     * @return string 
+     */
+    public function getOfficePhone()
+    {
+        return $this->officePhone;
+    }
+
+    /**
+     * Set officeFax
+     *
+     * @param string $officeFax
+     * @return Organization
+     */
+    public function setOfficeFax($officeFax)
+    {
+        $this->officeFax = $officeFax;
+
+        return $this;
+    }
+
+    /**
+     * Get officeFax
+     *
+     * @return string 
+     */
+    public function getOfficeFax()
+    {
+        return $this->officeFax;
+    }
+
+    /**
+     * Set mobilePhone
+     *
+     * @param string $mobilePhone
+     * @return Organization
+     */
+    public function setMobilePhone($mobilePhone)
+    {
+        $this->mobilePhone = $mobilePhone;
+
+        return $this;
+    }
+
+    /**
+     * Get mobilePhone
+     *
+     * @return string 
+     */
+    public function getMobilePhone()
+    {
+        return $this->mobilePhone;
     }
 }

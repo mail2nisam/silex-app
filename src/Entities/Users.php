@@ -1,16 +1,15 @@
 <?php
 namespace Entities;
 
-use Doctrine\ORM\Mapping as ORM;
 
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Users
  *
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"})})
  * @ORM\Entity
- * @UniqueEntity(fields={"username"}, groups={"registration"})
  */
 class Users
 {
@@ -56,21 +55,21 @@ class Users
      *
      * @ORM\Column(name="last_ip", type="string", length=80, nullable=true)
      */
-    private $lastIp=null;
+    private $lastIp;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="last_login_date", type="date", nullable=true)
      */
-    private $lastLoginDate=null;
+    private $lastLoginDate;
 
     /**
      * @var string
      *
      * @ORM\Column(name="activation_key", type="string", length=250, nullable=true)
      */
-    private $activationKey=null;
+    private $activationKey;
 
     /**
      * @var string
@@ -100,10 +99,12 @@ class Users
      */
     private $roles;
 
+
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -113,7 +114,7 @@ class Users
     /**
      * Set username
      *
-     * @param  string $username
+     * @param string $username
      * @return Users
      */
     public function setUsername($username)
@@ -126,7 +127,7 @@ class Users
     /**
      * Get username
      *
-     * @return string
+     * @return string 
      */
     public function getUsername()
     {
@@ -136,7 +137,7 @@ class Users
     /**
      * Set password
      *
-     * @param  string $password
+     * @param string $password
      * @return Users
      */
     public function setPassword($password)
@@ -149,7 +150,7 @@ class Users
     /**
      * Get password
      *
-     * @return string
+     * @return string 
      */
     public function getPassword()
     {
@@ -159,7 +160,7 @@ class Users
     /**
      * Set email
      *
-     * @param  string $email
+     * @param string $email
      * @return Users
      */
     public function setEmail($email)
@@ -172,7 +173,7 @@ class Users
     /**
      * Get email
      *
-     * @return string
+     * @return string 
      */
     public function getEmail()
     {
@@ -182,7 +183,7 @@ class Users
     /**
      * Set access
      *
-     * @param  string $access
+     * @param string $access
      * @return Users
      */
     public function setAccess($access)
@@ -195,7 +196,7 @@ class Users
     /**
      * Get access
      *
-     * @return string
+     * @return string 
      */
     public function getAccess()
     {
@@ -205,7 +206,7 @@ class Users
     /**
      * Set lastIp
      *
-     * @param  string $lastIp
+     * @param string $lastIp
      * @return Users
      */
     public function setLastIp($lastIp)
@@ -218,7 +219,7 @@ class Users
     /**
      * Get lastIp
      *
-     * @return string
+     * @return string 
      */
     public function getLastIp()
     {
@@ -228,7 +229,7 @@ class Users
     /**
      * Set lastLoginDate
      *
-     * @param  \DateTime $lastLoginDate
+     * @param \DateTime $lastLoginDate
      * @return Users
      */
     public function setLastLoginDate($lastLoginDate)
@@ -241,7 +242,7 @@ class Users
     /**
      * Get lastLoginDate
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getLastLoginDate()
     {
@@ -251,7 +252,7 @@ class Users
     /**
      * Set activationKey
      *
-     * @param  string $activationKey
+     * @param string $activationKey
      * @return Users
      */
     public function setActivationKey($activationKey)
@@ -264,7 +265,7 @@ class Users
     /**
      * Get activationKey
      *
-     * @return string
+     * @return string 
      */
     public function getActivationKey()
     {
@@ -274,7 +275,7 @@ class Users
     /**
      * Set status
      *
-     * @param  string $status
+     * @param string $status
      * @return Users
      */
     public function setStatus($status)
@@ -287,7 +288,7 @@ class Users
     /**
      * Get status
      *
-     * @return string
+     * @return string 
      */
     public function getStatus()
     {
@@ -297,7 +298,7 @@ class Users
     /**
      * Set orgId
      *
-     * @param  integer $orgId
+     * @param integer $orgId
      * @return Users
      */
     public function setOrgId($orgId)
@@ -310,7 +311,7 @@ class Users
     /**
      * Get orgId
      *
-     * @return integer
+     * @return integer 
      */
     public function getOrgId()
     {
@@ -320,7 +321,7 @@ class Users
     /**
      * Set locId
      *
-     * @param  integer $locId
+     * @param integer $locId
      * @return Users
      */
     public function setLocId($locId)
@@ -333,7 +334,7 @@ class Users
     /**
      * Get locId
      *
-     * @return integer
+     * @return integer 
      */
     public function getLocId()
     {
@@ -343,7 +344,7 @@ class Users
     /**
      * Set roles
      *
-     * @param  string $roles
+     * @param string $roles
      * @return Users
      */
     public function setRoles($roles)
@@ -356,7 +357,7 @@ class Users
     /**
      * Get roles
      *
-     * @return string
+     * @return string 
      */
     public function getRoles()
     {

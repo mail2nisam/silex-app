@@ -1,4 +1,6 @@
 <?php
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,12 +33,14 @@ class Sessions
      *
      * @ORM\Column(name="last_accessed", type="datetime", nullable=false)
      */
-    private $lastAccessed = 'CURRENT_TIMESTAMP';
+    private $lastAccessed;
+
+
 
     /**
      * Get id
      *
-     * @return string
+     * @return string 
      */
     public function getId()
     {
@@ -46,7 +50,7 @@ class Sessions
     /**
      * Set data
      *
-     * @param  string   $data
+     * @param string $data
      * @return Sessions
      */
     public function setData($data)
@@ -59,7 +63,7 @@ class Sessions
     /**
      * Get data
      *
-     * @return string
+     * @return string 
      */
     public function getData()
     {
@@ -69,7 +73,7 @@ class Sessions
     /**
      * Set lastAccessed
      *
-     * @param  \DateTime $lastAccessed
+     * @param \DateTime $lastAccessed
      * @return Sessions
      */
     public function setLastAccessed($lastAccessed)
@@ -82,7 +86,7 @@ class Sessions
     /**
      * Get lastAccessed
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getLastAccessed()
     {

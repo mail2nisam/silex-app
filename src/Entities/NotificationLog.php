@@ -1,4 +1,6 @@
 <?php
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -75,10 +77,12 @@ class NotificationLog
      */
     private $userId;
 
+
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -88,7 +92,7 @@ class NotificationLog
     /**
      * Set notificationType
      *
-     * @param  string          $notificationType
+     * @param string $notificationType
      * @return NotificationLog
      */
     public function setNotificationType($notificationType)
@@ -101,7 +105,7 @@ class NotificationLog
     /**
      * Get notificationType
      *
-     * @return string
+     * @return string 
      */
     public function getNotificationType()
     {
@@ -111,7 +115,7 @@ class NotificationLog
     /**
      * Set notificationAction
      *
-     * @param  string          $notificationAction
+     * @param string $notificationAction
      * @return NotificationLog
      */
     public function setNotificationAction($notificationAction)
@@ -124,7 +128,7 @@ class NotificationLog
     /**
      * Get notificationAction
      *
-     * @return string
+     * @return string 
      */
     public function getNotificationAction()
     {
@@ -134,7 +138,7 @@ class NotificationLog
     /**
      * Set notificationTime
      *
-     * @param  \DateTime       $notificationTime
+     * @param \DateTime $notificationTime
      * @return NotificationLog
      */
     public function setNotificationTime($notificationTime)
@@ -147,7 +151,7 @@ class NotificationLog
     /**
      * Get notificationTime
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getNotificationTime()
     {
@@ -157,7 +161,7 @@ class NotificationLog
     /**
      * Set notificationStatus
      *
-     * @param  string          $notificationStatus
+     * @param string $notificationStatus
      * @return NotificationLog
      */
     public function setNotificationStatus($notificationStatus)
@@ -170,7 +174,7 @@ class NotificationLog
     /**
      * Get notificationStatus
      *
-     * @return string
+     * @return string 
      */
     public function getNotificationStatus()
     {
@@ -180,7 +184,7 @@ class NotificationLog
     /**
      * Set notificationResponse
      *
-     * @param  string          $notificationResponse
+     * @param string $notificationResponse
      * @return NotificationLog
      */
     public function setNotificationResponse($notificationResponse)
@@ -193,7 +197,7 @@ class NotificationLog
     /**
      * Get notificationResponse
      *
-     * @return string
+     * @return string 
      */
     public function getNotificationResponse()
     {
@@ -203,7 +207,7 @@ class NotificationLog
     /**
      * Set logIndex
      *
-     * @param  string          $logIndex
+     * @param string $logIndex
      * @return NotificationLog
      */
     public function setLogIndex($logIndex)
@@ -216,7 +220,7 @@ class NotificationLog
     /**
      * Get logIndex
      *
-     * @return string
+     * @return string 
      */
     public function getLogIndex()
     {
@@ -226,7 +230,7 @@ class NotificationLog
     /**
      * Set probeId
      *
-     * @param  integer         $probeId
+     * @param integer $probeId
      * @return NotificationLog
      */
     public function setProbeId($probeId)
@@ -239,7 +243,7 @@ class NotificationLog
     /**
      * Get probeId
      *
-     * @return integer
+     * @return integer 
      */
     public function getProbeId()
     {
@@ -249,7 +253,7 @@ class NotificationLog
     /**
      * Set userId
      *
-     * @param  integer         $userId
+     * @param integer $userId
      * @return NotificationLog
      */
     public function setUserId($userId)
@@ -262,7 +266,7 @@ class NotificationLog
     /**
      * Get userId
      *
-     * @return integer
+     * @return integer 
      */
     public function getUserId()
     {

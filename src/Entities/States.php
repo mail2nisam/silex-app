@@ -1,4 +1,6 @@
 <?php
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,10 +42,12 @@ class States
      */
     private $statestatus;
 
+
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -53,7 +57,7 @@ class States
     /**
      * Set countryid
      *
-     * @param  integer $countryid
+     * @param integer $countryid
      * @return States
      */
     public function setCountryid($countryid)
@@ -66,7 +70,7 @@ class States
     /**
      * Get countryid
      *
-     * @return integer
+     * @return integer 
      */
     public function getCountryid()
     {
@@ -76,7 +80,7 @@ class States
     /**
      * Set statename
      *
-     * @param  string $statename
+     * @param string $statename
      * @return States
      */
     public function setStatename($statename)
@@ -89,7 +93,7 @@ class States
     /**
      * Get statename
      *
-     * @return string
+     * @return string 
      */
     public function getStatename()
     {
@@ -99,7 +103,7 @@ class States
     /**
      * Set statestatus
      *
-     * @param  string $statestatus
+     * @param string $statestatus
      * @return States
      */
     public function setStatestatus($statestatus)
@@ -112,7 +116,7 @@ class States
     /**
      * Get statestatus
      *
-     * @return string
+     * @return string 
      */
     public function getStatestatus()
     {

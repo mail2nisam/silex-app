@@ -10,6 +10,6 @@ register:
 logout:
   path: /logout
   defaults: { _controller: 'Smart\Controllers\IndexController::logoutAction' }
-test:
-  path: /test
+admin_index:
+  path: /admin/test
   defaults: { _controller: 'Smart\Controllers\IndexController::testAction' }

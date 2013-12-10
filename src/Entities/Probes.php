@@ -1,4 +1,6 @@
 <?php
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -120,9 +122,9 @@ class Probes
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", nullable=false)
+     * @ORM\Column(name="status", type="string", length=255, nullable=false)
      */
-    private $status = 'Inactive';
+    private $status;
 
     /**
      * @var integer
@@ -131,10 +133,12 @@ class Probes
      */
     private $locId;
 
+
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -144,7 +148,7 @@ class Probes
     /**
      * Set userId
      *
-     * @param  integer $userId
+     * @param integer $userId
      * @return Probes
      */
     public function setUserId($userId)
@@ -157,7 +161,7 @@ class Probes
     /**
      * Get userId
      *
-     * @return integer
+     * @return integer 
      */
     public function getUserId()
     {
@@ -167,7 +171,7 @@ class Probes
     /**
      * Set alerthighlimit
      *
-     * @param  float  $alerthighlimit
+     * @param float $alerthighlimit
      * @return Probes
      */
     public function setAlerthighlimit($alerthighlimit)
@@ -180,7 +184,7 @@ class Probes
     /**
      * Get alerthighlimit
      *
-     * @return float
+     * @return float 
      */
     public function getAlerthighlimit()
     {
@@ -190,7 +194,7 @@ class Probes
     /**
      * Set alertlowlimit
      *
-     * @param  float  $alertlowlimit
+     * @param float $alertlowlimit
      * @return Probes
      */
     public function setAlertlowlimit($alertlowlimit)
@@ -203,7 +207,7 @@ class Probes
     /**
      * Get alertlowlimit
      *
-     * @return float
+     * @return float 
      */
     public function getAlertlowlimit()
     {
@@ -213,7 +217,7 @@ class Probes
     /**
      * Set siteno
      *
-     * @param  integer $siteno
+     * @param integer $siteno
      * @return Probes
      */
     public function setSiteno($siteno)
@@ -226,7 +230,7 @@ class Probes
     /**
      * Get siteno
      *
-     * @return integer
+     * @return integer 
      */
     public function getSiteno()
     {
@@ -236,7 +240,7 @@ class Probes
     /**
      * Set collingDevice
      *
-     * @param  string $collingDevice
+     * @param string $collingDevice
      * @return Probes
      */
     public function setCollingDevice($collingDevice)
@@ -249,7 +253,7 @@ class Probes
     /**
      * Get collingDevice
      *
-     * @return string
+     * @return string 
      */
     public function getCollingDevice()
     {
@@ -259,7 +263,7 @@ class Probes
     /**
      * Set lastcalibrationdatetime
      *
-     * @param  \DateTime $lastcalibrationdatetime
+     * @param \DateTime $lastcalibrationdatetime
      * @return Probes
      */
     public function setLastcalibrationdatetime($lastcalibrationdatetime)
@@ -272,7 +276,7 @@ class Probes
     /**
      * Get lastcalibrationdatetime
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getLastcalibrationdatetime()
     {
@@ -282,7 +286,7 @@ class Probes
     /**
      * Set nextcalibrationdue
      *
-     * @param  \DateTime $nextcalibrationdue
+     * @param \DateTime $nextcalibrationdue
      * @return Probes
      */
     public function setNextcalibrationdue($nextcalibrationdue)
@@ -295,7 +299,7 @@ class Probes
     /**
      * Get nextcalibrationdue
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getNextcalibrationdue()
     {
@@ -305,7 +309,7 @@ class Probes
     /**
      * Set serialnumber
      *
-     * @param  string $serialnumber
+     * @param string $serialnumber
      * @return Probes
      */
     public function setSerialnumber($serialnumber)
@@ -318,7 +322,7 @@ class Probes
     /**
      * Get serialnumber
      *
-     * @return string
+     * @return string 
      */
     public function getSerialnumber()
     {
@@ -328,7 +332,7 @@ class Probes
     /**
      * Set probetype
      *
-     * @param  string $probetype
+     * @param string $probetype
      * @return Probes
      */
     public function setProbetype($probetype)
@@ -341,7 +345,7 @@ class Probes
     /**
      * Get probetype
      *
-     * @return string
+     * @return string 
      */
     public function getProbetype()
     {
@@ -351,7 +355,7 @@ class Probes
     /**
      * Set registereddate
      *
-     * @param  \DateTime $registereddate
+     * @param \DateTime $registereddate
      * @return Probes
      */
     public function setRegistereddate($registereddate)
@@ -364,7 +368,7 @@ class Probes
     /**
      * Get registereddate
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getRegistereddate()
     {
@@ -374,7 +378,7 @@ class Probes
     /**
      * Set sampleperiodunits
      *
-     * @param  string $sampleperiodunits
+     * @param string $sampleperiodunits
      * @return Probes
      */
     public function setSampleperiodunits($sampleperiodunits)
@@ -387,7 +391,7 @@ class Probes
     /**
      * Get sampleperiodunits
      *
-     * @return string
+     * @return string 
      */
     public function getSampleperiodunits()
     {
@@ -397,7 +401,7 @@ class Probes
     /**
      * Set sampleperiod
      *
-     * @param  integer $sampleperiod
+     * @param integer $sampleperiod
      * @return Probes
      */
     public function setSampleperiod($sampleperiod)
@@ -410,7 +414,7 @@ class Probes
     /**
      * Get sampleperiod
      *
-     * @return integer
+     * @return integer 
      */
     public function getSampleperiod()
     {
@@ -420,7 +424,7 @@ class Probes
     /**
      * Set warninghighlimit
      *
-     * @param  float  $warninghighlimit
+     * @param float $warninghighlimit
      * @return Probes
      */
     public function setWarninghighlimit($warninghighlimit)
@@ -433,7 +437,7 @@ class Probes
     /**
      * Get warninghighlimit
      *
-     * @return float
+     * @return float 
      */
     public function getWarninghighlimit()
     {
@@ -443,7 +447,7 @@ class Probes
     /**
      * Set warninglowlimit
      *
-     * @param  float  $warninglowlimit
+     * @param float $warninglowlimit
      * @return Probes
      */
     public function setWarninglowlimit($warninglowlimit)
@@ -456,7 +460,7 @@ class Probes
     /**
      * Get warninglowlimit
      *
-     * @return float
+     * @return float 
      */
     public function getWarninglowlimit()
     {
@@ -466,7 +470,7 @@ class Probes
     /**
      * Set status
      *
-     * @param  string $status
+     * @param string $status
      * @return Probes
      */
     public function setStatus($status)
@@ -479,7 +483,7 @@ class Probes
     /**
      * Get status
      *
-     * @return string
+     * @return string 
      */
     public function getStatus()
     {
@@ -489,7 +493,7 @@ class Probes
     /**
      * Set locId
      *
-     * @param  integer $locId
+     * @param integer $locId
      * @return Probes
      */
     public function setLocId($locId)
@@ -502,7 +506,7 @@ class Probes
     /**
      * Get locId
      *
-     * @return integer
+     * @return integer 
      */
     public function getLocId()
     {

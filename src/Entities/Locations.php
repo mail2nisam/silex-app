@@ -1,4 +1,6 @@
 <?php
+namespace Entities;
+
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -117,10 +119,12 @@ class Locations
      */
     private $timeZone;
 
+
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -130,7 +134,7 @@ class Locations
     /**
      * Set orgId
      *
-     * @param  integer   $orgId
+     * @param integer $orgId
      * @return Locations
      */
     public function setOrgId($orgId)
@@ -143,7 +147,7 @@ class Locations
     /**
      * Get orgId
      *
-     * @return integer
+     * @return integer 
      */
     public function getOrgId()
     {
@@ -153,7 +157,7 @@ class Locations
     /**
      * Set locName
      *
-     * @param  string    $locName
+     * @param string $locName
      * @return Locations
      */
     public function setLocName($locName)
@@ -166,7 +170,7 @@ class Locations
     /**
      * Get locName
      *
-     * @return string
+     * @return string 
      */
     public function getLocName()
     {
@@ -176,7 +180,7 @@ class Locations
     /**
      * Set locAddress
      *
-     * @param  string    $locAddress
+     * @param string $locAddress
      * @return Locations
      */
     public function setLocAddress($locAddress)
@@ -189,7 +193,7 @@ class Locations
     /**
      * Get locAddress
      *
-     * @return string
+     * @return string 
      */
     public function getLocAddress()
     {
@@ -199,7 +203,7 @@ class Locations
     /**
      * Set locCountry
      *
-     * @param  integer   $locCountry
+     * @param integer $locCountry
      * @return Locations
      */
     public function setLocCountry($locCountry)
@@ -212,7 +216,7 @@ class Locations
     /**
      * Get locCountry
      *
-     * @return integer
+     * @return integer 
      */
     public function getLocCountry()
     {
@@ -222,7 +226,7 @@ class Locations
     /**
      * Set locState
      *
-     * @param  integer   $locState
+     * @param integer $locState
      * @return Locations
      */
     public function setLocState($locState)
@@ -235,7 +239,7 @@ class Locations
     /**
      * Get locState
      *
-     * @return integer
+     * @return integer 
      */
     public function getLocState()
     {
@@ -245,7 +249,7 @@ class Locations
     /**
      * Set locCity
      *
-     * @param  string    $locCity
+     * @param string $locCity
      * @return Locations
      */
     public function setLocCity($locCity)
@@ -258,7 +262,7 @@ class Locations
     /**
      * Get locCity
      *
-     * @return string
+     * @return string 
      */
     public function getLocCity()
     {
@@ -268,7 +272,7 @@ class Locations
     /**
      * Set locZip
      *
-     * @param  string    $locZip
+     * @param string $locZip
      * @return Locations
      */
     public function setLocZip($locZip)
@@ -281,7 +285,7 @@ class Locations
     /**
      * Get locZip
      *
-     * @return string
+     * @return string 
      */
     public function getLocZip()
     {
@@ -291,7 +295,7 @@ class Locations
     /**
      * Set locLatitude
      *
-     * @param  string    $locLatitude
+     * @param string $locLatitude
      * @return Locations
      */
     public function setLocLatitude($locLatitude)
@@ -304,7 +308,7 @@ class Locations
     /**
      * Get locLatitude
      *
-     * @return string
+     * @return string 
      */
     public function getLocLatitude()
     {
@@ -314,7 +318,7 @@ class Locations
     /**
      * Set locLongitude
      *
-     * @param  string    $locLongitude
+     * @param string $locLongitude
      * @return Locations
      */
     public function setLocLongitude($locLongitude)
@@ -327,7 +331,7 @@ class Locations
     /**
      * Get locLongitude
      *
-     * @return string
+     * @return string 
      */
     public function getLocLongitude()
     {
@@ -337,7 +341,7 @@ class Locations
     /**
      * Set locAccessKey
      *
-     * @param  string    $locAccessKey
+     * @param string $locAccessKey
      * @return Locations
      */
     public function setLocAccessKey($locAccessKey)
@@ -350,7 +354,7 @@ class Locations
     /**
      * Get locAccessKey
      *
-     * @return string
+     * @return string 
      */
     public function getLocAccessKey()
     {
@@ -360,7 +364,7 @@ class Locations
     /**
      * Set locSecret
      *
-     * @param  string    $locSecret
+     * @param string $locSecret
      * @return Locations
      */
     public function setLocSecret($locSecret)
@@ -373,7 +377,7 @@ class Locations
     /**
      * Get locSecret
      *
-     * @return string
+     * @return string 
      */
     public function getLocSecret()
     {
@@ -383,7 +387,7 @@ class Locations
     /**
      * Set createdAt
      *
-     * @param  \DateTime $createdAt
+     * @param \DateTime $createdAt
      * @return Locations
      */
     public function setCreatedAt($createdAt)
@@ -396,7 +400,7 @@ class Locations
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getCreatedAt()
     {
@@ -406,7 +410,7 @@ class Locations
     /**
      * Set updatedAt
      *
-     * @param  \DateTime $updatedAt
+     * @param \DateTime $updatedAt
      * @return Locations
      */
     public function setUpdatedAt($updatedAt)
@@ -419,7 +423,7 @@ class Locations
     /**
      * Get updatedAt
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getUpdatedAt()
     {
@@ -429,7 +433,7 @@ class Locations
     /**
      * Set timeZone
      *
-     * @param  integer   $timeZone
+     * @param integer $timeZone
      * @return Locations
      */
     public function setTimeZone($timeZone)
@@ -442,7 +446,7 @@ class Locations
     /**
      * Get timeZone
      *
-     * @return integer
+     * @return integer 
      */
     public function getTimeZone()
     {

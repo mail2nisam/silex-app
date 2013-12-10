@@ -27,22 +27,39 @@ $app->register(new UrlGeneratorServiceProvider());
 
 $app->register(new Silex\Provider\SecurityServiceProvider(), array(
     'security.firewalls' => array(
-        'default' => array(
-            'pattern' => '^/',
+        'dev' => array(
+            'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
+            'security' => false
+        ),
+        'main' => array(
+            'pattern' => '^/.*$',
             'anonymous' => true,
-            'form' => array('login_path' => '/login', 'check_path' => 'login_check'),
+            'form' => array(
+                'login_path' => '/login',
+                'check_path' => '/login_check'
+            ),
             'logout' => array('logout_path' => '/logout'),
             'users' => $app->share(function () use ($app) {
                 return new Smart\User\UserProvider($app['db']);
             }),
         ),
-
     ),
-   $app['security.access_rules'] = array(
-    array('^/admin', 'ROLE_ADMIN'),
-    array('^.*$', 'ROLE_USER'),
-)
+    'security.access_rules' => array(
+        array('^/login', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+        array('^/register', 'IS_AUTHENTICATED_ANONYMOUSLY'),
+        array('^/admin', 'ROLE_ADMIN'),
+        //array('^/.*$', 'ROLE_USER'),
+    ),
+    'security.role_hierarchy' => array(
+        'ROLE_MANAGER' => array('ROLE_USER'),
+        'ROLE_BUSINESS' => array('ROLE_USER'),
+        'ROLE_MASTER' => array('ROLE_USER'),
+        'ROLE_ADMIN' => array('ROLE_USER'),
+    )
 ));
+$app['security.authentication.success_handler.main'] = $app->share(function ($app) {
+    return new Smart\Handler\successHandler($app);
+});
 
 $app['security.encoder.digest'] = $app->share(function ($app) {
     return new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', false, 1);
@@ -121,7 +138,7 @@ $app->register(new DoctrineOrmServiceProvider, array(
             array(
                 "type" => "annotation",
                 "namespace" => "Entities",
-                "path" => __DIR__ . "Entities",
+                "path" => __DIR__ . "/Entities",
                 'use_simple_annotation_reader' => false
             ),
         ),
