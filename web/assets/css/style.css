@@ -1,0 +1,243 @@
+
+/* CSS Document */
+
+body{text-align:center; margin:0; padding:0; font-family:Lucida Grande, Arial; font-size:13px; background-color:#303030 !important; color:#464646; }
+
+.wrapper{margin:0 auto; width:1024px;}
+
+.content{background-color:#FFFFFF; border:1px solid #bab9b9; text-align:center; padding-bottom:25px;position:relative;}
+
+.in{width:98%; margin:25px auto; text-align:left;}
+
+.line{border-top:1px solid #bab9b9; height:1px; }
+
+
+
+/*.............................................................General.................... */
+
+h1, h2, h3 {margin:0; padding:0; }
+
+h1{font-size:32px;}
+
+h2{font-family:Verdana; font-size:24px; font-style:italic; }
+
+.author p{margin:0; padding:0; }
+
+.forms{line-height:2em; }
+
+a:link, a:visited{color:#30a4b1; text-decoration:none;}
+
+a:hover{color:#007777;}
+
+.v_line{padding:0 5px; color:#999999;}
+
+
+/*.............................................................Header.................... */
+
+.logo{float:center; margin:25px 0;}
+
+.txt_right{ float:right; margin-top:15px;color:silver}
+
+
+
+
+/*.............................................................Form.................... */
+
+
+.box{border:1px solid #bab9b9; padding:10px; width:200px; color:#707070; font-size:14px; height:auto;}
+
+.access_box{border:1px solid #bab9b9; padding:10px; width:100px; color:#707070; font-size:14px; }
+
+
+.box2{border:1px solid #bab9b9; padding:10px; width:400px; color:#707070; font-size:14px; }
+
+.com_btn{margin:0px; padding:10px 20px; border:0px; background-color:#007777; color:#fff; font-size:14px; }
+
+.com_btn2{margin:0px; padding:10px 20px; border:0px; background-color:#FF0000; color:#fff; font-size:14px; }
+
+/*.............................................................Check YES or NO.................... */
+
+.check{ margin:25px; text-align:left; padding:10px 15px; border:1px solid #bab9b9; background-color:#f7f7f7;}
+
+.good{}
+
+.icon{padding-right:8px; float:left;}
+
+.bad{}
+
+
+/*..................................................... Navigation .....................*/	
+
+
+.navigation{ background-color:#979797; 
+float: left; margin-bottom:20px; width:1024px; position:relative;
+/*background-image: url("branding/smart_probe.png");*/
+background-repeat:no-repeat;
+background-position:63% 50%;}
+
+.navigation ul{ margin:0px; padding:0px; position:relative;}
+
+.navigation ul li{list-style:none; float: left; margin: 0; padding: 0; font-weight:normal; }
+
+.navigation li a{border-right: 2px white solid;float:left; color:#fff; margin: 0; font-size: 14px; text-decoration: none; padding:20px 5px;  }
+
+.navigation li a:hover, .navigation li .active { color:#FFFFFF; background-color:#007777; }
+
+.clear{clear:both;}
+
+
+/*............................... Search Form.....................*/	
+
+
+#searchform{ position:absolute; top:13px; right:15px;}
+
+.search_box{ padding:6px; color:#999999; font-size:13px; margin:0; background-color:#FFFFFF; border:1px solid #ccc;}
+
+.search_btn{margin:0 0 0 5px; padding:6px; border:0px; background-color:#007777; color:#fff; height:30px; font-size:13px; }
+
+
+
+/*.............................................................Footer................... */
+
+.footer{text-align:center; margin-bottom:40px;white-space:nowrap;overflow:hidden;}
+
+.footer_left{text-align: left; margin-bottom:40px;white-space:nowrap;overflow:hidden;}
+
+
+
+
+/*.............................................................Table................... */
+
+
+td { padding: 2px 12px 2px 12px; text-align:left; }
+
+.gray td {background-color:#f7f7f7;}
+
+.table_main { border-top: 1px solid #bab9b9; border-right: 1px solid #bab9b9; border-left: 1px solid #bab9b9;}
+
+.table_main .delete {background:url(images/x2.gif) center left no-repeat; padding-left:12px;}
+
+tr td {border-bottom: 1px solid #bab9b9;}
+
+/*******************/
+.text_area{
+height:174px;
+margin:2px;
+width:427px;
+}
+.map-canvas{ 
+background-color: #E5E3DF;
+height: 333px;
+overflow: hidden;
+position: absolute;
+right: 0;
+top: 275px;
+width: 505px;
+}
+.clearfix:after,.content:after {
+content: " ";
+display: table;
+}
+
+.clearfix:after,.content:after {
+clear: both;
+}
+
+.clearfix,.content {
+*zoom: 1;
+}
+
+
+.left-menu {
+float: left;
+width: 260px;
+}
+.right-content {
+float: right;
+width: 600px;
+}
+#box-table-a,#box-table-b
+{
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 12px;
+margin: 45px;
+width: 760px;
+text-align: left;
+border-collapse: collapse;
+}
+#box-table-a th,#box-table-b th
+{
+font-size: 13px;
+font-weight: normal;
+padding: 8px;
+background: #ccc;
+border-top: 4px solid #ccc;
+border-bottom: 1px solid #fff;
+color: #000;
+}
+#box-table-a td,#box-table-b td
+{
+padding: 8px;
+background: #e8edff; 
+border-bottom: 1px solid #fff;
+color: #669;
+border-top: 1px solid transparent;
+cursor:pointer;
+}
+#box-table-a tr:hover td,#box-table-b tr:hover td
+{
+background: #d0dafd;
+color: #339;
+}
+.filter_top {
+height: 50px;
+padding: 5px 10px;
+}
+
+.label-span {
+margin-left: 2px !important;
+margin-right: 10px;
+}
+.search_filter label {margin: 5px 9px 5px 25px;}
+.tableDiv {
+height: 500px;
+overflow: scroll;
+}
+.acc_key,.acc_key_secret {
+float: left;
+padding: 6px 17px;
+width: auto;
+}
+.h_div {
+border-bottom: 1px solid;
+float: left;
+margin: 7px 8px;
+width: 100%;
+}
+.h_div label {padding-right:15px;}
+.h_div input {width:250px;}
+.tile{
+height: 313px;
+margin: 5px;
+width: 315px;
+overflow:hidden;
+}
+.first-tile{margin-right:15px;}
+.shadow {
+-moz-box-shadow:    3px 3px 3px 6px #ccc;
+-webkit-box-shadow: 3px 3px 3px 6px #ccc;
+box-shadow:         3px 3px 3px 6px #ccc;
+}
+.home-table{
+margin:0 !important;
+    padding: 0 8px;
+    word-wrap: break-word;
+    width:315px !important;
+}
+.home-table td {max-width:104px;padding: 0 8px !important}
+.home-container .heading {padding:3px 0;text-align:center;}
+.notification {
+    border: 1px dotted;
+    margin: 0 auto;
+    text-align: center;
+}
