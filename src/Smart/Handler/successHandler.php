@@ -29,10 +29,16 @@ class successHandler implements AuthenticationSuccessHandlerInterface {
 //            );
             return $this->app->redirect($this->app['url_generator']->generate('admin_index'));
         } else {
+              $currentUserObj   =   $this->app['orm.em']->getRepository('Entities\Users')->findByUsername($token->getUsername());
+              $currentUser = $currentUserObj[0]  ;
+              //var_dump($currentUser[0]);exit;
+            $this->app['session']->set('user', (object)array('__org_id' => $currentUser->getOrgId(),'__loc_id'=>$currentUser->getLocId()));
 //            $include = array(
 //                'error' => $this->app['security.last_error']($request),
 //                'last_username' => $this->app['session']->get('_security.last_username'),
 //            );
+          //  $userSession    =   $this->app['session']->get('user');
+         //   var_dump($userSession->__org_id);exit;
             return $this->app->redirect($this->app['url_generator']->generate('homepage'));
         }
     }

@@ -4,61 +4,27 @@
 <h2>{{ 'Register New Business'|trans }}</h2>
 {%endblock%}
 {% block content %}
-
-
-
 {{ form_start(form) }}
-    {{ form_errors(form) }}
-
+        {{ form_errors(form) }}
 <div class="pull-left" style="padding-right: 35px">
-
-    
          {{ form_row(form.org_name) }}
-    
-        {{ form_row(form.username) }}
-    
-
-        {% for passwordField in form.password_repeated %}
-    
-        
-        {{ form_row(passwordField, { 'attr': {'class': 'form-input'} }) }}
-        {% endfor %}
-
-
-    
+         {{ form_row(form.username) }}
+         {% for passwordField in form.password_repeated %}
+            {{ form_row(passwordField, { 'attr': {'class': 'form-input'} }) }}
+         {% endfor %}
          {{ form_row(form.email) }}
-
-
-    
          {{ form_row(form.org_description) }}
-
-
-
-    {{ form_row(form.submit, { 'label': 'CREATE' }) }}
+         {{ form_row(form.submit, { 'label': 'CREATE' }) }}
 </div>
 <div class="pull-left">
-    
          {{ form_row(form.address) }}
-
-    
          {{ form_row(form.zip_code) }}
-
-    
          {{ form_row(form.country) }}
-
-    
          {{ form_row(form.state) }}
-
-    
          {{ form_row(form.office_phone) }}
-
-    
          {{ form_row(form.office_fax) }}
-
-    
          {{ form_row(form.moile_phone) }}
 </div>
-
-{{ form_rest(form) }}
+        {{ form_rest(form) }}
 {{ form_end(form) }}
 {% endblock %}

@@ -13,3 +13,19 @@ logout:
 admin_index:
   path: /admin/test
   defaults: { _controller: 'Smart\Controllers\IndexController::testAction' }
+locations:
+  path: /locations
+  defaults: { _controller: 'Smart\Controllers\IndexController::listLocationAction' }
+new_location:
+  path: /new-location
+  defaults: { _controller: 'Smart\Controllers\IndexController::newLocationAction' }
+managers:
+  path: /managers
+  defaults: { _controller: 'Smart\Controllers\IndexController::listManagersAction' }
+new_manager:
+  path: /new-manager
+  defaults: { _controller: 'Smart\Controllers\IndexController::newManagerAction' }
+state_list:
+  path: /states/{countryId}
+  defaults: { _controller: 'Smart\Controllers\IndexController::stateListAction' }
+  

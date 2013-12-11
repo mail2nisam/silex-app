@@ -1,0 +1,103 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'location' %}
+{%block subhead%}
+<h2>{{ 'Register New Business Location'|trans }}</h2>
+{%endblock%}
+{% block content %}
+
+
+
+{{ form_start(form,{ 'attr': {'id': 'add_loc_frm'} }) }}
+    {{ form_errors(form) }}
+
+<div class="pull-left" style="padding-right: 35px">
+
+
+         {{ form_row(form.loc_name) }}
+
+
+
+
+</div>
+<div class="pull-left">
+<div id="map-canvas"class="map-canvas"></div>
+</div>
+
+{{ form_rest(form) }}
+{{ form_row(form.submit, { 'label': 'CREATE' }) }}
+{{ form_end(form) }}
+
+{% endblock %}
+{% block scriptblock %}
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script>
+    var geocoder;
+    var map;
+    var marker = null;
+    var lat = null;
+    var lng = null;
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 8,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    }
+
+    function codeAddress(addr) {
+        var address = addr;
+
+        geocoder.geocode({'address': address}, function(results, status) {
+
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                if (marker)
+                    marker.setMap(null);
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+                lat = results[0].geometry.location.lat();
+                lng = results[0].geometry.location.lng();
+                $('#form_loc_lat').val(lat);
+                $('#form_loc_lng').val(lng);
+
+            } else {
+                // alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+        $('#add_loc_frm input,#add_loc_frm select').not('#form_loc_name,#form_zip_code,#org_id,#form_time_zone,#form_submit').change(function() {
+            var country = '';
+            var state = '';
+            var city = '';
+            var add = '';
+            if ($('#form_country').val()) {
+                country = ', ' + $('#form_country').find(':selected').text();
+            }
+            if ($('#form_state').val()) {
+                state = ', ' + $('#form_state').find(':selected').text();
+            }
+            if ($('#form_city').val()) {
+                city = ', ' + $('#form_city').val();
+            }
+            if ($('#form_loc_address').val()) {
+                add = $('#form_loc_address').val();
+            }
+            var address = add + city + country + state;
+            codeAddress(address);
+        });
+    
+    
+        
+
+</script>
+            {% endblock %}

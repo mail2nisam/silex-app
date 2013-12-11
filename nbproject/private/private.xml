@@ -5,6 +5,7 @@
         <group>
             <file>file:/var/www/newsilex/resources/views/layout.html.twig</file>
             <file>file:/var/www/newsilex/src/app.php</file>
+            <file>file:/var/www/newsilex/src/Entities/Users.php</file>
             <file>file:/var/www/newsilex/resources/views/common/form_div_layout.html.twig</file>
             <file>file:/var/www/newsilex/src/Smart/Controllers/IndexController.php</file>
             <file>file:/var/www/newsilex/resources/config/prod.php</file>

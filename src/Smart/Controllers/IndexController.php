@@ -63,8 +63,12 @@ class IndexController {
                 ->add('org_description', 'textarea', array('label' => 'Details', 'constraints' => new Assert\NotBlank(), 'attr' => array('required' => true)))
                 ->add('address', 'text', array('label' => 'Street Name and Number', 'attr' => array('required' => true)))
                 ->add('zip_code', 'text', array('label' => 'Zip Code', 'attr' => array('required' => true)))
-                ->add('country', 'text', array('label' => 'Country', 'attr' => array('required' => true)))
-                ->add('state', 'text', array('label' => 'State', 'attr' => array('required' => true)))
+                ->add('country', 'choice', array(
+                    'choices' => $this->getCountry($app),
+                    'preferred_choices' => array('13'),
+                    'empty_value' => 'Choose a country',
+                ))
+                ->add('state', 'text', array('label' => 'State', 'attr' => array('class'=>'state_list','required' => true)))
                 ->add('office_phone', 'text', array('label' => 'Office Phone', 'attr' => array('required' => false)))
                 ->add('office_fax', 'text', array('label' => 'Office Fax', 'attr' => array('required' => false)))
                 ->add('moile_phone', 'text', array('label' => 'Mobile Phone Number', 'attr' => array('required' => false)))
@@ -75,7 +79,7 @@ class IndexController {
             if ($form->submit($request)->isValid()) {
                 $formData = $form->getData();
                 $users = new \Entities\Users;
-                $organization   =   new \Entities\Organization();
+                $organization = new \Entities\Organization();
                 $organization->setAddress($formData['address']);
                 $organization->setCountry($formData['country']);
                 $organization->setOrgName($formData['org_name']);
@@ -88,7 +92,7 @@ class IndexController {
                 $organization->setOrgCreatedAt(new \DateTime());
                 $app['orm.em']->persist($organization);
                 $app['orm.em']->flush();
-                $orgId  =   $organization->getId();
+                $orgId = $organization->getId();
                 $users->setUsername($formData['username']);
                 $users->setPassword($app['security.encoder.digest']->encodePassword($formData['password_repeated'], ''));
                 $users->setEmail($formData['email']);
@@ -98,18 +102,87 @@ class IndexController {
                 $users->setAccess('organizer');
                 $users->setOrgId($orgId);
                 $app['orm.em']->persist($users);
-                if($app['orm.em']->flush()){
-                   return $app['session']->getFlashBag()->add('success', 'New Business Added Succesfully');
+                if ($app['orm.em']->flush()) {
+                    return $app['session']->getFlashBag()->add('success', 'New Business Added Succesfully');
                 }
-                
-                
             } else {
-                 
+
                 $app['session']->getFlashBag()->add('error', 'Something went wrong please check once again');
             }
+            
         }
-
+        $app['session']->getFlashBag()->add('success', 'New Business Added Succesfully');
         return $app['twig']->render('register.html.twig', array('form' => $form->createView()));
+    }
+
+    protected function getCountry(Application $app) {
+        $countryObj = $app['orm.em']->getRepository('Entities\Countries')->findAll();
+        $choices = [];
+        foreach ($countryObj as $table2Obj) {
+            $choices[$table2Obj->getId()] = $table2Obj->getCountryname();
+        }
+        return $choices;
+    }
+    protected function getTimeZones(Application $app){
+        $countryObj = $app['orm.em']->getRepository('Entities\Timezones')->findAll();
+        $choices = [];
+        foreach ($countryObj as $table2Obj) {
+            $choices[$table2Obj->getId()] = $table2Obj->getTimezonename();
+        }
+        return $choices;
+    }
+
+    public function stateListAction(Application $app,$countryId){
+        $countryObj = $app['orm.em']->getRepository('Entities\States')->findByCountryid($countryId);
+        $states = [];
+        foreach ($countryObj as $table2Obj) {
+            $states[$table2Obj->getId()] = $table2Obj->getStatename();
+        }
+        return $app['twig']->render('states.html.twig', array('states' => $countryObj));
+    }
+    public function newLocationAction(Application $app, Request $request){
+         $builder = $app['form.factory']->createBuilder('form');
+ 
+        $form = $builder
+                ->add('loc_name', 'text', array('label' => 'Location Name'))
+                ->add('loc_address', 'text', array('label' => 'Address'))
+                ->add('city', 'text', array('label' => 'City'))
+                ->add('zip_code', 'text', array('label' => 'Zip'))
+                ->add('time_zone', 'choice', array(
+                    'choices' => $this->getTimeZones($app),
+                    'empty_value' => 'Choose an country',
+                ))
+                ->add('country', 'choice', array(
+                    'choices' => $this->getCountry($app),
+                    'preferred_choices' => array('13'),
+                    'empty_value' => 'Choose a country',
+                ))
+                ->add('state', 'text', array('label' => 'State', 'attr' => array('class'=>'state_list','required' => true)))
+                ->add('loc_lat', 'hidden')
+                ->add('loc_lng', 'hidden')
+                ->add('loc_id', 'hidden')
+                ->add('submit', 'submit')
+                ->getForm();
+        if ($request->isMethod('POST')) {
+         if ($form->submit($request)->isValid()) {
+             $currentUser    =   $this->app['session']->get('user');
+             $formData = $form->getData();
+             $location  =   new \Entities\Locations();
+             $location->setCreatedAt(new \DateTime());
+             $location->setLocAccessKey($locAccessKey);
+             $location->setLocAddress($formData['loc_address']);
+             $location->setLocCity($formData['city']);
+             $location->setLocCountry($formData['country']);
+             $location->setLocLatitude($formData['loc_lat']);
+             $location->setLocLongitude($formData['loc_lng']);
+             $location->setLocName($formData['loc_name']);
+             $location->setLocSecret($locSecret);
+             $location->setLocState($formData['state']);
+             $location->setLocZip($formData['zip_code']);
+             $location->setOrgId($userSession->__org_id);
+         }
+        }
+         return $app['twig']->render('new-location.html.twig', array('form' => $form->createView()));
     }
 
     public function testAction(Application $app) {
