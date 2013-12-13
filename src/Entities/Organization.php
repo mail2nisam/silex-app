@@ -2,12 +2,13 @@
 namespace Entities;
 
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Organization
  *
- * @ORM\Table(name="organization", indexes={@ORM\Index(name="org_description", columns={"org_description"})})
+ * @ORM\Table(name="organization", uniqueConstraints={@ORM\UniqueConstraint(name="new_fk_constraint_2", columns={"state"})}, indexes={@ORM\Index(name="new_fk_constraint_1", columns={"country"})})
  * @ORM\Entity
  */
 class Organization
@@ -64,20 +65,6 @@ class Organization
     private $zipCode;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="country", type="integer", nullable=false)
-     */
-    private $country;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="state", type="integer", nullable=false)
-     */
-    private $state;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="office_phone", type="string", length=100, nullable=false)
@@ -97,6 +84,26 @@ class Organization
      * @ORM\Column(name="mobile_phone", type="string", length=100, nullable=false)
      */
     private $mobilePhone;
+
+    /**
+     * @var \States
+     *
+     * @ORM\ManyToOne(targetEntity="States")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="state", referencedColumnName="id")
+     * })
+     */
+    private $state;
+
+    /**
+     * @var \Countries
+     *
+     * @ORM\ManyToOne(targetEntity="Countries")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="country", referencedColumnName="id")
+     * })
+     */
+    private $country;
 
 
 
@@ -249,52 +256,6 @@ class Organization
     }
 
     /**
-     * Set country
-     *
-     * @param integer $country
-     * @return Organization
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return integer 
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set state
-     *
-     * @param integer $state
-     * @return Organization
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
-     * Get state
-     *
-     * @return integer 
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
      * Set officePhone
      *
      * @param string $officePhone
@@ -361,5 +322,51 @@ class Organization
     public function getMobilePhone()
     {
         return $this->mobilePhone;
+    }
+
+    /**
+     * Set state
+     *
+     * @param \States $state
+     * @return Organization
+     */
+    public function setState(\States $state = null)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return \States 
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set country
+     *
+     * @param \Countries $country
+     * @return Organization
+     */
+    public function setCountry(\Countries $country = null)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return \Countries 
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }

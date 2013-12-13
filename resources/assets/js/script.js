@@ -2,12 +2,13 @@
     $(function() {
 
     });
-    $('#form_country').change(function() {
+    $('#location_locCountry').change(function() {
         doStateAjax(this);
 
     });
-    if ($('#form_country').val()) {
-        doStateAjax($('#form_country'));
+    $('#location_locState').empty();
+    if ($('#location_locCountry').val()) {
+        doStateAjax($('#location_locCountry'));
     }
 
 })(jQuery);
@@ -18,11 +19,12 @@ function doStateAjax(thiss) {
             type: "GET",
             url: ajaxRoute,
             success: function(data) {
-                $('#form_state').parent().html(data);
+                $('#location_locState').empty();
+                $('#location_locState').append(data);
             }
         });
     }else{
-        $('#form_state').empty();
+        $('#location_locState').empty();
     }
 
 }

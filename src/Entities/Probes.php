@@ -2,12 +2,13 @@
 namespace Entities;
 
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Probes
  *
- * @ORM\Table(name="probes")
+ * @ORM\Table(name="probes", uniqueConstraints={@ORM\UniqueConstraint(name="new_fk_constraint_5", columns={"user_id"}), @ORM\UniqueConstraint(name="loc_id", columns={"loc_id"})})
  * @ORM\Entity
  */
 class Probes
@@ -20,13 +21,6 @@ class Probes
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
-     */
-    private $userId;
 
     /**
      * @var float
@@ -127,11 +121,24 @@ class Probes
     private $status;
 
     /**
-     * @var integer
+     * @var \Locations
      *
-     * @ORM\Column(name="loc_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Locations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="loc_id", referencedColumnName="id")
+     * })
      */
-    private $locId;
+    private $loc;
+
+    /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
 
 
 
@@ -143,29 +150,6 @@ class Probes
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     * @return Probes
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return integer 
-     */
-    public function getUserId()
-    {
-        return $this->userId;
     }
 
     /**
@@ -491,25 +475,48 @@ class Probes
     }
 
     /**
-     * Set locId
+     * Set loc
      *
-     * @param integer $locId
+     * @param \Locations $loc
      * @return Probes
      */
-    public function setLocId($locId)
+    public function setLoc(\Locations $loc = null)
     {
-        $this->locId = $locId;
+        $this->loc = $loc;
 
         return $this;
     }
 
     /**
-     * Get locId
+     * Get loc
      *
-     * @return integer 
+     * @return \Locations 
      */
-    public function getLocId()
+    public function getLoc()
     {
-        return $this->locId;
+        return $this->loc;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Users $user
+     * @return Probes
+     */
+    public function setUser(\Users $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Users 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

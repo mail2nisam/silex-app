@@ -141,45 +141,52 @@ class IndexController {
         return $app['twig']->render('states.html.twig', array('states' => $countryObj));
     }
     public function newLocationAction(Application $app, Request $request){
-         $builder = $app['form.factory']->createBuilder('form');
- 
-        $form = $builder
-                ->add('loc_name', 'text', array('label' => 'Location Name'))
-                ->add('loc_address', 'text', array('label' => 'Address'))
-                ->add('city', 'text', array('label' => 'City'))
-                ->add('zip_code', 'text', array('label' => 'Zip'))
-                ->add('time_zone', 'choice', array(
-                    'choices' => $this->getTimeZones($app),
-                    'empty_value' => 'Choose an country',
-                ))
-                ->add('country', 'choice', array(
-                    'choices' => $this->getCountry($app),
-                    'preferred_choices' => array('13'),
-                    'empty_value' => 'Choose a country',
-                ))
-                ->add('state', 'text', array('label' => 'State', 'attr' => array('class'=>'state_list','required' => true)))
-                ->add('loc_lat', 'hidden')
-                ->add('loc_lng', 'hidden')
-                ->add('loc_id', 'hidden')
-                ->add('submit', 'submit')
-                ->getForm();
+        // $builder = $app['form.factory']->createBuilder('form');
+        $form = $app['form.factory']->create(new \Smart\Form\locationType());  
+//        
+//        $form = $builder
+//                ->add('loc_name', 'text', array('label' => 'Location Name'))
+//                ->add('loc_address', 'text', array('label' => 'Address'))
+//                ->add('city', 'text', array('label' => 'City'))
+//                ->add('zip_code', 'text', array('label' => 'Zip'))
+//                ->add('time_zone', 'choice', array(
+//                    'choices' => $this->getTimeZones($app),
+//                    'empty_value' => 'Choose an country',
+//                ))
+//                ->add('country', 'choice', array(
+//                    'choices' => $this->getCountry($app),
+//                    'preferred_choices' => array('13'),
+//                    'empty_value' => 'Choose a country',
+//                ))
+//                ->add('state', 'text', array('label' => 'State', 'attr' => array('class'=>'state_list','required' => true)))
+//                ->add('loc_lat', 'hidden')
+//                ->add('loc_lng', 'hidden')
+//                ->add('loc_id', 'hidden')
+//                ->add('submit', 'submit')
+//                ->getForm();
         if ($request->isMethod('POST')) {
          if ($form->submit($request)->isValid()) {
-             $currentUser    =   $this->app['session']->get('user');
+             $currentUser    =   $app['session']->get('user');
              $formData = $form->getData();
-             $location  =   new \Entities\Locations();
+             $location  =  new \Entities\Locations();
              $location->setCreatedAt(new \DateTime());
-             $location->setLocAccessKey($locAccessKey);
-             $location->setLocAddress($formData['loc_address']);
-             $location->setLocCity($formData['city']);
-             $location->setLocCountry($formData['country']);
-             $location->setLocLatitude($formData['loc_lat']);
-             $location->setLocLongitude($formData['loc_lng']);
-             $location->setLocName($formData['loc_name']);
-             $location->setLocSecret($locSecret);
-             $location->setLocState($formData['state']);
-             $location->setLocZip($formData['zip_code']);
-             $location->setOrgId($userSession->__org_id);
+             $location->setLocAccessKey('smart_' . substr(hash_hmac('sha256',$formData->getlocName(), 'dty4523grtuy'), 0, 20));
+             $location->setLocAddress($formData->getLocAddress());
+             $location->setLocCity($formData->getLocCity());
+             $location->setLocCountry($formData->getLocCountry());
+             $location->setLocLatitude($formData->getLocLatitude());
+             $location->setLocLongitude($formData->getLocLongitude());
+             $location->setLocName($formData->getLocName());
+             $location->setLocSecret(hash_hmac('md5', 'smartpro_' . $formData->getLocName(). rand(), 'dty4523grtuyh745t45htg487gh'));
+             $location->setLocState($formData->getLocState());
+             $location->setLocZip($formData->getLocZip());
+             $location->setUpdatedAt(new \DateTime());
+             $location->setTimeZone($formData->getTimeZone());
+             $location->setOrg($app['orm.em']->getRepository('Entities\Organization')->find($currentUser->__org_id));
+              $app['orm.em']->persist($location);
+                if ($app['orm.em']->flush()) {
+                    return $app['session']->getFlashBag()->add('success', 'New Business Added Succesfully');
+                }
          }
         }
          return $app['twig']->render('new-location.html.twig', array('form' => $form->createView()));

@@ -1,0 +1,108 @@
+<?php
+
+
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Organization
+ *
+ * @ORM\Table(name="organization", uniqueConstraints={@ORM\UniqueConstraint(name="new_fk_constraint_2", columns={"state"})}, indexes={@ORM\Index(name="new_fk_constraint_1", columns={"country"})})
+ * @ORM\Entity
+ */
+class Organization
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="org_name", type="string", length=250, nullable=false)
+     */
+    private $orgName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="org_description", type="text", nullable=false)
+     */
+    private $orgDescription;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="org_created_at", type="datetime", nullable=false)
+     */
+    private $orgCreatedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="org_updated_on", type="datetime", nullable=false)
+     */
+    private $orgUpdatedOn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=500, nullable=false)
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zip_code", type="string", length=100, nullable=false)
+     */
+    private $zipCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="office_phone", type="string", length=100, nullable=false)
+     */
+    private $officePhone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="office_fax", type="string", length=100, nullable=false)
+     */
+    private $officeFax;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mobile_phone", type="string", length=100, nullable=false)
+     */
+    private $mobilePhone;
+
+    /**
+     * @var \States
+     *
+     * @ORM\ManyToOne(targetEntity="States")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="state", referencedColumnName="id")
+     * })
+     */
+    private $state;
+
+    /**
+     * @var \Countries
+     *
+     * @ORM\ManyToOne(targetEntity="Countries")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="country", referencedColumnName="id")
+     * })
+     */
+    private $country;
+
+
+}

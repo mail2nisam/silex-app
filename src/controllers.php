@@ -4,9 +4,11 @@ use Symfony\Component\Routing\RouteCollection;
 use Silex\Application;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
+use Smart\Helper\ManagerRegistry;
 
 $app['routes'] = $app->extend('routes', function (RouteCollection $routes, Application $app) {
-    $loader     = new YamlFileLoader(new FileLocator('../resources/config'));
+    $loader = new YamlFileLoader(new FileLocator('../resources/config'));
     $collection = $loader->load('routes.yml');
     $routes->addCollection($collection);
 
@@ -28,7 +30,15 @@ $app->error(function (\Exception $e, $code) use ($app) {
 
     return new Response($message, $code);
 });
+        $app['form.extensions'] = $app->share($app->extend('form.extensions', function ($extensions,$app) {
+           // $managerRegistry = new ManagerRegistry(null, array(), array('doctrine_orm.em'), null, null, $app['doctrine_orm.proxies_namespace']);
+            $managerRegistry = new ManagerRegistry(null, array(), array('orm.em'), null, null, '\Doctrine\ORM\Proxy\Proxy');
+            $managerRegistry->setContainer($app);
+            $extensions[] = new DoctrineOrmExtension($managerRegistry);
 
+            return $extensions;
+        }));
+        
 //
 //$app->match('/form', function (Request $request) use ($app) {
 //
@@ -117,7 +127,6 @@ $app->error(function (\Exception $e, $code) use ($app) {
 //
 //    return $app['twig']->render('form.html.twig', array('form' => $form->createView()));
 //})->bind('form');
-
 //$app->get('/page-with-cache', function () use ($app) {
 //    $response = new Response($app['twig']->render('page-with-cache.html.twig', array('date' => date('Y-M-d h:i:s'))));
 //    $response->setTtl(10);

@@ -2,12 +2,13 @@
 namespace Entities;
 
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * ProbeLogs
  *
- * @ORM\Table(name="probe_logs")
+ * @ORM\Table(name="probe_logs", uniqueConstraints={@ORM\UniqueConstraint(name="probe_id", columns={"probe_id"})})
  * @ORM\Entity
  */
 class ProbeLogs
@@ -78,11 +79,14 @@ class ProbeLogs
     private $trip2;
 
     /**
-     * @var string
+     * @var \Probes
      *
-     * @ORM\Column(name="probe_id", type="string", length=250, nullable=false)
+     * @ORM\ManyToOne(targetEntity="Probes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="probe_id", referencedColumnName="id")
+     * })
      */
-    private $probeId;
+    private $probe;
 
 
 
@@ -281,25 +285,25 @@ class ProbeLogs
     }
 
     /**
-     * Set probeId
+     * Set probe
      *
-     * @param string $probeId
+     * @param \Probes $probe
      * @return ProbeLogs
      */
-    public function setProbeId($probeId)
+    public function setProbe(\Probes $probe = null)
     {
-        $this->probeId = $probeId;
+        $this->probe = $probe;
 
         return $this;
     }
 
     /**
-     * Get probeId
+     * Get probe
      *
-     * @return string 
+     * @return \Probes 
      */
-    public function getProbeId()
+    public function getProbe()
     {
-        return $this->probeId;
+        return $this->probe;
     }
 }

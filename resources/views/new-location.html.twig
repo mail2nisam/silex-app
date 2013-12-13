@@ -62,8 +62,8 @@
                 });
                 lat = results[0].geometry.location.lat();
                 lng = results[0].geometry.location.lng();
-                $('#form_loc_lat').val(lat);
-                $('#form_loc_lng').val(lng);
+                $('#location_locLatitude').val(lat);
+                $('#location_locLongitude').val(lng);
 
             } else {
                 // alert('Geocode was not successful for the following reason: ' + status);
@@ -75,22 +75,22 @@
 
 
 
-        $('#add_loc_frm input,#add_loc_frm select').not('#form_loc_name,#form_zip_code,#org_id,#form_time_zone,#form_submit').change(function() {
+        $('#add_loc_frm input,#add_loc_frm select').not('#location_loc_name,#location_locZip,#org_id,#location_timeZone,#location_submit').change(function() {
             var country = '';
             var state = '';
             var city = '';
             var add = '';
-            if ($('#form_country').val()) {
-                country = ', ' + $('#form_country').find(':selected').text();
+            if ($('#location_locCountry').val()) {
+                country = ', ' + $('#location_locCountry').find(':selected').text();
             }
-            if ($('#form_state').val()) {
-                state = ', ' + $('#form_state').find(':selected').text();
+            if ($('#location_locState').val()) {
+                state = ', ' + $('#location_locState').find(':selected').text();
             }
-            if ($('#form_city').val()) {
-                city = ', ' + $('#form_city').val();
+            if ($('#location_locCity').val()) {
+                city = ', ' + $('#location_locCity').val();
             }
-            if ($('#form_loc_address').val()) {
-                add = $('#form_loc_address').val();
+            if ($('#location_loc_address').val()) {
+                add = $('#location_loc_address').val();
             }
             var address = add + city + country + state;
             codeAddress(address);

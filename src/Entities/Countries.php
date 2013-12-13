@@ -1,6 +1,6 @@
 <?php
-namespace Entities;
 
+namespace Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="countries")
  * @ORM\Entity
  */
-class Countries
-{
+class Countries {
+
     /**
      * @var integer
      *
@@ -56,15 +56,12 @@ class Countries
      */
     private $countryavailable;
 
-
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -74,8 +71,7 @@ class Countries
      * @param string $countryname
      * @return Countries
      */
-    public function setCountryname($countryname)
-    {
+    public function setCountryname($countryname) {
         $this->countryname = $countryname;
 
         return $this;
@@ -86,8 +82,7 @@ class Countries
      *
      * @return string 
      */
-    public function getCountryname()
-    {
+    public function getCountryname() {
         return $this->countryname;
     }
 
@@ -97,8 +92,7 @@ class Countries
      * @param string $countryisoa2
      * @return Countries
      */
-    public function setCountryisoa2($countryisoa2)
-    {
+    public function setCountryisoa2($countryisoa2) {
         $this->countryisoa2 = $countryisoa2;
 
         return $this;
@@ -109,8 +103,7 @@ class Countries
      *
      * @return string 
      */
-    public function getCountryisoa2()
-    {
+    public function getCountryisoa2() {
         return $this->countryisoa2;
     }
 
@@ -120,8 +113,7 @@ class Countries
      * @param string $countryisoa3
      * @return Countries
      */
-    public function setCountryisoa3($countryisoa3)
-    {
+    public function setCountryisoa3($countryisoa3) {
         $this->countryisoa3 = $countryisoa3;
 
         return $this;
@@ -132,8 +124,7 @@ class Countries
      *
      * @return string 
      */
-    public function getCountryisoa3()
-    {
+    public function getCountryisoa3() {
         return $this->countryisoa3;
     }
 
@@ -143,8 +134,7 @@ class Countries
      * @param string $countryisonumber
      * @return Countries
      */
-    public function setCountryisonumber($countryisonumber)
-    {
+    public function setCountryisonumber($countryisonumber) {
         $this->countryisonumber = $countryisonumber;
 
         return $this;
@@ -155,8 +145,7 @@ class Countries
      *
      * @return string 
      */
-    public function getCountryisonumber()
-    {
+    public function getCountryisonumber() {
         return $this->countryisonumber;
     }
 
@@ -166,8 +155,7 @@ class Countries
      * @param string $countryavailable
      * @return Countries
      */
-    public function setCountryavailable($countryavailable)
-    {
+    public function setCountryavailable($countryavailable) {
         $this->countryavailable = $countryavailable;
 
         return $this;
@@ -178,8 +166,12 @@ class Countries
      *
      * @return string 
      */
-    public function getCountryavailable()
-    {
+    public function getCountryavailable() {
         return $this->countryavailable;
     }
+
+    public function __toString() {
+        return $this->getCountryname();
+    }
+
 }

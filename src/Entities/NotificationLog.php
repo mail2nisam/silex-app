@@ -2,12 +2,13 @@
 namespace Entities;
 
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * NotificationLog
  *
- * @ORM\Table(name="notification_log")
+ * @ORM\Table(name="notification_log", uniqueConstraints={@ORM\UniqueConstraint(name="probe_id", columns={"probe_id", "user_id"}), @ORM\UniqueConstraint(name="user_id", columns={"user_id"})}, indexes={@ORM\Index(name="IDX_ED15DF23D2D0D4A", columns={"probe_id"})})
  * @ORM\Entity
  */
 class NotificationLog
@@ -64,18 +65,24 @@ class NotificationLog
     private $logIndex;
 
     /**
-     * @var integer
+     * @var \Users
      *
-     * @ORM\Column(name="probe_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
      */
-    private $probeId;
+    private $user;
 
     /**
-     * @var integer
+     * @var \Probes
      *
-     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Probes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="probe_id", referencedColumnName="id")
+     * })
      */
-    private $userId;
+    private $probe;
 
 
 
@@ -228,48 +235,48 @@ class NotificationLog
     }
 
     /**
-     * Set probeId
+     * Set user
      *
-     * @param integer $probeId
+     * @param \Users $user
      * @return NotificationLog
      */
-    public function setProbeId($probeId)
+    public function setUser(\Users $user = null)
     {
-        $this->probeId = $probeId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get probeId
+     * Get user
      *
-     * @return integer 
+     * @return \Users 
      */
-    public function getProbeId()
+    public function getUser()
     {
-        return $this->probeId;
+        return $this->user;
     }
 
     /**
-     * Set userId
+     * Set probe
      *
-     * @param integer $userId
+     * @param \Probes $probe
      * @return NotificationLog
      */
-    public function setUserId($userId)
+    public function setProbe(\Probes $probe = null)
     {
-        $this->userId = $userId;
+        $this->probe = $probe;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get probe
      *
-     * @return integer 
+     * @return \Probes 
      */
-    public function getUserId()
+    public function getProbe()
     {
-        return $this->userId;
+        return $this->probe;
     }
 }

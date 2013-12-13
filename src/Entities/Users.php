@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="org_id", columns={"org_id"})})
  * @ORM\Entity
  */
 class Users
@@ -83,14 +83,14 @@ class Users
      *
      * @ORM\Column(name="org_id", type="integer", nullable=false)
      */
-    private $orgId=0;
+    private $orgId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="loc_id", type="integer", nullable=false)
      */
-    private $locId=0;
+    private $locId;
 
     /**
      * @var string

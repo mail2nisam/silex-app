@@ -5,16 +5,20 @@
         <group>
             <file>file:/var/www/newsilex/resources/views/layout.html.twig</file>
             <file>file:/var/www/newsilex/src/app.php</file>
+            <file>file:/var/www/newsilex/src/Entities/States.php</file>
+            <file>file:/var/www/newsilex/resources/config/routes.yml</file>
+            <file>file:/var/www/newsilex/resources/assets/less/style.less</file>
+            <file>file:/var/www/newsilex/src/Smart/Handler/successHandler.php</file>
+            <file>file:/var/www/newsilex/resources/views/login.html.twig</file>
+            <file>file:/var/www/newsilex/src/controllers.php</file>
+            <file>file:/var/www/newsilex/resources/views/states.html.twig</file>
+            <file>file:/var/www/newsilex/resources/assets/js/script.js</file>
             <file>file:/var/www/newsilex/src/Entities/Users.php</file>
-            <file>file:/var/www/newsilex/resources/views/common/form_div_layout.html.twig</file>
             <file>file:/var/www/newsilex/src/Smart/Controllers/IndexController.php</file>
             <file>file:/var/www/newsilex/resources/config/prod.php</file>
-            <file>file:/var/www/newsilex/resources/assets/less/style.less</file>
-            <file>file:/var/www/newsilex/resources/config/routes.yml</file>
-            <file>file:/var/www/newsilex/resources/views/register.html.twig</file>
             <file>file:/var/www/newsilex/resources/views/index.html.twig</file>
-            <file>file:/var/www/newsilex/resources/views/layout2.html.twig</file>
-            <file>file:/var/www/newsilex/resources/views/login.html.twig</file>
+            <file>file:/var/www/newsilex/resources/views/register.html.twig</file>
+            <file>file:/var/www/newsilex/resources/views/new-location.html.twig</file>
         </group>
     </open-files>
 </project-private>

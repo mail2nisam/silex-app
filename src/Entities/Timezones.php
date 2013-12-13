@@ -2,6 +2,7 @@
 namespace Entities;
 
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -331,5 +332,8 @@ class Timezones
     public function getDstenddate()
     {
         return $this->dstenddate;
+    }
+     public function __toString() {
+        return $this->getTimezonename();
     }
 }

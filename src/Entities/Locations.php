@@ -2,12 +2,13 @@
 namespace Entities;
 
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Locations
  *
- * @ORM\Table(name="locations")
+ * @ORM\Table(name="locations", indexes={@ORM\Index(name="new_fk_constraint", columns={"loc_country"}), @ORM\Index(name="new_fk_constraint_2", columns={"loc_state"}), @ORM\Index(name="new_fk_constraint_3", columns={"time_zone"}), @ORM\Index(name="new_fk_constraint_4", columns={"org_id"})})
  * @ORM\Entity
  */
 class Locations
@@ -22,13 +23,6 @@ class Locations
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="org_id", type="integer", nullable=false)
-     */
-    private $orgId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="loc_name", type="string", length=250, nullable=false)
@@ -41,20 +35,6 @@ class Locations
      * @ORM\Column(name="loc_address", type="string", length=250, nullable=false)
      */
     private $locAddress;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="loc_country", type="integer", nullable=false)
-     */
-    private $locCountry;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="loc_state", type="integer", nullable=false)
-     */
-    private $locState;
 
     /**
      * @var string
@@ -110,12 +90,45 @@ class Locations
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt;
+    private $updatedAt ;
 
     /**
-     * @var integer
+     * @var \Timezones
      *
-     * @ORM\Column(name="time_zone", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
+     * })
+     */
+    private $org;
+
+    /**
+     * @var \Countries
+     *
+     * @ORM\ManyToOne(targetEntity="Countries")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="loc_country", referencedColumnName="id")
+     * })
+     */
+    private $locCountry;
+
+    /**
+     * @var \States
+     *
+     * @ORM\ManyToOne(targetEntity="States")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="loc_state", referencedColumnName="id")
+     * })
+     */
+    private $locState;
+
+    /**
+     * @var \Timezones
+     *
+     * @ORM\ManyToOne(targetEntity="Timezones")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="time_zone", referencedColumnName="id")
+     * })
      */
     private $timeZone;
 
@@ -129,29 +142,6 @@ class Locations
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set orgId
-     *
-     * @param integer $orgId
-     * @return Locations
-     */
-    public function setOrgId($orgId)
-    {
-        $this->orgId = $orgId;
-
-        return $this;
-    }
-
-    /**
-     * Get orgId
-     *
-     * @return integer 
-     */
-    public function getOrgId()
-    {
-        return $this->orgId;
     }
 
     /**
@@ -198,52 +188,6 @@ class Locations
     public function getLocAddress()
     {
         return $this->locAddress;
-    }
-
-    /**
-     * Set locCountry
-     *
-     * @param integer $locCountry
-     * @return Locations
-     */
-    public function setLocCountry($locCountry)
-    {
-        $this->locCountry = $locCountry;
-
-        return $this;
-    }
-
-    /**
-     * Get locCountry
-     *
-     * @return integer 
-     */
-    public function getLocCountry()
-    {
-        return $this->locCountry;
-    }
-
-    /**
-     * Set locState
-     *
-     * @param integer $locState
-     * @return Locations
-     */
-    public function setLocState($locState)
-    {
-        $this->locState = $locState;
-
-        return $this;
-    }
-
-    /**
-     * Get locState
-     *
-     * @return integer 
-     */
-    public function getLocState()
-    {
-        return $this->locState;
     }
 
     /**
@@ -431,12 +375,81 @@ class Locations
     }
 
     /**
-     * Set timeZone
+     * Set org
      *
-     * @param integer $timeZone
+     * @param \Organization $org
      * @return Locations
      */
-    public function setTimeZone($timeZone)
+    public function setOrg(Organization $org = null)
+    {
+        $this->org = $org;
+
+        return $this;
+    }
+
+    /**
+     * Get org
+     *
+     * @return \Timezones 
+     */
+    public function getOrg()
+    {
+        return $this->org;
+    }
+
+    /**
+     * Set locCountry
+     *
+     * @param \Countries $locCountry
+     * @return Locations
+     */
+    public function setLocCountry(Countries $locCountry = null)
+    {
+        $this->locCountry = $locCountry;
+
+        return $this;
+    }
+
+    /**
+     * Get locCountry
+     *
+     * @return \Countries 
+     */
+    public function getLocCountry()
+    {
+        return $this->locCountry;
+    }
+
+    /**
+     * Set locState
+     *
+     * @param \States $locState
+     * @return Locations
+     */
+    public function setLocState(States $locState = null)
+    {
+        $this->locState = $locState;
+
+        return $this;
+    }
+
+    /**
+     * Get locState
+     *
+     * @return \States 
+     */
+    public function getLocState()
+    {
+        return $this->locState;
+    }
+
+    /**
+     * Set timeZone
+     *
+     * @param \Timezones $timeZone
+     * @return Locations
+     */
+    public function setTimeZone(Timezones $timeZone = null)
     {
         $this->timeZone = $timeZone;
 
@@ -446,7 +459,7 @@ class Locations
     /**
      * Get timeZone
      *
-     * @return integer 
+     * @return \Timezones 
      */
     public function getTimeZone()
     {

@@ -2,6 +2,7 @@
 namespace Entities;
 
 
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -121,5 +122,8 @@ class States
     public function getStatestatus()
     {
         return $this->statestatus;
+    }
+     public function __toString() {
+        return $this->getStatename();
     }
 }
