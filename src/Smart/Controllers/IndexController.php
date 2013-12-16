@@ -16,13 +16,28 @@ use Smart\Models\userModel;
 
 class IndexController {
 
-    public function homeAction(Application $app) {
-        $app['session']->getFlashBag()->add('warning', 'Warning flash message');
-        $app['session']->getFlashBag()->add('info', 'Info flash message');
-        $app['session']->getFlashBag()->add('success', 'Success flash message');
-        $app['session']->getFlashBag()->add('error', 'Error flash message');
-
-        return $app['twig']->render('index.html.twig');
+    public function homeAction(Application $app, Request $request) {
+//        $app['session']->getFlashBag()->add('warning', 'Warning flash message');
+//        $app['session']->getFlashBag()->add('info', 'Info flash message');
+//        $app['session']->getFlashBag()->add('success', 'Success flash message');
+//        $app['session']->getFlashBag()->add('error', 'Error flash message');
+        $builder = $app['form.factory']->createBuilder('form');
+        $form = $builder->add('probe', 'choice', array('choices' => array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 'label' => ''))
+                ->add('subscription', 'checkbox', array('label' => 'Subscrbe', 'required' => false,))
+                ->add('subscription_period', 'choice', array('choices' => array('weekly' => 'Weekly', 'monthly' => 'Monthly', 'yearly' => 'Yearly')))
+                ->add('submit', 'submit')
+                ->getForm();
+        if ($request->isMethod('POST')) {
+            if ($form->submit($request)->isValid()) {
+                $formData = $form->getData();
+                $subscriptionStatus = $formData['subscription'];
+                $subscription_period = $formData['subscription_period'];
+                $no_of_probes = $formData['probe'];
+                $app['session']->set('probuct_n_subscription', (object) array('_subscription_status' => $subscriptionStatus, '__subscription_period' => $subscription_period, '__no_of_probes' => $no_of_probes));
+                return $app->redirect($app['url_generator']->generate('buy_stage_one'));
+            }
+        }
+        return $app['twig']->render('index.html.twig', array('form' => $form->createView()));
     }
 
     public function loginAction(Request $request, Application $app) {
@@ -68,7 +83,7 @@ class IndexController {
                     'preferred_choices' => array('13'),
                     'empty_value' => 'Choose a country',
                 ))
-                ->add('state', 'text', array('label' => 'State', 'attr' => array('class'=>'state_list','required' => true)))
+                ->add('state', 'text', array('label' => 'State', 'attr' => array('class' => 'state_list', 'required' => true)))
                 ->add('office_phone', 'text', array('label' => 'Office Phone', 'attr' => array('required' => false)))
                 ->add('office_fax', 'text', array('label' => 'Office Fax', 'attr' => array('required' => false)))
                 ->add('moile_phone', 'text', array('label' => 'Mobile Phone Number', 'attr' => array('required' => false)))
@@ -109,7 +124,6 @@ class IndexController {
 
                 $app['session']->getFlashBag()->add('error', 'Something went wrong please check once again');
             }
-            
         }
         $app['session']->getFlashBag()->add('success', 'New Business Added Succesfully');
         return $app['twig']->render('register.html.twig', array('form' => $form->createView()));
@@ -123,7 +137,8 @@ class IndexController {
         }
         return $choices;
     }
-    protected function getTimeZones(Application $app){
+
+    protected function getTimeZones(Application $app) {
         $countryObj = $app['orm.em']->getRepository('Entities\Timezones')->findAll();
         $choices = [];
         foreach ($countryObj as $table2Obj) {
@@ -132,7 +147,7 @@ class IndexController {
         return $choices;
     }
 
-    public function stateListAction(Application $app,$countryId){
+    public function stateListAction(Application $app, $countryId) {
         $countryObj = $app['orm.em']->getRepository('Entities\States')->findByCountryid($countryId);
         $states = [];
         foreach ($countryObj as $table2Obj) {
@@ -140,9 +155,10 @@ class IndexController {
         }
         return $app['twig']->render('states.html.twig', array('states' => $countryObj));
     }
-    public function newLocationAction(Application $app, Request $request){
+
+    public function newLocationAction(Application $app, Request $request) {
         // $builder = $app['form.factory']->createBuilder('form');
-        $form = $app['form.factory']->create(new \Smart\Form\locationType());  
+        $form = $app['form.factory']->create(new \Smart\Form\locationType());
 //        
 //        $form = $builder
 //                ->add('loc_name', 'text', array('label' => 'Location Name'))
@@ -165,31 +181,31 @@ class IndexController {
 //                ->add('submit', 'submit')
 //                ->getForm();
         if ($request->isMethod('POST')) {
-         if ($form->submit($request)->isValid()) {
-             $currentUser    =   $app['session']->get('user');
-             $formData = $form->getData();
-             $location  =  new \Entities\Locations();
-             $location->setCreatedAt(new \DateTime());
-             $location->setLocAccessKey('smart_' . substr(hash_hmac('sha256',$formData->getlocName(), 'dty4523grtuy'), 0, 20));
-             $location->setLocAddress($formData->getLocAddress());
-             $location->setLocCity($formData->getLocCity());
-             $location->setLocCountry($formData->getLocCountry());
-             $location->setLocLatitude($formData->getLocLatitude());
-             $location->setLocLongitude($formData->getLocLongitude());
-             $location->setLocName($formData->getLocName());
-             $location->setLocSecret(hash_hmac('md5', 'smartpro_' . $formData->getLocName(). rand(), 'dty4523grtuyh745t45htg487gh'));
-             $location->setLocState($formData->getLocState());
-             $location->setLocZip($formData->getLocZip());
-             $location->setUpdatedAt(new \DateTime());
-             $location->setTimeZone($formData->getTimeZone());
-             $location->setOrg($app['orm.em']->getRepository('Entities\Organization')->find($currentUser->__org_id));
-              $app['orm.em']->persist($location);
+            if ($form->submit($request)->isValid()) {
+                $currentUser = $app['session']->get('user');
+                $formData = $form->getData();
+                $location = new \Entities\Locations();
+                $location->setCreatedAt(new \DateTime());
+                $location->setLocAccessKey('smart_' . substr(hash_hmac('sha256', $formData->getlocName(), 'dty4523grtuy'), 0, 20));
+                $location->setLocAddress($formData->getLocAddress());
+                $location->setLocCity($formData->getLocCity());
+                $location->setLocCountry($formData->getLocCountry());
+                $location->setLocLatitude($formData->getLocLatitude());
+                $location->setLocLongitude($formData->getLocLongitude());
+                $location->setLocName($formData->getLocName());
+                $location->setLocSecret(hash_hmac('md5', 'smartpro_' . $formData->getLocName() . rand(), 'dty4523grtuyh745t45htg487gh'));
+                $location->setLocState($formData->getLocState());
+                $location->setLocZip($formData->getLocZip());
+                $location->setUpdatedAt(new \DateTime());
+                $location->setTimeZone($formData->getTimeZone());
+                $location->setOrg($app['orm.em']->getRepository('Entities\Organization')->find($currentUser->__org_id));
+                $app['orm.em']->persist($location);
                 if ($app['orm.em']->flush()) {
                     return $app['session']->getFlashBag()->add('success', 'New Business Added Succesfully');
                 }
-         }
+            }
         }
-         return $app['twig']->render('new-location.html.twig', array('form' => $form->createView()));
+        return $app['twig']->render('new-location.html.twig', array('form' => $form->createView()));
     }
 
     public function testAction(Application $app) {
@@ -197,6 +213,22 @@ class IndexController {
         $states = $userModel->fetchStates();
 
         return $app['twig']->render('doctrine.html.twig', array('posts' => $states));
+    }
+
+    public function buyerInfoAction(Application $app, Request $request) {
+
+        if ($app['security']->isGranted('ROLE_USER')) {
+            $token = $app['security']->getToken();
+            $token->getUser();
+        } else {
+            $form = $app['form.factory']->create(new \Smart\Form\buyerInfoType());
+            if ($request->isMethod('POST')) {
+                if ($form->submit($request)->isValid()) {
+                    
+                }
+            }
+        }
+        return $app['twig']->render('buyerinfo.html.twig', array('form' => $form->createView()));
     }
 
 }

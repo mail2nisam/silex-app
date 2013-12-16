@@ -2,6 +2,57 @@
 {% set active = 'form' %}
 
 {% block content %}
-    <h1>{{ 'Form'|trans }}</h1>
-    {{ form(form, {action: path('form')}) }}
+
+
+
+
+ {{ form_start(form) }}
+        {{ form_errors(form) }}
+<div  style="padding-right: 35px">
+    <div class="pull-left">
+         {{ form_row(form.name,{ 'attr': {'tabindex': '1'} }) }}
+         {{ form_row(form.billingAddress1,{ 'attr': {'tabindex': '3'} }) }}
+         {{ form_row(form.billingCity,{ 'attr': {'tabindex': '5'} }) }}
+          {{ form_row(form.billingCountry,{ 'attr': {'tabindex': '7'} }) }}
+    </div>
+    <div class="pull-left">
+         {{ form_row(form.email,{ 'attr': {'tabindex': '2'} }) }}
+        {{ form_row(form.billingAddress2,{ 'attr': {'tabindex': '4'} }) }}
+         {{ form_row(form.billingZip,{ 'attr': {'tabindex': '6'} }) }}
+         {{ form_row(form.billingState,{ 'attr': {'tabindex': '8'} }) }}
+    </div>
+        
+         
+        
+       
+       
+</div>
+<div class="line clear"></div>
+<div class="pull-left">
+    
+     {{ form_row(form.ship_n_bill) }}
+</div>
+<div class="line clear"></div>
+<div >
+    <div class="pull-left">
+        {{ form_row(form.shippingAddress1,{ 'attr': {'tabindex': '9'} }) }}
+         {{ form_row(form.shippingCity,{ 'attr': {'tabindex': '11'} }) }} 
+         {{ form_row(form.shippingCountry,{ 'attr': {'tabindex': '13'} }) }}
+    </div>
+    <div class="pull-left">
+     {{ form_row(form.shippingAddress2,{ 'attr': {'tabindex': '10'} }) }}  
+    {{ form_row(form.shippingZip,{ 'attr': {'tabindex': '12'} }) }}
+    {{ form_row(form.shippingState,{ 'attr': {'tabindex': '14'} }) }}
+    {{ form_row(form.submit, { 'label': 'Buy Now', 'attr': {'tabindex': '15'} }) }} 
+    </div>
+   
+
+        {{ form_rest(form) }}
+    
+    
+   
+    
+</div>
+{{ form_end(form) }}
+
 {% endblock %}

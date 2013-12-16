@@ -1,0 +1,156 @@
+<?php
+
+
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * BuyerInfo
+ *
+ * @ORM\Table(name="buyer_info", uniqueConstraints={@ORM\UniqueConstraint(name="billing_country", columns={"billing_country"}), @ORM\UniqueConstraint(name="billing_state", columns={"billing_state"}), @ORM\UniqueConstraint(name="shipping_state", columns={"shipping_state"}), @ORM\UniqueConstraint(name="shipping_country", columns={"shipping_country"})})
+ * @ORM\Entity
+ */
+class BuyerInfo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=200, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=70, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="billing_address1", type="string", length=500, nullable=false)
+     */
+    private $billingAddress1;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="billing_address2", type="string", length=500, nullable=true)
+     */
+    private $billingAddress2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="billing_city", type="string", length=100, nullable=false)
+     */
+    private $billingCity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="billing_zip", type="integer", nullable=false)
+     */
+    private $billingZip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shipping_address1", type="string", length=500, nullable=false)
+     */
+    private $shippingAddress1;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shipping_address2", type="string", length=500, nullable=true)
+     */
+    private $shippingAddress2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shipping_city", type="string", length=100, nullable=false)
+     */
+    private $shippingCity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="shipping_zip", type="integer", nullable=false)
+     */
+    private $shippingZip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_status", type="string", length=100, nullable=false)
+     */
+    private $paymentStatus = 'waiting';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="transaction_id", type="string", length=100, nullable=true)
+     */
+    private $transactionId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="transaction_response", type="string", length=500, nullable=true)
+     */
+    private $transactionResponse;
+
+    /**
+     * @var \Countries
+     *
+     * @ORM\ManyToOne(targetEntity="Countries")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="billing_country", referencedColumnName="id")
+     * })
+     */
+    private $billingCountry;
+
+    /**
+     * @var \States
+     *
+     * @ORM\ManyToOne(targetEntity="States")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="billing_state", referencedColumnName="id")
+     * })
+     */
+    private $billingState;
+
+    /**
+     * @var \Countries
+     *
+     * @ORM\ManyToOne(targetEntity="Countries")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="shipping_country", referencedColumnName="id")
+     * })
+     */
+    private $shippingCountry;
+
+    /**
+     * @var \States
+     *
+     * @ORM\ManyToOne(targetEntity="States")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="shipping_state", referencedColumnName="id")
+     * })
+     */
+    private $shippingState;
+
+
+}

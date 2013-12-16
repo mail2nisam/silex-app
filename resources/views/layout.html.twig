@@ -6,8 +6,10 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
+        {% block page_titile %}
         <title>{{ 'Homepage'|trans }}</title>
+        {% endblock page_titile %}
+        
 
         <meta name="description" content="">
         <meta name="author" content="">
@@ -30,7 +32,7 @@
 
                         <div class="nav-collapse ">
                             <ul class="nav">
-                                <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}">{{ 'Homepage'|trans }}</a></li>
+                                <li {% if 'homepage' == active %}class="active"{% endif %}><a href="{{ path('homepage') }}">{{ 'Home'|trans }}</a></li>
                                 <li {% if 'page_with_cache' == active %}class="active"{% endif %}><a href="{# path('page_with_cache')#}">Cache sample</a></li>
                                 <li {% if 'register' == active %}class="active"{% endif %}><a href="{{ path('register') }}">Register</a></li>
                                 {% if is_granted('ROLE_USER') %}

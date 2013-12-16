@@ -28,4 +28,7 @@ new_manager:
 state_list:
   path: /states/{countryId}
   defaults: { _controller: 'Smart\Controllers\IndexController::stateListAction' }
+buy_stage_one:
+  path: /buy/stage-1
+  defaults: { _controller: 'Smart\Controllers\IndexController::buyerInfoAction' }
   

@@ -10,7 +10,7 @@
 <p>Welcome {{ app.security.token.user.username }}!</p>
 <p><a href="{{ path('logout') }}">Log out</a></p>
 {% else %}
-<div class="in forms">
+<div class="in forms control-group">
     <center>
         <form action="{{ path('login_check') }}" method="post">
 

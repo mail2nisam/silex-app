@@ -20,7 +20,7 @@ $dbParams = array(
 //            tinyblob: text
 //echo __DIR__."/src/Entities";
 $paths = array("entity/mappings");
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src/Entities"), $isDevMode, null, null, false);;//= Setup::createYAMLMetadataConfiguration($paths, $isDevMode);
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src/Entities/Test"), $isDevMode, null, null, false);;//= Setup::createYAMLMetadataConfiguration($paths, $isDevMode);
 $entityManager = EntityManager::create($dbParams, $config);
 $platform = $entityManager->getConnection()->getDatabasePlatform();
 $platform->registerDoctrineTypeMapping('enum', 'string');
