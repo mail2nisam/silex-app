@@ -30,5 +30,7 @@ state_list:
   defaults: { _controller: 'Smart\Controllers\IndexController::stateListAction' }
 buy_stage_one:
   path: /buy/stage-1
-  defaults: { _controller: 'Smart\Controllers\IndexController::buyerInfoAction' }
-  
+  defaults: { _controller: 'Smart\Controllers\IndexController::buyerInfoAction' }  
+buy_stage_two:
+  path: /buy/stage-2
+  defaults: { _controller: 'Smart\Controllers\IndexController::expressResponseAction' }  

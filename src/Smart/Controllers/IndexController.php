@@ -5,7 +5,7 @@ namespace Smart\Controllers;
 /**
  * Description of indexController
  *
- * @author nisam mail2nisam@gmail.com
+ * @author nisam <mail2nisam@gmail.com>
  */
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +13,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Silex\Application;
 use Symfony\Component\Validator\ExecutionContext;
 use Smart\Models\userModel;
+use PayPal\Service\PayPalAPIInterfaceServiceService,
+    PayPal\EBLBaseComponents\PaymentDetailsType,
+    PayPal\CoreComponentTypes\BasicAmountType,
+    PayPal\EBLBaseComponents\SetExpressCheckoutRequestDetailsType,
+    PayPal\EBLBaseComponents\BillingAgreementDetailsType,
+    PayPal\PayPalAPI\SetExpressCheckoutRequestType,
+    PayPal\PayPalAPI\SetExpressCheckoutReq,
+    PayPal\EBLBaseComponents\RecurringPaymentsProfileDetailsType,
+    PayPal\EBLBaseComponents\BillingPeriodDetailsType,
+    PayPal\EBLBaseComponents\ScheduleDetailsType,
+    PayPal\EBLBaseComponents\CreateRecurringPaymentsProfileRequestDetailsType,
+    PayPal\PayPalAPI\CreateRecurringPaymentsProfileRequestType,
+    PayPal\PayPalAPI\CreateRecurringPaymentsProfileReq;
 
 class IndexController {
 
@@ -159,27 +172,7 @@ class IndexController {
     public function newLocationAction(Application $app, Request $request) {
         // $builder = $app['form.factory']->createBuilder('form');
         $form = $app['form.factory']->create(new \Smart\Form\locationType());
-//        
-//        $form = $builder
-//                ->add('loc_name', 'text', array('label' => 'Location Name'))
-//                ->add('loc_address', 'text', array('label' => 'Address'))
-//                ->add('city', 'text', array('label' => 'City'))
-//                ->add('zip_code', 'text', array('label' => 'Zip'))
-//                ->add('time_zone', 'choice', array(
-//                    'choices' => $this->getTimeZones($app),
-//                    'empty_value' => 'Choose an country',
-//                ))
-//                ->add('country', 'choice', array(
-//                    'choices' => $this->getCountry($app),
-//                    'preferred_choices' => array('13'),
-//                    'empty_value' => 'Choose a country',
-//                ))
-//                ->add('state', 'text', array('label' => 'State', 'attr' => array('class'=>'state_list','required' => true)))
-//                ->add('loc_lat', 'hidden')
-//                ->add('loc_lng', 'hidden')
-//                ->add('loc_id', 'hidden')
-//                ->add('submit', 'submit')
-//                ->getForm();
+
         if ($request->isMethod('POST')) {
             if ($form->submit($request)->isValid()) {
                 $currentUser = $app['session']->get('user');
@@ -217,18 +210,188 @@ class IndexController {
 
     public function buyerInfoAction(Application $app, Request $request) {
 
+
         if ($app['security']->isGranted('ROLE_USER')) {
             $token = $app['security']->getToken();
             $token->getUser();
         } else {
+
             $form = $app['form.factory']->create(new \Smart\Form\buyerInfoType());
             if ($request->isMethod('POST')) {
                 if ($form->submit($request)->isValid()) {
-                    
+
+                    $formData = $form->getData();
+                    $entity = new \Entities\BuyerInfo();
+
+                    $entity->setEmail($formData->getEmail());
+                    $entity->setName($formData->getName());
+
+                    $entity->setBillingAddress1($formData->getBillingAddress1());
+                    $entity->setBillingAddress2($formData->getBillingAddress2());
+                    $entity->setBillingCity($formData->getBillingCity());
+                    $entity->setBillingCountry($formData->getBillingCountry());
+                    $entity->setBillingState($formData->getBillingState());
+                    $entity->setBillingZip($formData->getBillingZip());
+
+                    $entity->setShipNBill(($formData->getShipNBill() == 1) ? 'Yes' : 'No');
+
+                    $entity->setShippingAddress1($formData->getShippingAddress1());
+                    $entity->setShippingAddress2($formData->getShippingAddress2());
+                    $entity->setShippingCity($formData->getShippingCity());
+                    $entity->setShippingCountry($formData->getShippingCountry());
+                    $entity->setShippingState($formData->getShippingState());
+                    $entity->setShippingZip($formData->getShippingZip());
+                    $app['orm.em']->persist($entity);
+                    try {
+                        $app['orm.em']->flush();
+                        $this->setExpressCheckout($app);
+                    } catch (\Exception $exc) {
+                        echo $exc->getTraceAsString();
+                    }
                 }
             }
         }
         return $app['twig']->render('buyerinfo.html.twig', array('form' => $form->createView()));
+    }
+
+    public function expressResponseAction(Application $app, Request $request) {
+        $productInfo = $this->priceAndSubscriptionDetails($app);
+        $paypalService = new PayPalAPIInterfaceServiceService($app['paypal.config']);
+
+        $doExpressCheckoutPaymentRequestDetails = new \PayPal\EBLBaseComponents\DoExpressCheckoutPaymentRequestDetailsType();
+        $doExpressCheckoutPaymentRequestDetails->Token = $_GET['token'];
+        $doExpressCheckoutPaymentRequestDetails->PayerID = $_GET['PayerID'];
+        $paymentDetails = new PaymentDetailsType();
+
+        $orderTotal = new BasicAmountType();
+        $orderTotal->currencyID = 'AUD';
+        $orderTotal->value = $productInfo['subTotal'];
+
+        $paymentDetails->OrderTotal = $orderTotal;
+        $paymentDetails->PaymentAction = 'Sale';
+        $doExpressCheckoutPaymentRequestDetails->PaymentDetails = $paymentDetails;
+        $doExpressCheckoutPaymentReq = new \PayPal\PayPalAPI\DoExpressCheckoutPaymentReq();
+        $doExpressCheckoutPaymentRequest = new \PayPal\PayPalAPI\DoExpressCheckoutPaymentRequestType($doExpressCheckoutPaymentRequestDetails);
+        $doExpressCheckoutPaymentReq->DoExpressCheckoutPaymentRequest = $doExpressCheckoutPaymentRequest;
+        try {
+
+            $response = $paypalService->DoExpressCheckoutPayment($doExpressCheckoutPaymentReq);
+        } catch (Exception $ex) {
+            
+        }
+
+        $profileDetails = new RecurringPaymentsProfileDetailsType();
+        $profileDetails->BillingStartDate = "2013-12-21T00:00:00:000Z";
+
+        $paymentBillingPeriod = new BillingPeriodDetailsType();
+        $paymentBillingPeriod->BillingFrequency = 1;
+        $paymentBillingPeriod->BillingPeriod = $productInfo['subscriptionPeriod'];
+        $paymentBillingPeriod->Amount = new BasicAmountType("AUD", $productInfo['totalSubscriptionCost']);
+
+        $scheduleDetails = new ScheduleDetailsType();
+        $scheduleDetails->Description = $productInfo['description'];
+        $scheduleDetails->PaymentPeriod = $paymentBillingPeriod;
+
+        $createRPProfileRequestDetails = new CreateRecurringPaymentsProfileRequestDetailsType();
+        $createRPProfileRequestDetails->Token = $_GET['token'];
+
+        $createRPProfileRequestDetails->ScheduleDetails = $scheduleDetails;
+        $createRPProfileRequestDetails->RecurringPaymentsProfileDetails = $profileDetails;
+
+        $createRPProfileRequest = new CreateRecurringPaymentsProfileRequestType();
+        $createRPProfileRequest->CreateRecurringPaymentsProfileRequestDetails = $createRPProfileRequestDetails;
+
+        $createRPProfileReq = new CreateRecurringPaymentsProfileReq();
+        $createRPProfileReq->CreateRecurringPaymentsProfileRequest = $createRPProfileRequest;
+
+
+
+        $createRPProfileResponse = $paypalService->CreateRecurringPaymentsProfile($createRPProfileReq);
+        print_r($createRPProfileResponse);
+    }
+
+    protected function priceAndSubscriptionDetails(Application $app) {
+        $purchaseDetails = $app['session']->get('probuct_n_subscription');
+        $subscriptionStatus = $purchaseDetails->_subscription_status;
+        $subscription_period = $purchaseDetails->__subscription_period;
+        $no_of_probes = $purchaseDetails->__no_of_probes;
+        $subTotal = ($no_of_probes * 120) + 120;
+        $totalCost = $subTotal;
+        $subscriptionDetails = array();
+        $description = 'Master Probe and ' . $no_of_probes . 'Probe unit(s) with a cost of $' . $subTotal;
+
+        if ($subscriptionStatus) {
+            switch ($subscription_period) {
+                case 'weekly':
+                    $weekly_subscription_fee = 0.50;
+                    $totalCost = $subTotal + ($no_of_probes * $weekly_subscription_fee);
+                    $totalSubscription = ($no_of_probes * $weekly_subscription_fee);
+                    $BillingPeriod = 'Week';
+                    $description = 'Master Probe + ' . $no_of_probes . 'Probe unit(s) for $' . $subTotal . ' and  $' . $totalSubscription . ' for every Weekly';
+                    break;
+                case 'monthly':
+                    $monthly_subscription_fee = 1.50;
+                    $totalCost = $subTotal + ($no_of_probes * $monthly_subscription_fee);
+                    $totalSubscription = ($no_of_probes * $monthly_subscription_fee);
+                    $BillingPeriod = 'Month';
+                    $description = 'Master Probe + ' . $no_of_probes . 'Probe unit(s) for $' . $subTotal . 'and  $' . $totalSubscription . ' for every Month';
+                    break;
+                case 'yearly':
+                    $yearly_subscription_fee = 12.00;
+                    $totalCost = $subTotal + ($no_of_probes * $yearly_subscription_fee);
+                    $totalSubscription = ($no_of_probes * $yearly_subscription_fee);
+                    $BillingPeriod = 'Year';
+                    $description = 'Master Probe + ' . $no_of_probes . 'Probe unit(s) fro $' . $subTotal . ' and  $' . $totalSubscription . ' for every Year';
+                    break;
+            }
+            $subscriptionDetails = (object) array('subscriptionStatus' => $subscriptionStatus, 'subscriptionPeriod' => $BillingPeriod, 'totalSubscriptionCost' => $totalSubscription);
+        }
+        return array('subTotal' => $subTotal, 'totalCost' => $totalCost, 'subscription' => $subscriptionDetails, 'description' => $description);
+    }
+
+    protected function setExpressCheckout(Application $app) {
+
+        $productInfo = $this->priceAndSubscriptionDetails($app);
+
+
+        $paypalService = new PayPalAPIInterfaceServiceService($app['paypal.config']);
+        $paymentDetails = new PaymentDetailsType();
+
+        $orderTotal = new BasicAmountType();
+        $orderTotal->currencyID = 'AUD';
+        $orderTotal->value = $productInfo['subTotal'];
+
+        $paymentDetails->OrderTotal = $orderTotal;
+        $paymentDetails->PaymentAction = 'Sale';
+
+        $setECReqDetails = new SetExpressCheckoutRequestDetailsType();
+        $setECReqDetails->PaymentDetails[0] = $paymentDetails;
+        $setECReqDetails->CancelURL = 'http://localhost/newsilex/web/index_dev.php/buy/stage-1';
+        $setECReqDetails->ReturnURL = 'http://localhost/newsilex/web/index_dev.php/buy/stage-2';
+
+        $billingAgreementDetails = new BillingAgreementDetailsType('RecurringPayments');
+        $billingAgreementDetails->BillingAgreementDescription = 'recurringbilling';
+        $setECReqDetails->BillingAgreementDetails = array($billingAgreementDetails);
+
+        $setECReqType = new SetExpressCheckoutRequestType();
+        $setECReqType->Version = '104.0';
+        $setECReqType->SetExpressCheckoutRequestDetails = $setECReqDetails;
+
+        $setECReq = new SetExpressCheckoutReq();
+        $setECReq->SetExpressCheckoutRequest = $setECReqType;
+
+        $setECResponse = $paypalService->SetExpressCheckout($setECReq);
+
+        $getExpressDetailsType = new \PayPal\PayPalAPI\GetExpressCheckoutDetailsRequestType();
+        $getExpressDetailsType->Token = $setECResponse->Token;
+        $getExpressCheckoutDetailsReq = new \PayPal\PayPalAPI\GetExpressCheckoutDetailsReq();
+        $getExpressCheckoutDetailsReq->GetExpressCheckoutDetailsRequest = $getExpressDetailsType;
+        $getExpressCheckoutResponse = $paypalService->GetExpressCheckoutDetails($getExpressCheckoutDetailsReq);
+        if ($getExpressCheckoutResponse->Ack == "Success") {
+            return $app->redirect('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $setECResponse->Token);
+        } else {
+            return $getExpressCheckoutResponse;
+        }
     }
 
 }

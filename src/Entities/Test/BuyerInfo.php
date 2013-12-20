@@ -113,6 +113,13 @@ class BuyerInfo
     private $transactionResponse;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="ship_n_bill", type="string", nullable=true)
+     */
+    private $shipNBill = 'No';
+
+    /**
      * @var \Countries
      *
      * @ORM\ManyToOne(targetEntity="Countries")
@@ -461,6 +468,29 @@ class BuyerInfo
     public function getTransactionResponse()
     {
         return $this->transactionResponse;
+    }
+
+    /**
+     * Set shipNBill
+     *
+     * @param string $shipNBill
+     * @return BuyerInfo
+     */
+    public function setShipNBill($shipNBill)
+    {
+        $this->shipNBill = $shipNBill;
+
+        return $this;
+    }
+
+    /**
+     * Get shipNBill
+     *
+     * @return string 
+     */
+    public function getShipNBill()
+    {
+        return $this->shipNBill;
     }
 
     /**

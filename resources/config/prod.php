@@ -15,6 +15,12 @@ $app['http_cache.cache_dir'] = $app['cache.path'] . '/http';
 
 // Twig cache
 $app['twig.options.cache'] = $app['cache.path'] . '/twig';
+$app['paypal.config'] = array (
+ 	'mode' => 'sandbox' , 
+ 	'acct1.UserName' => 'nisamudheen_calpine_api1.yahoo.com',
+	'acct1.Password' => '1387277434', 
+	'acct1.Signature' => 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-AUhgs2R.MkS8kUP2pOUFTzKXSVDF'
+);
 
 // Assetic
 $app['assetic.enabled']              = true;

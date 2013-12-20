@@ -3,25 +3,35 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/var/www/newsilex/src/Smart/lib/Paypal/PayFlowTransaction.php</file>
             <file>file:/var/www/newsilex/src/Smart/Form/locationType.php</file>
             <file>file:/var/www/newsilex/resources/views/layout.html.twig</file>
-            <file>file:/var/www/newsilex/src/Entities/Timezones.php</file>
-            <file>file:/var/www/newsilex/src/app.php</file>
-            <file>file:/var/www/newsilex/src/Entities/States.php</file>
+            <file>file:/var/www/newsilex/vendor/symfony/validator/Symfony/Component/Validator/Constraints/Email.php</file>
+            <file>file:/var/www/newsilex/src/Entities/Test/BuyerInfo.php</file>
             <file>file:/var/www/newsilex/resources/config/routes.yml</file>
-            <file>file:/var/www/newsilex/resources/assets/less/style.less</file>
+            <file>file:/var/www/newsilex/resources/views/buyerinfo.html.twig</file>
             <file>file:/var/www/newsilex/src/Smart/Handler/successHandler.php</file>
-            <file>file:/var/www/newsilex/resources/views/login.html.twig</file>
-            <file>file:/var/www/newsilex/src/controllers.php</file>
-            <file>file:/var/www/newsilex/resources/views/states.html.twig</file>
-            <file>file:/var/www/newsilex/resources/assets/js/script.js</file>
+            <file>file:/var/www/newsilex/src/Smart/lib/Paypal/PayPal_Digital_Goods_Configuration.php</file>
+            <file>file:/var/www/newsilex/src/Smart/Form/buyerInfoType.php</file>
+            <file>file:/var/www/newsilex/vendor/bin/doctrine.php</file>
+            <file>file:/var/www/newsilex/src/Smart/Helper/PaypalHelper.php</file>
             <file>file:/var/www/newsilex/src/Smart/Controllers/IndexController.php</file>
-            <file>file:/var/www/newsilex/src/Entities/Organization.php</file>
-            <file>file:/var/www/newsilex/resources/config/prod.php</file>
-            <file>file:/var/www/newsilex/src/Entities/Locations.php</file>
-            <file>file:/var/www/newsilex/resources/views/index.html.twig</file>
+            <file>file:/var/www/newsilex/src/Entities/BuyerInfo.php</file>
             <file>file:/var/www/newsilex/resources/views/register.html.twig</file>
             <file>file:/var/www/newsilex/resources/views/new-location.html.twig</file>
+            <file>file:/var/www/newsilex/src/app.php</file>
+            <file>file:/var/www/newsilex/vendor/symfony/validator/Symfony/Component/Validator/Constraint.php</file>
+            <file>file:/var/www/newsilex/src/Smart/lib/Paypal/PayPal_Purchase.php</file>
+            <file>file:/var/www/newsilex/resources/assets/less/style.less</file>
+            <file>file:/var/www/newsilex/resources/views/login.html.twig</file>
+            <file>file:/var/www/newsilex/vendor/symfony/validator/Symfony/Component/Validator/Constraints/NotBlank.php</file>
+            <file>file:/var/www/newsilex/resources/views/states.html.twig</file>
+            <file>file:/var/www/newsilex/resources/assets/js/script.js</file>
+            <file>file:/var/www/newsilex/src/Smart/lib/Paypal/PayPal_Digital_Goods.php</file>
+            <file>file:/var/www/newsilex/src/Smart/lib/Paypal/PayPal_Subscription.php</file>
+            <file>file:/var/www/newsilex/src/Smart/Helper/ManagerRegistry.php</file>
+            <file>file:/var/www/newsilex/resources/views/index.html.twig</file>
+            <file>file:/var/www/newsilex/composer.json</file>
         </group>
     </open-files>
 </project-private>

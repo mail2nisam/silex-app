@@ -33,7 +33,8 @@
         "silex/web-profiler"    : "~1.0.1",
         "twitter/bootstrap"     : "2.3.2",
         "dflydev/doctrine-orm-service-provider": "v1.0.3",
-        "symfony/doctrine-bridge": "2.5.*@dev"
+        "symfony/doctrine-bridge": "2.5.*@dev",
+        "paypal/merchant-sdk-php":"v3.6.106"
     },
     "require-dev": {
         "symfony/browser-kit"   : "~2.3",

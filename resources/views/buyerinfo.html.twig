@@ -6,9 +6,9 @@
 
 
 
- {{ form_start(form) }}
+ {{ form_start(form,{'form_type': 'horizontal', 'attr': {'class': 'form-horizontal'}}) }}
         {{ form_errors(form) }}
-<div  style="padding-right: 35px">
+ <div class="billing_address"  style="padding-right: 35px">
     <div class="pull-left">
          {{ form_row(form.name,{ 'attr': {'tabindex': '1'} }) }}
          {{ form_row(form.billingAddress1,{ 'attr': {'tabindex': '3'} }) }}
@@ -30,10 +30,10 @@
 <div class="line clear"></div>
 <div class="pull-left">
     
-     {{ form_row(form.ship_n_bill) }}
+     {{ form_row(form.shipNBill,{'attr': {'class':'ship_n_bill'} }) }}
 </div>
 <div class="line clear"></div>
-<div >
+<div class="shipping_address" >
     <div class="pull-left">
         {{ form_row(form.shippingAddress1,{ 'attr': {'tabindex': '9'} }) }}
          {{ form_row(form.shippingCity,{ 'attr': {'tabindex': '11'} }) }} 
@@ -43,16 +43,19 @@
      {{ form_row(form.shippingAddress2,{ 'attr': {'tabindex': '10'} }) }}  
     {{ form_row(form.shippingZip,{ 'attr': {'tabindex': '12'} }) }}
     {{ form_row(form.shippingState,{ 'attr': {'tabindex': '14'} }) }}
-    {{ form_row(form.submit, { 'label': 'Buy Now', 'attr': {'tabindex': '15'} }) }} 
+   
     </div>
    
 
-        {{ form_rest(form) }}
+       
     
     
    
     
 </div>
+ 
+ {{ form_row(form.submit, { 'label': 'Buy Now', 'attr': {'tabindex': '15'} }) }} 
+{{ form_rest(form) }}
 {{ form_end(form) }}
 
 {% endblock %}

@@ -1,7 +1,6 @@
 <?php
+
 namespace Entities;
-
-
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="buyer_info", uniqueConstraints={@ORM\UniqueConstraint(name="billing_country", columns={"billing_country"}), @ORM\UniqueConstraint(name="billing_state", columns={"billing_state"}), @ORM\UniqueConstraint(name="shipping_state", columns={"shipping_state"}), @ORM\UniqueConstraint(name="shipping_country", columns={"shipping_country"})})
  * @ORM\Entity
  */
-class BuyerInfo
-{
+class BuyerInfo {
+
     /**
      * @var integer
      *
@@ -21,14 +20,14 @@ class BuyerInfo
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-    
-   /**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=200, nullable=false)
      */
     private $name;
-    
+
     /**
      * @var string
      *
@@ -109,6 +108,13 @@ class BuyerInfo
     /**
      * @var string
      *
+     * @ORM\Column(name="ship_n_bill", type="string", nullable=true)
+     */
+    private $shipNBill = 'No';
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="transaction_response", type="string", length=500, nullable=true)
      */
     private $transactionResponse;
@@ -153,15 +159,12 @@ class BuyerInfo
      */
     private $shippingState;
 
-
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -171,8 +174,7 @@ class BuyerInfo
      * @param string $email
      * @return BuyerInfo
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
 
         return $this;
@@ -183,8 +185,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -194,8 +195,7 @@ class BuyerInfo
      * @param string $billingAddress1
      * @return BuyerInfo
      */
-    public function setBillingAddress1($billingAddress1)
-    {
+    public function setBillingAddress1($billingAddress1) {
         $this->billingAddress1 = $billingAddress1;
 
         return $this;
@@ -206,8 +206,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getBillingAddress1()
-    {
+    public function getBillingAddress1() {
         return $this->billingAddress1;
     }
 
@@ -217,8 +216,7 @@ class BuyerInfo
      * @param string $billingAddress2
      * @return BuyerInfo
      */
-    public function setBillingAddress2($billingAddress2)
-    {
+    public function setBillingAddress2($billingAddress2) {
         $this->billingAddress2 = $billingAddress2;
 
         return $this;
@@ -229,8 +227,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getBillingAddress2()
-    {
+    public function getBillingAddress2() {
         return $this->billingAddress2;
     }
 
@@ -240,8 +237,7 @@ class BuyerInfo
      * @param string $billingCity
      * @return BuyerInfo
      */
-    public function setBillingCity($billingCity)
-    {
+    public function setBillingCity($billingCity) {
         $this->billingCity = $billingCity;
 
         return $this;
@@ -252,8 +248,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getBillingCity()
-    {
+    public function getBillingCity() {
         return $this->billingCity;
     }
 
@@ -263,8 +258,7 @@ class BuyerInfo
      * @param integer $billingZip
      * @return BuyerInfo
      */
-    public function setBillingZip($billingZip)
-    {
+    public function setBillingZip($billingZip) {
         $this->billingZip = $billingZip;
 
         return $this;
@@ -275,8 +269,7 @@ class BuyerInfo
      *
      * @return integer 
      */
-    public function getBillingZip()
-    {
+    public function getBillingZip() {
         return $this->billingZip;
     }
 
@@ -286,8 +279,7 @@ class BuyerInfo
      * @param string $shippingAddress1
      * @return BuyerInfo
      */
-    public function setShippingAddress1($shippingAddress1)
-    {
+    public function setShippingAddress1($shippingAddress1) {
         $this->shippingAddress1 = $shippingAddress1;
 
         return $this;
@@ -298,8 +290,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getShippingAddress1()
-    {
+    public function getShippingAddress1() {
         return $this->shippingAddress1;
     }
 
@@ -309,8 +300,7 @@ class BuyerInfo
      * @param string $shippingAddress2
      * @return BuyerInfo
      */
-    public function setShippingAddress2($shippingAddress2)
-    {
+    public function setShippingAddress2($shippingAddress2) {
         $this->shippingAddress2 = $shippingAddress2;
 
         return $this;
@@ -321,8 +311,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getShippingAddress2()
-    {
+    public function getShippingAddress2() {
         return $this->shippingAddress2;
     }
 
@@ -332,8 +321,7 @@ class BuyerInfo
      * @param string $shippingCity
      * @return BuyerInfo
      */
-    public function setShippingCity($shippingCity)
-    {
+    public function setShippingCity($shippingCity) {
         $this->shippingCity = $shippingCity;
 
         return $this;
@@ -344,8 +332,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getShippingCity()
-    {
+    public function getShippingCity() {
         return $this->shippingCity;
     }
 
@@ -355,8 +342,7 @@ class BuyerInfo
      * @param integer $shippingZip
      * @return BuyerInfo
      */
-    public function setShippingZip($shippingZip)
-    {
+    public function setShippingZip($shippingZip) {
         $this->shippingZip = $shippingZip;
 
         return $this;
@@ -367,8 +353,7 @@ class BuyerInfo
      *
      * @return integer 
      */
-    public function getShippingZip()
-    {
+    public function getShippingZip() {
         return $this->shippingZip;
     }
 
@@ -378,8 +363,7 @@ class BuyerInfo
      * @param string $paymentStatus
      * @return BuyerInfo
      */
-    public function setPaymentStatus($paymentStatus)
-    {
+    public function setPaymentStatus($paymentStatus) {
         $this->paymentStatus = $paymentStatus;
 
         return $this;
@@ -390,8 +374,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getPaymentStatus()
-    {
+    public function getPaymentStatus() {
         return $this->paymentStatus;
     }
 
@@ -401,8 +384,7 @@ class BuyerInfo
      * @param string $transactionId
      * @return BuyerInfo
      */
-    public function setTransactionId($transactionId)
-    {
+    public function setTransactionId($transactionId) {
         $this->transactionId = $transactionId;
 
         return $this;
@@ -413,8 +395,7 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getTransactionId()
-    {
+    public function getTransactionId() {
         return $this->transactionId;
     }
 
@@ -424,8 +405,7 @@ class BuyerInfo
      * @param string $transactionResponse
      * @return BuyerInfo
      */
-    public function setTransactionResponse($transactionResponse)
-    {
+    public function setTransactionResponse($transactionResponse) {
         $this->transactionResponse = $transactionResponse;
 
         return $this;
@@ -436,9 +416,29 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getTransactionResponse()
-    {
+    public function getTransactionResponse() {
         return $this->transactionResponse;
+    }
+
+    /**
+     * Set shipNBill
+     *
+     * @param string $shipNBill
+     * @return BuyerInfo
+     */
+    public function setShipNBill($shipNBill) {
+        $this->shipNBill = $shipNBill;
+
+        return $this;
+    }
+
+    /**
+     * Get shipNBill
+     *
+     * @return string 
+     */
+    public function getShipNBill() {
+        return $this->shipNBill;
     }
 
     /**
@@ -447,8 +447,7 @@ class BuyerInfo
      * @param \Countries $billingCountry
      * @return BuyerInfo
      */
-    public function setBillingCountry(Countries $billingCountry = null)
-    {
+    public function setBillingCountry(Countries $billingCountry = null) {
         $this->billingCountry = $billingCountry;
 
         return $this;
@@ -459,8 +458,7 @@ class BuyerInfo
      *
      * @return \Countries 
      */
-    public function getBillingCountry()
-    {
+    public function getBillingCountry() {
         return $this->billingCountry;
     }
 
@@ -470,8 +468,7 @@ class BuyerInfo
      * @param \States $billingState
      * @return BuyerInfo
      */
-    public function setBillingState(States $billingState = null)
-    {
+    public function setBillingState(States $billingState = null) {
         $this->billingState = $billingState;
 
         return $this;
@@ -482,8 +479,7 @@ class BuyerInfo
      *
      * @return \States 
      */
-    public function getBillingState()
-    {
+    public function getBillingState() {
         return $this->billingState;
     }
 
@@ -493,8 +489,7 @@ class BuyerInfo
      * @param \Countries $shippingCountry
      * @return BuyerInfo
      */
-    public function setShippingCountry(Countries $shippingCountry = null)
-    {
+    public function setShippingCountry(Countries $shippingCountry = null) {
         $this->shippingCountry = $shippingCountry;
 
         return $this;
@@ -505,8 +500,7 @@ class BuyerInfo
      *
      * @return \Countries 
      */
-    public function getShippingCountry()
-    {
+    public function getShippingCountry() {
         return $this->shippingCountry;
     }
 
@@ -516,8 +510,7 @@ class BuyerInfo
      * @param \States $shippingState
      * @return BuyerInfo
      */
-    public function setShippingState(States $shippingState = null)
-    {
+    public function setShippingState(States $shippingState = null) {
         $this->shippingState = $shippingState;
 
         return $this;
@@ -528,19 +521,17 @@ class BuyerInfo
      *
      * @return \States 
      */
-    public function getShippingState()
-    {
+    public function getShippingState() {
         return $this->shippingState;
     }
-    
+
     /**
      * Set name
      *
      * @param string $name
      * @return BuyerInfo
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -551,8 +542,8 @@ class BuyerInfo
      *
      * @return string 
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
+
 }
