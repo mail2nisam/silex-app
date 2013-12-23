@@ -34,3 +34,7 @@ buy_stage_one:
 buy_stage_two:
   path: /buy/stage-2
   defaults: { _controller: 'Smart\Controllers\IndexController::expressResponseAction' }  
+ajaxOrder:
+  path: /ajax/update-order
+  defaults: { _controller: 'Smart\Controllers\IndexController::ajaxOrderUpdateAction' }  
+    

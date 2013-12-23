@@ -209,7 +209,25 @@ class IndexController {
     }
 
     public function buyerInfoAction(Application $app, Request $request) {
-
+//        $shipping = new \Smart\lib\AustraliaPostAPI\Shipping();
+//        $data = array(
+//		'from_postcode' => 4511,
+//		'to_postcode' => 4030,
+//		'weight' => 10,
+//		'height' => 105,
+//		'width' => 10,
+//		'length' => 10,
+//		'service_code' => 'AUS_PARCEL_REGULAR',
+//            'country_code'=>'NZ','weight'=>0.5
+//	);
+//        try{
+//            print_r($shipping->getInternationalShiipingCost($data));
+//        }
+//        catch (Exception $e)
+//        {
+//                 echo "oops: ".$e->getMessage();
+//        }
+        $pructDetails = $this->priceAndSubscriptionDetails($app);
 
         if ($app['security']->isGranted('ROLE_USER')) {
             $token = $app['security']->getToken();
@@ -251,7 +269,7 @@ class IndexController {
                 }
             }
         }
-        return $app['twig']->render('buyerinfo.html.twig', array('form' => $form->createView()));
+        return $app['twig']->render('buyerinfo.html.twig', array('form' => $form->createView(), 'productDetails' => $pructDetails));
     }
 
     public function expressResponseAction(Application $app, Request $request) {
@@ -392,6 +410,23 @@ class IndexController {
         } else {
             return $getExpressCheckoutResponse;
         }
+    }
+
+    public function ajaxOrderUpdateAction(Application $app, Request $request) {
+        $probeDetails = $request->query->get('probes');
+        $subscription = $request->query->get('subscription');
+        if ($subscription) {
+            $subscriptionStatus = 1;
+            $subscription_period = $subscription;
+        }else{
+            $subscriptionStatus = 0;
+            $subscription_period = $subscription;
+        }
+        $no_of_probes = $probeDetails;
+        $app['session']->set('probuct_n_subscription', (object) array('_subscription_status' => $subscriptionStatus, '__subscription_period' => $subscription_period, '__no_of_probes' => $no_of_probes));
+        $purchaseDEtails    = $this->priceAndSubscriptionDetails($app);
+        $result =   array('no_of_probes'=>$no_of_probes,'purchaseDEtails'=>$purchaseDEtails);
+        return json_encode($result);
     }
 
 }

@@ -2360,10 +2360,10 @@
 
     function shop_n_bill() {
         if ($('.ship_n_bill').prop('checked')) {
-                $('.shipping_address').slideUp('slow');
+            $('.shipping_address').slideUp('slow');
             doStateAjax($('#BuyerInfo_shippingCountry'), 'BuyerInfo_shippingState');
             setTimeout(function() {
-             
+
                 $('#BuyerInfo_shippingAddress1').val($('#BuyerInfo_billingAddress1').val());
                 $('#BuyerInfo_shippingAddress2').val($('#BuyerInfo_billingAddress2').val());
 
@@ -2384,7 +2384,33 @@
     }
     $('#BuyerInfo_shipNBill').click(function() {
         shop_n_bill();
-    })
+    });
+    $('#changebuy').click(function() {
+        $('.new-order').slideToggle('slow');
+    });
+    $('#update-info').click(function() {
+        var new_order_route = ajaxOrder;
+        var probe_det = $('#new-order-probes').val();
+        var subs_det = $('#new-order-subscription').val();
+        $.ajax({
+            type: "GET",
+            url: new_order_route,
+            dataType: 'json',
+            data: {probes: probe_det, subscription: subs_det},
+            success: function(data) {
+                var responseText = " You Selected Master probe unit and " + data.no_of_probes + " probes ";
+                var subText = '';
+
+                if (data.purchaseDEtails.subscription.subscriptionStatus) {
+                    responseText += ", with " + data.purchaseDEtails.subscription.subscriptionPeriod + "ly Probe monitoring Subscription <br/>";
+                    subText = "Probe Monitoring Subscription fee (" + data.purchaseDEtails.subscription.subscriptionPeriod + "ly) = $" + data.purchaseDEtails.subscription.totalSubscriptionCost;
+                }
+                responseText += "Total item cost = $" + data.purchaseDEtails.subTotal + "<br/>" + subText;
+                $('#order-summary').html(responseText);
+                $('.new-order').slideToggle('slow');
+            }
+        });
+    });
 })(jQuery);
 
 function totalCost() {

@@ -2,13 +2,45 @@
 {% set active = 'form' %}
 
 {% block content %}
+<h3 class="pull-left">Order Summary</h3>
+<div class="line clear"></div>
+<div class="order_summary clear">
+    <div id="order-summary">
+    {% set probedetails = app.session.get('probuct_n_subscription') %}
+        You Selected Master probe unit and {{probedetails.__no_of_probes}} probes {% if probedetails._subscription_status %}, with {{probedetails.__subscription_period}} Probe monitoring Subscription{% endif %}
+        <br/>
+        Total item cost = ${{productDetails.subTotal}}
+        <br/>
+    {% if probedetails._subscription_status %}
+        Probe Monitoring Subscription fee ({{probedetails.__subscription_period}}) = ${{productDetails.subscription.totalSubscriptionCost}}
+    {% endif %}
 
+    </div>
+    <div class="new-order" style="display: none">
+        <select namname="masterunit" id="new-order-probes">
+            {% for i in 1..10 %}
+            {% if probedetails.__no_of_probes == i %}{% set selected = 'selected="selected"' %} {% else %}{% set selected = '' %}  {% endif %}
+            <option {{selected}} value="{{ i }}">Master Unit + {{i}} probe(s)</option>
+            {% endfor %}
+        </select>
+        <select namname="subscription" id="new-order-subscription">
+            <option value="">No Probe Monitoring</option>
+            <option {% if probedetails.__subscription_period=='weekly' %}selected="selected"{%endif%} value="weekly">Weekly Subscription</option>
+            <option {% if probedetails.__subscription_period=='monthly' %}selected="selected"{%endif%}value="monthly">Monthly Subscription</option>
+            <option {% if probedetails.__subscription_period=='yearly' %}selected="selected"{%endif%} value="yearly">Yearly Subscription</option>
+        </select>
+        <input type="submit" id="update-info" name="update" value="Update" class="btn btn-primary"/>
+        
+    </div>
+
+    <i id="changebuy" class="icon-large pull-right  icon-edit"></i>
+</div>
 
 
 
  {{ form_start(form,{'form_type': 'horizontal', 'attr': {'class': 'form-horizontal'}}) }}
         {{ form_errors(form) }}
- <div class="billing_address"  style="padding-right: 35px">
+<div class="billing_address"  style="padding-right: 35px">
     <div class="pull-left">
          {{ form_row(form.name,{ 'attr': {'tabindex': '1'} }) }}
          {{ form_row(form.billingAddress1,{ 'attr': {'tabindex': '3'} }) }}
@@ -21,15 +53,15 @@
          {{ form_row(form.billingZip,{ 'attr': {'tabindex': '6'} }) }}
          {{ form_row(form.billingState,{ 'attr': {'tabindex': '8'} }) }}
     </div>
-        
-         
-        
-       
-       
+
+
+
+
+
 </div>
 <div class="line clear"></div>
 <div class="pull-left">
-    
+
      {{ form_row(form.shipNBill,{'attr': {'class':'ship_n_bill'} }) }}
 </div>
 <div class="line clear"></div>
@@ -43,17 +75,17 @@
      {{ form_row(form.shippingAddress2,{ 'attr': {'tabindex': '10'} }) }}  
     {{ form_row(form.shippingZip,{ 'attr': {'tabindex': '12'} }) }}
     {{ form_row(form.shippingState,{ 'attr': {'tabindex': '14'} }) }}
-   
-    </div>
-   
 
-       
-    
-    
-   
-    
+    </div>
+
+
+
+
+
+
+
 </div>
- 
+
  {{ form_row(form.submit, { 'label': 'Buy Now', 'attr': {'tabindex': '15'} }) }} 
 {{ form_rest(form) }}
 {{ form_end(form) }}
