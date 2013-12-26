@@ -2,9 +2,10 @@
 {% set active = 'form' %}
 
 {% block content %}
-<h3 class="pull-left">Order Summary</h3>
-<div class="line clear"></div>
+<legend>Order Summary</legend>
+
 <div class="order_summary clear">
+    <i id="changebuy" class="icon-large pull-right  icon-edit"></i>
     <div id="order-summary">
     {% set probedetails = app.session.get('probuct_n_subscription') %}
         You Selected Master probe unit and {{probedetails.__no_of_probes}} probes {% if probedetails._subscription_status %}, with {{probedetails.__subscription_period}} Probe monitoring Subscription{% endif %}
@@ -17,6 +18,7 @@
 
     </div>
     <div class="new-order" style="display: none">
+        <legend class="clear">Update Your Selection</legend>
         <select namname="masterunit" id="new-order-probes">
             {% for i in 1..10 %}
             {% if probedetails.__no_of_probes == i %}{% set selected = 'selected="selected"' %} {% else %}{% set selected = '' %}  {% endif %}
@@ -30,16 +32,46 @@
             <option {% if probedetails.__subscription_period=='yearly' %}selected="selected"{%endif%} value="yearly">Yearly Subscription</option>
         </select>
         <input type="submit" id="update-info" name="update" value="Update" class="btn btn-primary"/>
-        
+
     </div>
 
-    <i id="changebuy" class="icon-large pull-right  icon-edit"></i>
+
 </div>
+<legend>Calculate Shipping Cost</legend>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#pane1" data-toggle="tab">Domestic</a></li>
+        <li><a href="#pane2" data-toggle="tab">International</a></li>
 
+    </ul>
+    <div class="tab-content">
+        <div id="pane1" class="tab-pane active">
+            <div class="control-group">
+                <label for="to_pin" class="control-label required">Destination *</label>
+                <div class="controls pull-left clear"> <input type="text" name="to_pin" id="to_pin" placeholder="Enter suburb or postcode"/>
+                </div>
+                <div class="controls pull-left"> <button class="btn btn-primary" tabindex="15" name="calculate" id="domestic_calculator" type="submit">Calculate</button>
+                </div>
+            </div>
+            <div class="control-group ">
+                <label for="to_pin" class="control-label required"></label>
+                
+            </div>
+            
+            
+        </div>
+        <div id="pane2" class="tab-pane">
+            <h4>Pane 2 Content</h4>
+            <p> and so on ...</p>
+        </div>
 
+    </div><!-- /.tab-content -->
+</div><!-- /.tabbable -->
+<legend class="clear">Customer Info</legend>
 
  {{ form_start(form,{'form_type': 'horizontal', 'attr': {'class': 'form-horizontal'}}) }}
         {{ form_errors(form) }}
+
 <div class="billing_address"  style="padding-right: 35px">
     <div class="pull-left">
          {{ form_row(form.name,{ 'attr': {'tabindex': '1'} }) }}
@@ -59,13 +91,16 @@
 
 
 </div>
-<div class="line clear"></div>
-<div class="pull-left">
+
+
+
+<div class="pull-left clear">
 
      {{ form_row(form.shipNBill,{'attr': {'class':'ship_n_bill'} }) }}
 </div>
-<div class="line clear"></div>
-<div class="shipping_address" >
+
+<div class="shipping_address clear" >
+    <legend class="clear">Shiiping Info</legend>
     <div class="pull-left">
         {{ form_row(form.shippingAddress1,{ 'attr': {'tabindex': '9'} }) }}
          {{ form_row(form.shippingCity,{ 'attr': {'tabindex': '11'} }) }} 
