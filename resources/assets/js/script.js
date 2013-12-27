@@ -1,5 +1,43 @@
 (function($) {
-    $(function() {
+    /**
+     * Calculate Domestic Shipping Cost
+     */
+    $('#domestic_calculator').click(function() {
+        var to_pin = $('#to_pin').val();
+        var length = $('#length').val();
+        var width = $('#width').val();
+        var height = $('#height').val();
+        var weight = $('#weight').val();
+
+        $.ajax({
+            type: "GET",
+            url: ausPostCalculator,
+            dataType: 'json',
+            data: {destination: to_pin, length: length, width: width, height: height, weight: weight, type: 'domestic'},
+            success: function(data) {
+
+                var regularPostResult = data.services.service[0];
+                var regularExpressResult = data.services.service[2];
+
+                var effect = 'slide';
+                var options = {direction: 'left'};
+                var duration = 700;
+                $('#domestic_input').toggle(effect, options, duration);
+                var option = {direction: 'right'};
+                $('#postage_regular').html('$' + regularPostResult.price);
+                $('#postage_express').html('$' + regularExpressResult.price);
+                $('#domestic_output').toggle(effect, option, duration);
+            }
+        });
+    });
+
+    $('#domestic_back').click(function() {
+        var effect = 'slide';
+        var options = {direction: 'left'};
+        var duration = 700;
+        $('#domestic_output').toggle(effect, option, duration);
+        var option = {direction: 'right'};
+        $('#domestic_input').toggle(effect, options, duration);
 
     });
     $('#location_locCountry').change(function() {
@@ -63,15 +101,11 @@
     totalCost();
     shop_n_bill();
 
-
-
-
     function shop_n_bill() {
         if ($('.ship_n_bill').prop('checked')) {
             $('.shipping_address').slideUp('slow');
             doStateAjax($('#BuyerInfo_shippingCountry'), 'BuyerInfo_shippingState');
             setTimeout(function() {
-
                 $('#BuyerInfo_shippingAddress1').val($('#BuyerInfo_billingAddress1').val());
                 $('#BuyerInfo_shippingAddress2').val($('#BuyerInfo_billingAddress2').val());
 
@@ -82,10 +116,6 @@
                 $('#BuyerInfo_shippingState').val($('#BuyerInfo_billingState').val());
 
             }, 1000);
-
-
-
-
         } else {
             $('.shipping_address').slideDown('slow');
         }

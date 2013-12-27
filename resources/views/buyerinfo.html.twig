@@ -46,19 +46,77 @@
     </ul>
     <div class="tab-content">
         <div id="pane1" class="tab-pane active">
-            <div class="control-group">
-                <label for="to_pin" class="control-label required">Destination *</label>
-                <div class="controls pull-left clear"> <input type="text" name="to_pin" id="to_pin" placeholder="Enter suburb or postcode"/>
+            <div id="domestic_input">
+                <div class="control-group">
+                    <label for="to_pin" class="control-label required">Destination *</label>
+                    <div class="controls pull-left clear"> <input type="text" name="to_pin" id="to_pin" placeholder="Enter suburb or postcode"/>
+                    </div>
+
                 </div>
-                <div class="controls pull-left"> <button class="btn btn-primary" tabindex="15" name="calculate" id="domestic_calculator" type="submit">Calculate</button>
+                <div class="dimension">
+                    <h4 class="clear">Dimensions of your item</h4>
+                    <div class=" pull-left">
+                        <label for="length" class="control-label required">Length *</label>
+                        <div class="control pull-left"> <input type="text" name="length" id="length" placeholder="cm"/></div>                
+                    </div>
+                    <div class=" pull-left">
+                        <label for="width" class="control-label required">Width *</label>
+                        <div class="control pull-left"> <input type="text" name="width" id="width" placeholder="cm"/></div>                
+                    </div>
+                    <div class=" pull-left">
+                        <label for="height" class="control-label required">Height *</label>
+                        <div class="control pull-left"> <input type="text" name="height" id="height" placeholder="cm"/></div>                
+                    </div>
+                    <div class=" pull-left">
+                        <label for="wight" class="control-label required">Weight *</label>
+                        <div class="control pull-left"> <input type="text" name="weight" id="weight" placeholder="kg"/></div>       
+                        <div class="controls pull-left"> <button class="btn btn-primary" tabindex="15" name="calculate" id="domestic_calculator" type="submit">Calculate</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="control-group ">
-                <label for="to_pin" class="control-label required"></label>
+            <div id="domestic_output" style="display: none">
+                <div class="parcel_post" id="parcel_post">
+                    <img src="{{ app.request.basepath }}/img/regular_post_box.png"/>
+                    <div class="prcel_details">
+                        <h3 class="service-name">Parcel Post</h3>
+                        <p class="service-tooltip">Based on the size and weight you've entered</p>
+                        <table class="table">
+                            
+                            <tbody>
+                                <tr>
+                                    <td>Postage Charge</td>
+                                    <td id="postage_regular"></td>
+                                  
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="parcel_post" id="express_post">
+                    
+                    <img src="{{ app.request.basepath }}/img/express_post_box.png"/>
+                    <div class="prcel_details">
+                        <h3 class="service-name">Express Post</h3>
+                        <p class="service-tooltip">Based on the size and weight you've entered</p>
+                        <table class="table">
+                            
+                            <tbody>
+                                <tr>
+                                    <td>Postage Charge</td>
+                                    <td id="postage_express"></td>
+                                  
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 
+                <a id="domestic_back" class="button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only pull-right clear">Back</a>
             </div>
-            
-            
+
         </div>
         <div id="pane2" class="tab-pane">
             <h4>Pane 2 Content</h4>

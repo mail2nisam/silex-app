@@ -6825,6 +6825,13 @@ tr td {
 .control-group input {
   height: 33px;
 }
+.dimension .control {
+  padding: 0 30px 0 0;
+}
+.dimension .control input {
+  height: 33px;
+  width: 50px;
+}
 [class*='col-'] {
   float: left;
   padding-right: 20px;
@@ -6925,4 +6932,15 @@ tr td {
 }
 #changebuy {
   cursor: pointer;
+}
+.parcel_post {
+  float: left;
+  margin: 0 5px;
+}
+.parcel_post img {
+  float: left;
+  width: 150px;
+}
+.parcel_post .prcel_details {
+  float: left;
 }

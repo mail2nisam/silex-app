@@ -37,4 +37,8 @@ buy_stage_two:
 ajaxOrder:
   path: /ajax/update-order
   defaults: { _controller: 'Smart\Controllers\IndexController::ajaxOrderUpdateAction' }  
+ajaxAusPostCalculator:
+  path: /ajax/calculate-post
+  defaults: { _controller: 'Smart\Controllers\IndexController::ajaxPostCalculateAction' }  
+    
     

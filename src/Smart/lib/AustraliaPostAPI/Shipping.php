@@ -24,11 +24,11 @@ class Shipping {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $contents = curl_exec($ch);
         curl_close($ch);
-        return json_decode($contents, true);
+        return $contents;
     }
 
     public function getDomesticShippingCost($data) {
-        $edeliver_url = "{$this->api}postage/parcel/domestic/calculate.json";
+        $edeliver_url = "{$this->api}postage/parcel/domestic/service.json";
         $edeliver_url = $this->arrayToUrl($edeliver_url, $data);
         $results = $this->getRemoteData($edeliver_url);
         if (isset($results['error'])) {

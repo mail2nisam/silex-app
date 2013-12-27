@@ -209,24 +209,7 @@ class IndexController {
     }
 
     public function buyerInfoAction(Application $app, Request $request) {
-//        $shipping = new \Smart\lib\AustraliaPostAPI\Shipping();
-//        $data = array(
-//		'from_postcode' => 4511,
-//		'to_postcode' => 4030,
-//		'weight' => 10,
-//		'height' => 105,
-//		'width' => 10,
-//		'length' => 10,
-//		'service_code' => 'AUS_PARCEL_REGULAR',
-//            'country_code'=>'NZ','weight'=>0.5
-//	);
-//        try{
-//            print_r($shipping->getInternationalShiipingCost($data));
-//        }
-//        catch (Exception $e)
-//        {
-//                 echo "oops: ".$e->getMessage();
-//        }
+
         $pructDetails = $this->priceAndSubscriptionDetails($app);
 
         if ($app['security']->isGranted('ROLE_USER')) {
@@ -418,15 +401,42 @@ class IndexController {
         if ($subscription) {
             $subscriptionStatus = 1;
             $subscription_period = $subscription;
-        }else{
+        } else {
             $subscriptionStatus = 0;
             $subscription_period = $subscription;
         }
         $no_of_probes = $probeDetails;
         $app['session']->set('probuct_n_subscription', (object) array('_subscription_status' => $subscriptionStatus, '__subscription_period' => $subscription_period, '__no_of_probes' => $no_of_probes));
-        $purchaseDEtails    = $this->priceAndSubscriptionDetails($app);
-        $result =   array('no_of_probes'=>$no_of_probes,'purchaseDEtails'=>$purchaseDEtails);
+        $purchaseDEtails = $this->priceAndSubscriptionDetails($app);
+        $result = array('no_of_probes' => $no_of_probes, 'purchaseDEtails' => $purchaseDEtails);
         return json_encode($result);
+    }
+
+    public function ajaxPostCalculateAction(Application $app, Request $request) {
+        $type = $request->query->get('type');
+        $destination = $request->query->get('destination');
+        $length = $request->query->get('length');
+        $width = $request->query->get('width');
+        $height = $request->query->get('height');
+        $weight = $request->query->get('weight');
+        $shipping = new \Smart\lib\AustraliaPostAPI\Shipping();
+
+        if ($type == 'domestic') {
+            $data = array(
+                'from_postcode' => 4511,
+                'to_postcode' => $destination,
+                'weight' => $weight,
+                'height' => $height,
+                'width' => $width,
+                'length' => $length
+            );
+            try {
+                return new \Symfony\Component\BrowserKit\Response($shipping->getDomesticShippingCost($data));
+            } catch (Exception $e) {
+                 return new \Symfony\Component\BrowserKit\Response($e->getMessage());
+                
+            }
+        }
     }
 
 }
