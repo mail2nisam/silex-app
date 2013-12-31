@@ -6,6 +6,7 @@
             <file>file:/var/www/newsilex/web/assets/css/styles.css</file>
             <file>file:/var/www/newsilex/resources/assets/js/script.js</file>
             <file>file:/var/www/newsilex/resources/views/layout.html.twig</file>
+            <file>file:/var/www/newsilex/vendor/symfony/http-foundation/Symfony/Component/HttpFoundation/Request.php</file>
             <file>file:/var/www/newsilex/src/app.php</file>
             <file>file:/var/www/newsilex/src/Smart/Controllers/IndexController.php</file>
             <file>file:/var/www/newsilex/src/Smart/lib/AustraliaPostAPI/Shipping.php</file>
@@ -13,8 +14,6 @@
             <file>file:/var/www/newsilex/resources/views/buyerinfo.html.twig</file>
             <file>file:/var/www/newsilex/src/Entities/BuyerInfo.php</file>
             <file>file:/var/www/newsilex/resources/config/routes.yml</file>
-            <file>file:/var/www/newsilex/src/Smart/Handler/successHandler.php</file>
-            <file>file:/var/www/newsilex/src/Smart/Form/buyerInfoType.php</file>
         </group>
     </open-files>
 </project-private>

@@ -47,6 +47,12 @@
     <div class="tab-content">
         <div id="pane1" class="tab-pane active">
             <div id="domestic_input">
+                <span id="error_info" style="display: none">
+                    <div class="alert alert-error" >
+                        <button class="close" data-dismiss="alert">×</button>
+                        <span id="error-message"></span>
+                    </div>
+                </span>
                 <div class="control-group">
                     <label for="to_pin" class="control-label required">Destination *</label>
                     <div class="controls pull-left clear"> <input type="text" name="to_pin" id="to_pin" placeholder="Enter suburb or postcode"/>

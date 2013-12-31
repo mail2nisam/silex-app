@@ -242,7 +242,7 @@ class Locations
      * @param string $locLatitude
      * @return Locations
      */
-    public function setLocLatitude($locLatitude)
+    public function setLocLatitude($locLatitude=null)
     {
         $this->locLatitude = $locLatitude;
 
@@ -265,7 +265,7 @@ class Locations
      * @param string $locLongitude
      * @return Locations
      */
-    public function setLocLongitude($locLongitude)
+    public function setLocLongitude($locLongitude=null)
     {
         $this->locLongitude = $locLongitude;
 

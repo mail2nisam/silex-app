@@ -15,18 +15,23 @@
             dataType: 'json',
             data: {destination: to_pin, length: length, width: width, height: height, weight: weight, type: 'domestic'},
             success: function(data) {
+                if (data.error) {
+                    $('#error_info').slideDown('slow');
+                    $('#error-message').html(data.error.errorMessage);
+                } else {
 
-                var regularPostResult = data.services.service[0];
-                var regularExpressResult = data.services.service[2];
+                    var regularPostResult = data.services.service[0];
+                    var regularExpressResult = data.services.service[2];
 
-                var effect = 'slide';
-                var options = {direction: 'left'};
-                var duration = 700;
-                $('#domestic_input').toggle(effect, options, duration);
-                var option = {direction: 'right'};
-                $('#postage_regular').html('$' + regularPostResult.price);
-                $('#postage_express').html('$' + regularExpressResult.price);
-                $('#domestic_output').toggle(effect, option, duration);
+                    var effect = 'slide';
+                    var options = {direction: 'left'};
+                    var duration = 700;
+                    $('#domestic_input').toggle(effect, options, duration);
+                    var option = {direction: 'right'};
+                    $('#postage_regular').html('$' + regularPostResult.price);
+                    $('#postage_express').html('$' + regularExpressResult.price);
+                    $('#domestic_output').toggle(effect, option, duration);
+                }
             }
         });
     });

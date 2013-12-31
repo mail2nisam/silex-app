@@ -330,7 +330,7 @@ class Organization
      * @param \States $state
      * @return Organization
      */
-    public function setState(\States $state = null)
+    public function setState(States $state = null)
     {
         $this->state = $state;
 
@@ -353,7 +353,7 @@ class Organization
      * @param \Countries $country
      * @return Organization
      */
-    public function setCountry(\Countries $country = null)
+    public function setCountry(Countries $country = null)
     {
         $this->country = $country;
 
