@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * BuyerInfo
  *
- * @ORM\Table(name="buyer_info", uniqueConstraints={@ORM\UniqueConstraint(name="billing_country", columns={"billing_country"}), @ORM\UniqueConstraint(name="billing_state", columns={"billing_state"}), @ORM\UniqueConstraint(name="shipping_state", columns={"shipping_state"}), @ORM\UniqueConstraint(name="shipping_country", columns={"shipping_country"})})
+ * @ORM\Table(name="buyer_info", indexes={@ORM\Index(name="billing_country", columns={"billing_country"}), @ORM\Index(name="shipping_country", columns={"shipping_country"}), @ORM\Index(name="shipping_state", columns={"shipping_state"}), @ORM\Index(name="billing_state", columns={"billing_state"})})
  * @ORM\Entity
  */
 class BuyerInfo

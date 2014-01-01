@@ -218,6 +218,7 @@ class IndexController {
         if ($app['security']->isGranted('ROLE_USER')) {
             $token = $app['security']->getToken();
             $token->getUser();
+              $form = $app['form.factory']->create(new \Smart\Form\buyerInfoType());
         } else {
 
             $form = $app['form.factory']->create(new \Smart\Form\buyerInfoType());
@@ -330,13 +331,12 @@ class IndexController {
                     if ($createRPProfileResponse->Ack == 'Success') {
                         return $app->redirect($app['url_generator']->generate('activate_user'));
                     }
-                }  else {
-                     return $app->redirect($app['url_generator']->generate('payment_thanks'));
+                } else {
+                    return $app->redirect($app['url_generator']->generate('payment_thanks'));
                 }
-            }  else {
+            } else {
                 return $app->redirect($app['url_generator']->generate('buy_stage_one'));
             }
-            
         }
     }
 
@@ -396,10 +396,12 @@ class IndexController {
         $orderTotal->currencyID = 'AUD';
         $orderTotal->value = $productInfo['subTotal'];
 
-        $paymentDetails->OrderTotal = new BasicAmountType('AUD', $productInfo['subTotal']+2);;;
-        $paymentDetails->ItemTotal  =   $orderTotal;
+        $paymentDetails->OrderTotal = new BasicAmountType('AUD', $productInfo['subTotal'] + 2);
+        ;
+        ;
+        $paymentDetails->ItemTotal = $orderTotal;
         $paymentDetails->PaymentAction = 'Sale';
-        $paymentDetails->ShippingTotal  = 2;  
+        $paymentDetails->ShippingTotal = 2;
 
         $setECReqDetails = new SetExpressCheckoutRequestDetailsType();
         $setECReqDetails->PaymentDetails[0] = $paymentDetails;
@@ -426,7 +428,7 @@ class IndexController {
         $getExpressCheckoutResponse = $paypalService->GetExpressCheckoutDetails($getExpressCheckoutDetailsReq);
 
         if ($getExpressCheckoutResponse->Ack == "Success") {
-            $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find( $app['session']->get('buyer_info_id'));
+            $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($app['session']->get('buyer_info_id'));
             $buyerInfo->setTransactionResponse($setECResponse->Token);
             // $app['orm.em']->persist($buyerInfo);
             $app['orm.em']->flush();
@@ -516,8 +518,8 @@ class IndexController {
             $user->setAccess('organizer');
             $user->setActivationKey(hash_hmac('sha256', $buyerInfo->getName(), 'dty4523grtuy'));
             $user->setEmail($buyerInfo->getEmail());
-            $user->setLocId($location->getId());
-            $user->setOrgId($organization->getId());
+            $user->setLoc($location);
+            $user->setOrg($organization);
             $user->setRoles('ROLE_MASTER');
             $user->setStatus('inactive');
             $user->setUsername($buyerInfo->getEmail());
@@ -532,5 +534,35 @@ class IndexController {
             echo $exc->getTraceAsString();
         }
     }
+
+    public function activateBusinessAction(Application $app, $userId, Request $request) {
+        $user = $app['orm.em']->getRepository('Entities\Users')->find($userId);
+        $form = $app['form.factory']->create(new \Smart\Form\businessType($app), $user);
+        if ($request->isMethod('POST')) {
+               $oldPassword =  $user->getPassword();
+            if ($form->submit($request)->isValid()) {
+                $formData = $form->getData();
+                $user->setEmail($user->getEmail());
+                $user->setAccess('organizer');
+                $user->setStatus('active');
+                $user->setActivationKey('');
+                $newPassword    =   $formData->getPassword();
+                if(!$newPassword){
+                   
+                    $user->setPassword($oldPassword);
+                }  else {
+                    
+                    $user->setPassword($app['security.encoder.digest']->encodePassword($formData->getPassword(), ''));
+                }
+                try {
+                    $app['orm.em']->flush();
+                } catch (\Exception $exc) {
+                    echo $exc->getTraceAsString();
+                }
+            }
+        }
+         return $app['twig']->render('businessInfo.html.twig', array('form' => $form->createView()));
+    }
+    
 
 }

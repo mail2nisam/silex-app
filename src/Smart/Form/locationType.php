@@ -31,8 +31,8 @@ class locationType extends AbstractType {
                 ->add('timeZone')
                 ->add('locState','entity',array('class'=>'Entities\States','empty_value' => 'Choose a state'))
                 ->add('locLatitude', 'hidden')
-                ->add('locLongitude', 'hidden')
-                ->add('submit', 'submit');
+                ->add('locLongitude', 'hidden');
+              
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

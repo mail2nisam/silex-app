@@ -49,6 +49,14 @@
         doStateAjax(this, 'location_locState');
 
     });
+    $('#business_loc_locCountry').change(function() {
+        doStateAjax(this, 'business_loc_locState');
+
+    });
+    $('#business_org_country').change(function() {
+        doStateAjax(this, 'business_org_state');
+
+    });
     $('#location_locState').empty();
     if ($('#location_locCountry').val()) {
         doStateAjax($('#location_locCountry'), 'location_locState');

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="org_id", columns={"org_id"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"})}, indexes={@ORM\Index(name="org_id", columns={"org_id"}), @ORM\Index(name="new_fk_constraint_52", columns={"loc_id"})})
  * @ORM\Entity
  */
 class Users
@@ -79,25 +79,31 @@ class Users
     private $status;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="org_id", type="integer", nullable=false)
-     */
-    private $orgId;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="loc_id", type="integer", nullable=false)
-     */
-    private $locId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="roles", type="string", length=250, nullable=false)
      */
     private $roles;
+
+    /**
+     * @var \Locations
+     *
+     * @ORM\ManyToOne(targetEntity="Locations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="loc_id", referencedColumnName="id")
+     * })
+     */
+    private $loc;
+
+    /**
+     * @var \Organization
+     *
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
+     * })
+     */
+    private $org;
 
 
 
@@ -296,52 +302,6 @@ class Users
     }
 
     /**
-     * Set orgId
-     *
-     * @param integer $orgId
-     * @return Users
-     */
-    public function setOrgId($orgId)
-    {
-        $this->orgId = $orgId;
-
-        return $this;
-    }
-
-    /**
-     * Get orgId
-     *
-     * @return integer 
-     */
-    public function getOrgId()
-    {
-        return $this->orgId;
-    }
-
-    /**
-     * Set locId
-     *
-     * @param integer $locId
-     * @return Users
-     */
-    public function setLocId($locId)
-    {
-        $this->locId = $locId;
-
-        return $this;
-    }
-
-    /**
-     * Get locId
-     *
-     * @return integer 
-     */
-    public function getLocId()
-    {
-        return $this->locId;
-    }
-
-    /**
      * Set roles
      *
      * @param string $roles
@@ -362,5 +322,51 @@ class Users
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    /**
+     * Set loc
+     *
+     * @param \Locations $loc
+     * @return Users
+     */
+    public function setLoc(Locations $loc = null)
+    {
+        $this->loc = $loc;
+
+        return $this;
+    }
+
+    /**
+     * Get loc
+     *
+     * @return \Locations 
+     */
+    public function getLoc()
+    {
+        return $this->loc;
+    }
+
+    /**
+     * Set org
+     *
+     * @param \Organization $org
+     * @return Users
+     */
+    public function setOrg(Organization $org = null)
+    {
+        $this->org = $org;
+
+        return $this;
+    }
+
+    /**
+     * Get org
+     *
+     * @return \Organization 
+     */
+    public function getOrg()
+    {
+        return $this->org;
     }
 }

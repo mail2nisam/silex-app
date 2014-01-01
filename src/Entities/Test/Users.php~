@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="org_id", columns={"org_id"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"})}, indexes={@ORM\Index(name="org_id", columns={"org_id"}), @ORM\Index(name="new_fk_constraint_52", columns={"loc_id"})})
  * @ORM\Entity
  */
 class Users
@@ -78,25 +78,31 @@ class Users
     private $status;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="org_id", type="integer", nullable=false)
-     */
-    private $orgId;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="loc_id", type="integer", nullable=false)
-     */
-    private $locId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="roles", type="string", length=250, nullable=false)
      */
     private $roles;
+
+    /**
+     * @var \Locations
+     *
+     * @ORM\ManyToOne(targetEntity="Locations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="loc_id", referencedColumnName="id")
+     * })
+     */
+    private $loc;
+
+    /**
+     * @var \Organization
+     *
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
+     * })
+     */
+    private $org;
 
 
 }

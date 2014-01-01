@@ -52,14 +52,14 @@ class Locations
     /**
      * @var string
      *
-     * @ORM\Column(name="loc_latitude", type="string", length=100, nullable=false)
+     * @ORM\Column(name="loc_latitude", type="string", length=100, nullable=true)
      */
     private $locLatitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="loc_longitude", type="string", length=100, nullable=false)
+     * @ORM\Column(name="loc_longitude", type="string", length=100, nullable=true)
      */
     private $locLongitude;
 
@@ -87,9 +87,19 @@ class Locations
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @var \Organization
+     *
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
+     * })
+     */
+    private $org;
 
     /**
      * @var \Countries
@@ -120,16 +130,6 @@ class Locations
      * })
      */
     private $timeZone;
-
-    /**
-     * @var \Timezones
-     *
-     * @ORM\ManyToOne(targetEntity="Timezones")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
-     * })
-     */
-    private $org;
 
 
 }

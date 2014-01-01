@@ -45,7 +45,7 @@ class Organization
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="org_updated_on", type="datetime", nullable=false)
+     * @ORM\Column(name="org_updated_on", type="datetime", nullable=true)
      */
     private $orgUpdatedOn;
 
@@ -66,21 +66,21 @@ class Organization
     /**
      * @var string
      *
-     * @ORM\Column(name="office_phone", type="string", length=100, nullable=false)
+     * @ORM\Column(name="office_phone", type="string", length=100, nullable=true)
      */
     private $officePhone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="office_fax", type="string", length=100, nullable=false)
+     * @ORM\Column(name="office_fax", type="string", length=100, nullable=true)
      */
     private $officeFax;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mobile_phone", type="string", length=100, nullable=false)
+     * @ORM\Column(name="mobile_phone", type="string", length=100, nullable=true)
      */
     private $mobilePhone;
 

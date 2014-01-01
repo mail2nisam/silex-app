@@ -24,7 +24,8 @@
 </div>
 
 {{ form_rest(form) }}
-{{ form_row(form.submit, { 'label': 'CREATE' }) }}
+<div class="form-actions"><button class="btn btn-primary" name="location[submit]" id="location_submit" type="submit">Submit</button></div>
+
 {{ form_end(form) }}
 
 {% endblock %}

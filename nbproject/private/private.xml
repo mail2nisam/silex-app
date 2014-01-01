@@ -3,17 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/var/www/newsilex/vendor/paypal/merchant-sdk-php/samples/Configuration.php</file>
+            <file>file:/var/www/newsilex/vendor/pimple/pimple/lib/Pimple.php</file>
             <file>file:/var/www/newsilex/web/assets/css/styles.css</file>
-            <file>file:/var/www/newsilex/resources/assets/js/script.js</file>
+            <file>file:/var/www/newsilex/vendor/silex/silex/src/Silex/Application.php</file>
             <file>file:/var/www/newsilex/resources/views/layout.html.twig</file>
-            <file>file:/var/www/newsilex/vendor/symfony/http-foundation/Symfony/Component/HttpFoundation/Request.php</file>
             <file>file:/var/www/newsilex/src/app.php</file>
-            <file>file:/var/www/newsilex/src/Smart/Controllers/IndexController.php</file>
+            <file>file:/var/www/newsilex/vendor/paypal/merchant-sdk-php/lib/PayPal/CoreComponentTypes/BasicAmountType.php</file>
             <file>file:/var/www/newsilex/src/Smart/lib/AustraliaPostAPI/Shipping.php</file>
-            <file>file:/var/www/newsilex/resources/assets/less/style.less</file>
-            <file>file:/var/www/newsilex/resources/views/buyerinfo.html.twig</file>
-            <file>file:/var/www/newsilex/src/Entities/BuyerInfo.php</file>
             <file>file:/var/www/newsilex/resources/config/routes.yml</file>
+            <file>file:/var/www/newsilex/resources/views/buyerinfo.html.twig</file>
+            <file>file:/var/www/newsilex/resources/assets/less/style.less</file>
+            <file>file:/var/www/newsilex/vendor/paypal/merchant-sdk-php/samples/ExpressCheckout/SetExpressCheckout.php</file>
+            <file>file:/var/www/newsilex/src/Entities/Countries.php</file>
+            <file>file:/var/www/newsilex/resources/assets/js/script.js</file>
+            <file>file:/var/www/newsilex/vendor/symfony/http-foundation/Symfony/Component/HttpFoundation/Request.php</file>
+            <file>file:/var/www/newsilex/src/Entities/Users.php</file>
+            <file>file:/var/www/newsilex/src/Smart/Controllers/IndexController.php</file>
+            <file>file:/var/www/newsilex/src/Entities/Organization.php</file>
+            <file>file:/var/www/newsilex/src/Entities/BuyerInfo.php</file>
+            <file>file:/var/www/newsilex/src/Entities/Locations.php</file>
         </group>
     </open-files>
 </project-private>

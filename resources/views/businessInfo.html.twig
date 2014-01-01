@@ -1,0 +1,63 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'form' %}
+
+{% block content %}
+
+
+<legend>User Details</legend>
+ {{ form_start(form,{'form_type': 'horizontal', 'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_errors(form) }}
+
+<div class="billing_address"  style="padding-right: 35px">
+    <div class="pull-left">
+         {{ form_row(form.email,{'attr': {'tabindex': '1','readonly': 'true'} }) }}
+         {{ form_row(form.password.pass,{ 'required':false, 'attr': {'tabindex': '3'} }) }}
+    </div>
+    <div class="pull-left">
+         {{ form_row(form.username,{ 'attr': {'tabindex': '2'} }) }}
+         {{ form_row(form.password.confirm,{  'required':false,'attr': {'tabindex': '4'} }) }}
+    </div>
+    <legend class="clear">Business Details</legend>
+    <div class="pull-left">
+         {{ form_row(form.org.org_name,{ 'attr': {'tabindex': '5'} }) }}
+         {{ form_row(form.org.address,{ 'attr': {'tabindex': '7'} }) }}
+         {{ form_row(form.org.country,{ 'attr': {'tabindex': '9'} }) }}
+         {{ form_row(form.org.office_phone,{ 'attr': {'tabindex': '11'} }) }}
+        
+    </div>
+    <div class="pull-left">
+         {{ form_row(form.org.org_description,{ 'attr': {'tabindex': '6'} }) }}
+         {{ form_row(form.org.zip_code,{ 'attr': {'tabindex': '8'} }) }}
+         {{ form_row(form.org.state,{ 'attr': {'tabindex': '10'} }) }}
+         {{ form_row(form.org.office_fax,{ 'attr': {'tabindex': '12'} }) }}
+        
+    </div>
+    <legend class="clear">Business Location</legend>
+    <div class="pull-left">
+         {{ form_row(form.loc.loc_name,{ 'attr': {'tabindex': '13'} }) }}
+         {{ form_row(form.loc.locCity,{ 'attr': {'tabindex': '15'} }) }}
+         {{ form_row(form.loc.locCountry,{ 'attr': {'tabindex': '17'} }) }}
+          {{ form_row(form.loc.timeZone,{ 'attr': {'tabindex': '19'} }) }}
+        
+
+    </div>
+    <div class="pull-left">
+         {{ form_row(form.loc.loc_address,{ 'attr': {'tabindex': '14'} }) }}
+         {{ form_row(form.loc.locZip,{ 'attr': {'tabindex': '16'} }) }}
+        {{ form_row(form.loc.locState,{ 'attr': {'tabindex': '18'} }) }}
+        
+         {{ form_row(form.loc.locLatitude) }}
+         {{ form_row(form.loc.locLongitude) }}
+        
+    </div>
+
+<div class="form-actions"><button class="btn btn-primary" name="location[submit]" id="business_submit" type="submit">Update</button></div>
+
+
+
+</div>
+
+{{ form_rest(form) }}
+{{ form_end(form) }}
+
+{% endblock %}

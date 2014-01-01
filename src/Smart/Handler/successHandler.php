@@ -32,7 +32,21 @@ class successHandler implements AuthenticationSuccessHandlerInterface {
               $currentUserObj   =   $this->app['orm.em']->getRepository('Entities\Users')->findByUsername($token->getUsername());
               $currentUser = $currentUserObj[0]  ;
               //var_dump($currentUser[0]);exit;
-            $this->app['session']->set('user', (object)array('__org_id' => $currentUser->getOrgId(),'__loc_id'=>$currentUser->getLocId()));
+              $org  =   $currentUser->getOrg();
+             
+              $loc  =   $currentUser->getLoc();
+              if(!null==$loc){
+                  $locID   =   $loc->getId();
+              }else{
+                  $locID   =   0;
+              }
+              if(!null==$org){
+                  $orgID   =   $org->getId();
+              }else{
+                  $orgID   =   0;
+              }
+               //var_dump($loc);
+            $this->app['session']->set('user', (object)array('__org_id' => $orgID,'__loc_id'=>$locID));
 //            $include = array(
 //                'error' => $this->app['security.last_error']($request),
 //                'last_username' => $this->app['session']->get('_security.last_username'),

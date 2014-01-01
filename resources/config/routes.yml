@@ -41,7 +41,7 @@ ajaxAusPostCalculator:
   path: /ajax/calculate-post
   defaults: { _controller: 'Smart\Controllers\IndexController::ajaxPostCalculateAction' }  
 activate_user:
-  path: /business/activate
+  path: /business/activate/{userId}
   defaults: { _controller: 'Smart\Controllers\IndexController::activateBusinessAction' }  
 payment_thanks:
   path: /payment/thanks
