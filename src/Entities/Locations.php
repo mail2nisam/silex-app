@@ -1,7 +1,6 @@
 <?php
+
 namespace Entities;
-
-
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="locations", indexes={@ORM\Index(name="new_fk_constraint", columns={"loc_country"}), @ORM\Index(name="new_fk_constraint_2", columns={"loc_state"}), @ORM\Index(name="new_fk_constraint_3", columns={"time_zone"}), @ORM\Index(name="new_fk_constraint_4", columns={"org_id"})})
  * @ORM\Entity
  */
-class Locations
-{
+class Locations {
+
     /**
      * @var integer
      *
@@ -49,6 +48,13 @@ class Locations
      * @ORM\Column(name="loc_zip", type="string", length=50, nullable=false)
      */
     private $locZip;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isMonitored", type="boolean", nullable=false)
+     */
+    private $ismonitored;
 
     /**
      * @var string
@@ -90,7 +96,7 @@ class Locations
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
-    private $updatedAt ;
+    private $updatedAt;
 
     /**
      * @var \Timezones
@@ -132,15 +138,12 @@ class Locations
      */
     private $timeZone;
 
-
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -150,8 +153,7 @@ class Locations
      * @param string $locName
      * @return Locations
      */
-    public function setLocName($locName)
-    {
+    public function setLocName($locName) {
         $this->locName = $locName;
 
         return $this;
@@ -162,8 +164,7 @@ class Locations
      *
      * @return string 
      */
-    public function getLocName()
-    {
+    public function getLocName() {
         return $this->locName;
     }
 
@@ -173,8 +174,7 @@ class Locations
      * @param string $locAddress
      * @return Locations
      */
-    public function setLocAddress($locAddress)
-    {
+    public function setLocAddress($locAddress) {
         $this->locAddress = $locAddress;
 
         return $this;
@@ -185,8 +185,7 @@ class Locations
      *
      * @return string 
      */
-    public function getLocAddress()
-    {
+    public function getLocAddress() {
         return $this->locAddress;
     }
 
@@ -196,8 +195,7 @@ class Locations
      * @param string $locCity
      * @return Locations
      */
-    public function setLocCity($locCity)
-    {
+    public function setLocCity($locCity) {
         $this->locCity = $locCity;
 
         return $this;
@@ -208,8 +206,7 @@ class Locations
      *
      * @return string 
      */
-    public function getLocCity()
-    {
+    public function getLocCity() {
         return $this->locCity;
     }
 
@@ -219,8 +216,7 @@ class Locations
      * @param string $locZip
      * @return Locations
      */
-    public function setLocZip($locZip)
-    {
+    public function setLocZip($locZip) {
         $this->locZip = $locZip;
 
         return $this;
@@ -231,8 +227,7 @@ class Locations
      *
      * @return string 
      */
-    public function getLocZip()
-    {
+    public function getLocZip() {
         return $this->locZip;
     }
 
@@ -242,8 +237,7 @@ class Locations
      * @param string $locLatitude
      * @return Locations
      */
-    public function setLocLatitude($locLatitude=null)
-    {
+    public function setLocLatitude($locLatitude = null) {
         $this->locLatitude = $locLatitude;
 
         return $this;
@@ -254,8 +248,7 @@ class Locations
      *
      * @return string 
      */
-    public function getLocLatitude()
-    {
+    public function getLocLatitude() {
         return $this->locLatitude;
     }
 
@@ -265,8 +258,7 @@ class Locations
      * @param string $locLongitude
      * @return Locations
      */
-    public function setLocLongitude($locLongitude=null)
-    {
+    public function setLocLongitude($locLongitude = null) {
         $this->locLongitude = $locLongitude;
 
         return $this;
@@ -277,8 +269,7 @@ class Locations
      *
      * @return string 
      */
-    public function getLocLongitude()
-    {
+    public function getLocLongitude() {
         return $this->locLongitude;
     }
 
@@ -288,8 +279,7 @@ class Locations
      * @param string $locAccessKey
      * @return Locations
      */
-    public function setLocAccessKey($locAccessKey)
-    {
+    public function setLocAccessKey($locAccessKey) {
         $this->locAccessKey = $locAccessKey;
 
         return $this;
@@ -300,8 +290,7 @@ class Locations
      *
      * @return string 
      */
-    public function getLocAccessKey()
-    {
+    public function getLocAccessKey() {
         return $this->locAccessKey;
     }
 
@@ -311,8 +300,7 @@ class Locations
      * @param string $locSecret
      * @return Locations
      */
-    public function setLocSecret($locSecret)
-    {
+    public function setLocSecret($locSecret) {
         $this->locSecret = $locSecret;
 
         return $this;
@@ -323,8 +311,7 @@ class Locations
      *
      * @return string 
      */
-    public function getLocSecret()
-    {
+    public function getLocSecret() {
         return $this->locSecret;
     }
 
@@ -334,8 +321,7 @@ class Locations
      * @param \DateTime $createdAt
      * @return Locations
      */
-    public function setCreatedAt($createdAt)
-    {
+    public function setCreatedAt($createdAt) {
         $this->createdAt = $createdAt;
 
         return $this;
@@ -346,8 +332,7 @@ class Locations
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
-    {
+    public function getCreatedAt() {
         return $this->createdAt;
     }
 
@@ -357,8 +342,7 @@ class Locations
      * @param \DateTime $updatedAt
      * @return Locations
      */
-    public function setUpdatedAt($updatedAt)
-    {
+    public function setUpdatedAt($updatedAt) {
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -369,8 +353,7 @@ class Locations
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt()
-    {
+    public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
@@ -380,8 +363,7 @@ class Locations
      * @param \Organization $org
      * @return Locations
      */
-    public function setOrg(Organization $org = null)
-    {
+    public function setOrg(Organization $org = null) {
         $this->org = $org;
 
         return $this;
@@ -392,8 +374,7 @@ class Locations
      *
      * @return \Timezones 
      */
-    public function getOrg()
-    {
+    public function getOrg() {
         return $this->org;
     }
 
@@ -403,8 +384,7 @@ class Locations
      * @param \Countries $locCountry
      * @return Locations
      */
-    public function setLocCountry(Countries $locCountry = null)
-    {
+    public function setLocCountry(Countries $locCountry = null) {
         $this->locCountry = $locCountry;
 
         return $this;
@@ -415,8 +395,7 @@ class Locations
      *
      * @return \Countries 
      */
-    public function getLocCountry()
-    {
+    public function getLocCountry() {
         return $this->locCountry;
     }
 
@@ -426,8 +405,7 @@ class Locations
      * @param \States $locState
      * @return Locations
      */
-    public function setLocState(States $locState = null)
-    {
+    public function setLocState(States $locState = null) {
         $this->locState = $locState;
 
         return $this;
@@ -438,8 +416,7 @@ class Locations
      *
      * @return \States 
      */
-    public function getLocState()
-    {
+    public function getLocState() {
         return $this->locState;
     }
 
@@ -449,8 +426,7 @@ class Locations
      * @param \Timezones $timeZone
      * @return Locations
      */
-    public function setTimeZone(Timezones $timeZone = null)
-    {
+    public function setTimeZone(Timezones $timeZone = null) {
         $this->timeZone = $timeZone;
 
         return $this;
@@ -461,8 +437,29 @@ class Locations
      *
      * @return \Timezones 
      */
-    public function getTimeZone()
-    {
+    public function getTimeZone() {
         return $this->timeZone;
     }
+
+    /**
+     * Set ismonitored
+     *
+     * @param boolean $ismonitored
+     * @return Locations
+     */
+    public function setIsmonitored($ismonitored) {
+        $this->ismonitored = $ismonitored;
+
+        return $this;
+    }
+
+    /**
+     * Get ismonitored
+     *
+     * @return boolean 
+     */
+    public function getIsmonitored() {
+        return $this->ismonitored;
+    }
+
 }

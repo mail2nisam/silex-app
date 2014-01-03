@@ -115,9 +115,23 @@ class BuyerInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="ship_n_bill", type="string", nullable=true)
+     * @ORM\Column(name="ship_n_bill", type="string", length=20, nullable=true)
      */
-    private $shipNBill = 'No';
+    private $shipNBill = '0';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="no_of_probes", type="integer", nullable=false)
+     */
+    private $noOfProbes;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isMonitored", type="boolean", nullable=false)
+     */
+    private $ismonitored;
 
     /**
      * @var \Countries

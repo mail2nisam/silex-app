@@ -2327,7 +2327,9 @@
             }
         });
     });
-
+    $('#form_profile_date').datepicker({
+        minDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+    });
     $('#domestic_back').click(function() {
         var effect = 'slide';
         var options = {direction: 'left'};
@@ -2393,9 +2395,11 @@
             $('#subscription_details').show();
             $('.subscription_period-label').show();
             $('#subscription-period').show();
+            $('#form_profile_date').show();
         } else {
             $('#subscription_details').hide();
             $('#subscription-period').hide();
+            $('#form_profile_date').hide();
             $('.subscription_period-label').hide();
         }
     }

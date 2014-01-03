@@ -85,16 +85,6 @@ class Users
     private $roles;
 
     /**
-     * @var \Locations
-     *
-     * @ORM\ManyToOne(targetEntity="Locations")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="loc_id", referencedColumnName="id")
-     * })
-     */
-    private $loc;
-
-    /**
      * @var \Organization
      *
      * @ORM\ManyToOne(targetEntity="Organization")
@@ -103,6 +93,16 @@ class Users
      * })
      */
     private $org;
+
+    /**
+     * @var \Locations
+     *
+     * @ORM\ManyToOne(targetEntity="Locations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="loc_id", referencedColumnName="id")
+     * })
+     */
+    private $loc;
 
 
 
@@ -324,29 +324,6 @@ class Users
     }
 
     /**
-     * Set loc
-     *
-     * @param \Locations $loc
-     * @return Users
-     */
-    public function setLoc(\Locations $loc = null)
-    {
-        $this->loc = $loc;
-
-        return $this;
-    }
-
-    /**
-     * Get loc
-     *
-     * @return \Locations 
-     */
-    public function getLoc()
-    {
-        return $this->loc;
-    }
-
-    /**
      * Set org
      *
      * @param \Organization $org
@@ -367,5 +344,28 @@ class Users
     public function getOrg()
     {
         return $this->org;
+    }
+
+    /**
+     * Set loc
+     *
+     * @param \Locations $loc
+     * @return Users
+     */
+    public function setLoc(\Locations $loc = null)
+    {
+        $this->loc = $loc;
+
+        return $this;
+    }
+
+    /**
+     * Get loc
+     *
+     * @return \Locations 
+     */
+    public function getLoc()
+    {
+        return $this->loc;
     }
 }

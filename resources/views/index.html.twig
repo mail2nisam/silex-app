@@ -33,6 +33,7 @@ Your a not logged. Please <a href="{{ path('login') }}">{{ 'connect'|trans }}</a
             
              {{ form_row(form.subscription, { 'id': 'subscription-status' }) }}
              {{ form_row(form.subscription_period, { 'id': 'subscription-period','label_attr':{'class':'subscription_period-label'} }) }}
+             {{ form_row(form.profile_date, { 'label_attr':{'class':'subscription_period-label'} }) }}
              
         </div>
     </div>

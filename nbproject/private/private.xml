@@ -4,25 +4,40 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/var/www/newsilex/vendor/paypal/merchant-sdk-php/samples/Configuration.php</file>
-            <file>file:/var/www/newsilex/vendor/pimple/pimple/lib/Pimple.php</file>
-            <file>file:/var/www/newsilex/web/assets/css/styles.css</file>
+            <file>file:/var/www/newsilex/src/Smart/Form/locationType.php</file>
             <file>file:/var/www/newsilex/vendor/silex/silex/src/Silex/Application.php</file>
             <file>file:/var/www/newsilex/resources/views/layout.html.twig</file>
-            <file>file:/var/www/newsilex/src/app.php</file>
+            <file>file:/var/www/newsilex/resources/views/form.html.twig</file>
+            <file>file:/var/www/newsilex/src/Smart/Form/businessType.php</file>
             <file>file:/var/www/newsilex/vendor/paypal/merchant-sdk-php/lib/PayPal/CoreComponentTypes/BasicAmountType.php</file>
-            <file>file:/var/www/newsilex/src/Smart/lib/AustraliaPostAPI/Shipping.php</file>
-            <file>file:/var/www/newsilex/resources/config/routes.yml</file>
             <file>file:/var/www/newsilex/resources/views/buyerinfo.html.twig</file>
-            <file>file:/var/www/newsilex/resources/assets/less/style.less</file>
+            <file>file:/var/www/newsilex/resources/config/routes.yml</file>
+            <file>file:/var/www/newsilex/src/Smart/Handler/successHandler.php</file>
+            <file>file:/var/www/newsilex/vendor/silex/silex/doc/providers/url_generator.rst</file>
             <file>file:/var/www/newsilex/vendor/paypal/merchant-sdk-php/samples/ExpressCheckout/SetExpressCheckout.php</file>
-            <file>file:/var/www/newsilex/src/Entities/Countries.php</file>
-            <file>file:/var/www/newsilex/resources/assets/js/script.js</file>
-            <file>file:/var/www/newsilex/vendor/symfony/http-foundation/Symfony/Component/HttpFoundation/Request.php</file>
-            <file>file:/var/www/newsilex/src/Entities/Users.php</file>
+            <file>file:/var/www/newsilex/src/Smart/Form/buyerInfoType.php</file>
+            <file>file:/var/www/newsilex/src/Smart/Form/userType.php</file>
             <file>file:/var/www/newsilex/src/Smart/Controllers/IndexController.php</file>
             <file>file:/var/www/newsilex/src/Entities/Organization.php</file>
             <file>file:/var/www/newsilex/src/Entities/BuyerInfo.php</file>
+            <file>file:/var/www/newsilex/resources/views/register.html.twig</file>
+            <file>file:/var/www/newsilex/resources/views/new-location.html.twig</file>
+            <file>file:/var/www/newsilex/vendor/symfony/form/Symfony/Component/Form/FormConfigBuilderInterface.php</file>
+            <file>file:/var/www/newsilex/vendor/pimple/pimple/lib/Pimple.php</file>
+            <file>file:/var/www/newsilex/web/assets/css/styles.css</file>
+            <file>file:/var/www/newsilex/resources/views/businessInfo.html.twig</file>
+            <file>file:/var/www/newsilex/src/app.php</file>
+            <file>file:/var/www/newsilex/vendor/symfony/http-kernel/Symfony/Component/HttpKernel/EventListener/RouterListener.php</file>
+            <file>file:/var/www/newsilex/resources/assets/less/style.less</file>
+            <file>file:/var/www/newsilex/src/Entities/Countries.php</file>
+            <file>file:/var/www/newsilex/vendor/symfony/security/Symfony/Component/Security/Core/User/UserProviderInterface.php</file>
+            <file>file:/var/www/newsilex/resources/assets/js/script.js</file>
+            <file>file:/var/www/newsilex/src/Smart/Form/orgType.php</file>
+            <file>file:/var/www/newsilex/src/Entities/Users.php</file>
+            <file>file:/var/www/newsilex/composer.json</file>
+            <file>file:/var/www/newsilex/resources/views/index.html.twig</file>
             <file>file:/var/www/newsilex/src/Entities/Locations.php</file>
+            <file>file:/var/www/newsilex/src/Smart/User/UserProvider.php</file>
         </group>
     </open-files>
 </project-private>

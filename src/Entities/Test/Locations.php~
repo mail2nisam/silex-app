@@ -92,14 +92,11 @@ class Locations
     private $updatedAt;
 
     /**
-     * @var \Organization
+     * @var boolean
      *
-     * @ORM\ManyToOne(targetEntity="Organization")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="isMonitored", type="boolean", nullable=false)
      */
-    private $org;
+    private $ismonitored;
 
     /**
      * @var \Countries
@@ -130,6 +127,16 @@ class Locations
      * })
      */
     private $timeZone;
+
+    /**
+     * @var \Organization
+     *
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
+     * })
+     */
+    private $org;
 
 
 }

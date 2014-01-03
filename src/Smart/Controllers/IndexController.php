@@ -31,6 +31,8 @@ use PayPal\Service\PayPalAPIInterfaceServiceService,
 class IndexController {
 
     public function homeAction(Application $app, Request $request) {
+        //  echo date("Y-m-d\TH:i:s:000\Z", strtotime(date('Y-m-d')));
+        //  echo date('Y-m-dTH:M:SZ');//2014-01-01T00:00:00:000Z 2014-01-02T00:00:00.000Z ­
 //        $app['session']->getFlashBag()->add('warning', 'Warning flash message');
 //        $app['session']->getFlashBag()->add('info', 'Info flash message');
 //        $app['session']->getFlashBag()->add('success', 'Success flash message');
@@ -39,15 +41,20 @@ class IndexController {
         $form = $builder->add('probe', 'choice', array('choices' => array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 'label' => ''))
                 ->add('subscription', 'checkbox', array('label' => 'Subscrbe', 'required' => false,))
                 ->add('subscription_period', 'choice', array('choices' => array('weekly' => 'Weekly', 'monthly' => 'Monthly', 'yearly' => 'Yearly')))
+                ->add('profile_date', 'text', array('label' => 'Subscription Start Date', 'required' => false,))
                 ->add('submit', 'submit')
                 ->getForm();
         if ($request->isMethod('POST')) {
             if ($form->submit($request)->isValid()) {
                 $formData = $form->getData();
                 $subscriptionStatus = $formData['subscription'];
+                $profile_date = $formData['profile_date'];
+                if ($profile_date) {
+                    $formatted_profile_date = date("Y-m-d\TH:i:s:000\Z", strtotime($profile_date));
+                }
                 $subscription_period = $formData['subscription_period'];
                 $no_of_probes = $formData['probe'];
-                $app['session']->set('probuct_n_subscription', (object) array('_subscription_status' => $subscriptionStatus, '__subscription_period' => $subscription_period, '__no_of_probes' => $no_of_probes));
+                $app['session']->set('probuct_n_subscription', (object) array('_subscription_status' => $subscriptionStatus, '__subscription_period' => $subscription_period, '__no_of_probes' => $no_of_probes, '__profile_start_date' => $formatted_profile_date));
                 return $app->redirect($app['url_generator']->generate('buy_stage_one'));
             }
         }
@@ -129,7 +136,7 @@ class IndexController {
                 $users->setStatus('inactive');
                 $users->setActivationKey($app['security.encoder.digest']->encodePassword($formData['username'], ''));
                 $users->setAccess('organizer');
-                $users->setOrgId($orgId);
+                $users->setOrg($organization);
                 $app['orm.em']->persist($users);
                 if ($app['orm.em']->flush()) {
                     return $app['session']->getFlashBag()->add('success', 'New Business Added Succesfully');
@@ -213,53 +220,56 @@ class IndexController {
         if (!$app['session']->get('probuct_n_subscription')) {
             return $app->redirect($app['url_generator']->generate('homepage'));
         }
-        $pructDetails = $this->priceAndSubscriptionDetails($app);
+        $productDetails = $this->priceAndSubscriptionDetails($app);
+        $noOfProbes = $productDetails['no_of_probes'] + 1;
 
+        $isMonitored = (!empty($productDetails['subscription'])) ? 1 : 0;
         if ($app['security']->isGranted('ROLE_USER')) {
-            $token = $app['security']->getToken();
-            $token->getUser();
-              $form = $app['form.factory']->create(new \Smart\Form\buyerInfoType());
+            $buyerInfoId = $app['security.smart.user']->getOrg()->getPurchaseInfo();
+            $entity = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($buyerInfoId);
+            $form = $app['form.factory']->create(new \Smart\Form\buyerInfoType(), $entity);
         } else {
-
             $form = $app['form.factory']->create(new \Smart\Form\buyerInfoType());
-            if ($request->isMethod('POST')) {
-                if ($form->submit($request)->isValid()) {
+        }
 
-                    $formData = $form->getData();
-                    $entity = new \Entities\BuyerInfo();
+        $entity = new \Entities\BuyerInfo();
+        if ($request->isMethod('POST')) {
+            $form = $app['form.factory']->create(new \Smart\Form\buyerInfoType());
+            if ($form->submit($request)->isValid()) {
+                $formData = $form->getData();
+                $entity->setEmail($formData->getEmail());
+                $app['session']->set('buyer_email', $formData->getEmail());
+                $entity->setName($formData->getName());
 
-                    $entity->setEmail($formData->getEmail());
+                $entity->setBillingAddress1($formData->getBillingAddress1());
+                $entity->setBillingAddress2($formData->getBillingAddress2());
+                $entity->setBillingCity($formData->getBillingCity());
+                $entity->setBillingCountry($formData->getBillingCountry());
+                $entity->setBillingState($formData->getBillingState());
+                $entity->setBillingZip($formData->getBillingZip());
 
-                    $app['session']->set('buyer_email', $formData->getEmail());
-                    $entity->setName($formData->getName());
+                $entity->setShipNBill($formData->getShipNBill());
 
-                    $entity->setBillingAddress1($formData->getBillingAddress1());
-                    $entity->setBillingAddress2($formData->getBillingAddress2());
-                    $entity->setBillingCity($formData->getBillingCity());
-                    $entity->setBillingCountry($formData->getBillingCountry());
-                    $entity->setBillingState($formData->getBillingState());
-                    $entity->setBillingZip($formData->getBillingZip());
-
-                    $entity->setShipNBill(($formData->getShipNBill() == 1) ? 'Yes' : 'No');
-
-                    $entity->setShippingAddress1($formData->getShippingAddress1());
-                    $entity->setShippingAddress2($formData->getShippingAddress2());
-                    $entity->setShippingCity($formData->getShippingCity());
-                    $entity->setShippingCountry($formData->getShippingCountry());
-                    $entity->setShippingState($formData->getShippingState());
-                    $entity->setShippingZip($formData->getShippingZip());
-                    $app['orm.em']->persist($entity);
-                    try {
-                        $app['orm.em']->flush();
-                        $app['session']->set('buyer_info_id', $entity->getId());
-                        $this->setExpressCheckout($app);
-                    } catch (\Exception $exc) {
-                        echo $exc->getTraceAsString();
-                    }
+                $entity->setShippingAddress1($formData->getShippingAddress1());
+                $entity->setShippingAddress2($formData->getShippingAddress2());
+                $entity->setShippingCity($formData->getShippingCity());
+                $entity->setShippingCountry($formData->getShippingCountry());
+                $entity->setShippingState($formData->getShippingState());
+                $entity->setShippingZip($formData->getShippingZip());
+                $entity->setNoOfProbes($noOfProbes);
+                $entity->setIsmonitored($isMonitored);
+                $app['orm.em']->persist($entity);
+                try {
+                    $app['orm.em']->flush();
+                    $app['session']->set('buyer_info_id', $entity->getId());
+                    $this->setExpressCheckout($app);
+                } catch (\Exception $exc) {
+                    echo $exc->getTraceAsString();
                 }
             }
         }
-        return $app['twig']->render('buyerinfo.html.twig', array('form' => $form->createView(), 'productDetails' => $pructDetails));
+
+        return $app['twig']->render('buyerinfo.html.twig', array('form' => $form->createView(), 'productDetails' => $productDetails));
     }
 
     public function expressResponseAction(Application $app, Request $request) {
@@ -297,12 +307,12 @@ class IndexController {
                 
             }
             if ($response->Ack == "Success") {
-                $this->registerNewBusinessUser($app);
-                $app['session']->remove('probuct_n_subscription');
+                $newUser = $this->registerNewBusinessUser($app);
+                //$app['session']->remove('probuct_n_subscription');
                 if (!empty($productInfo['subscription'])) {
 
                     $profileDetails = new RecurringPaymentsProfileDetailsType();
-                    $profileDetails->BillingStartDate = "2014-01-01T00:00:00:000Z";
+                    $profileDetails->BillingStartDate = $productInfo['subscription']->profileStartDate;
 
                     $paymentBillingPeriod = new BillingPeriodDetailsType();
                     $paymentBillingPeriod->BillingFrequency = 1;
@@ -329,10 +339,14 @@ class IndexController {
 
                     $createRPProfileResponse = $paypalService->CreateRecurringPaymentsProfile($createRPProfileReq);
                     if ($createRPProfileResponse->Ack == 'Success') {
-                        return $app->redirect($app['url_generator']->generate('activate_user'));
+                        if ($app['security.smart.user']) {
+                            return $app->redirect($app['url_generator']->generate('payment_thanks')); //payment Thanks with Subscription notification
+                        } else {
+                            return $app->redirect($app['url_generator']->generate('activate_user', array('key' => $newUser->getActivationKey())));
+                        }
                     }
                 } else {
-                    return $app->redirect($app['url_generator']->generate('payment_thanks'));
+                    return $app->redirect($app['url_generator']->generate('payment_thanks')); //payment Thanks without Subscription notification
                 }
             } else {
                 return $app->redirect($app['url_generator']->generate('buy_stage_one'));
@@ -347,6 +361,7 @@ class IndexController {
             $subscriptionStatus = $purchaseDetails->_subscription_status;
             $subscription_period = $purchaseDetails->__subscription_period;
             $no_of_probes = $purchaseDetails->__no_of_probes;
+            $subscription_start_date = $purchaseDetails->__profile_start_date;
             $subTotal = ($no_of_probes * 120) + 120;
             $totalCost = $subTotal;
             $subscriptionDetails = array();
@@ -376,9 +391,9 @@ class IndexController {
                         $description = 'Master Probe + ' . $no_of_probes . 'Probe unit(s) fro $' . $subTotal . ' and  $' . $totalSubscription . ' for every Year';
                         break;
                 }
-                $subscriptionDetails = (object) array('subscriptionStatus' => $subscriptionStatus, 'subscriptionPeriod' => $BillingPeriod, 'totalSubscriptionCost' => $totalSubscription);
+                $subscriptionDetails = (object) array('subscriptionStatus' => $subscriptionStatus, 'subscriptionPeriod' => $BillingPeriod, 'totalSubscriptionCost' => $totalSubscription, 'profileStartDate' => $subscription_start_date);
             }
-            return array('subTotal' => $subTotal, 'totalCost' => $totalCost, 'subscription' => $subscriptionDetails, 'description' => $description);
+            return array('subTotal' => $subTotal, 'totalCost' => $totalCost, 'subscription' => $subscriptionDetails, 'description' => $description, 'no_of_probes' => $no_of_probes);
         } else {
             return false;
         }
@@ -397,8 +412,6 @@ class IndexController {
         $orderTotal->value = $productInfo['subTotal'];
 
         $paymentDetails->OrderTotal = new BasicAmountType('AUD', $productInfo['subTotal'] + 2);
-        ;
-        ;
         $paymentDetails->ItemTotal = $orderTotal;
         $paymentDetails->PaymentAction = 'Sale';
         $paymentDetails->ShippingTotal = 2;
@@ -484,21 +497,13 @@ class IndexController {
     }
 
     protected function registerNewBusinessUser(Application $app) {
-        $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($app['session']->get('buyer_info_id'));
+        $userExist = $app['security.smart.user'];
         $organization = new \Entities\Organization();
         $user = new \Entities\Users();
+        $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($app['session']->get('buyer_info_id'));
         $location = new \Entities\Locations();
-        $organization->setAddress($buyerInfo->getBillingAddress1());
-        $organization->setCountry($app['orm.em']->getRepository('Entities\Countries')->find($buyerInfo->getBillingCountry()));
-        $organization->setState($app['orm.em']->getRepository('Entities\States')->find($buyerInfo->getBillingState()));
-        $organization->setOrgCreatedAt(new \DateTime());
-        $organization->setOrgName($buyerInfo->getName() . "'s New Business");
-        $organization->setZipCode($buyerInfo->getBillingZip());
-        $organization->setOrgDescription($buyerInfo->getName() . "'s New Business");
-        $app['orm.em']->persist($organization);
-        try {
-            $app['orm.em']->flush();
-
+        if ($userExist->getOrg()) {
+            $organization = $userExist->getOrg();
             $location->setCreatedAt(new \DateTime());
             $location->setLocAccessKey('smart_' . substr(hash_hmac('sha256', $buyerInfo->getName(), 'dty4523grtuy'), 0, 20));
             $location->setLocSecret(hash_hmac('md5', 'smartpro_' . $buyerInfo->getName() . rand(), 'dty4523grtuyh745t45htg487gh'));
@@ -508,6 +513,7 @@ class IndexController {
             $location->setLocZip($buyerInfo->getShippingZip());
             $location->setLocCity($buyerInfo->getShippingCity());
             $location->setLocName($buyerInfo->getName() . '\'s location');
+            $location->setIsmonitored($buyerInfo->getIsmonitored());
             $location->setOrg($organization);
             $app['orm.em']->persist($location);
             try {
@@ -515,54 +521,89 @@ class IndexController {
             } catch (\Exception $exc) {
                 echo $exc->getTraceAsString();
             }
-            $user->setAccess('organizer');
-            $user->setActivationKey(hash_hmac('sha256', $buyerInfo->getName(), 'dty4523grtuy'));
-            $user->setEmail($buyerInfo->getEmail());
-            $user->setLoc($location);
-            $user->setOrg($organization);
-            $user->setRoles('ROLE_MASTER');
-            $user->setStatus('inactive');
-            $user->setUsername($buyerInfo->getEmail());
-            $user->setPassword($app['security.encoder.digest']->encodePassword($buyerInfo->getEmail(), ''));
-            $app['orm.em']->persist($user);
+            $user = $userExist;
+        } else {
+            $organization->setAddress($buyerInfo->getBillingAddress1());
+            $organization->setCountry($app['orm.em']->getRepository('Entities\Countries')->find($buyerInfo->getBillingCountry()));
+            $organization->setState($app['orm.em']->getRepository('Entities\States')->find($buyerInfo->getBillingState()));
+            $organization->setOrgCreatedAt(new \DateTime());
+            $organization->setOrgName($buyerInfo->getName() . "'s New Business");
+            $organization->setZipCode($buyerInfo->getBillingZip());
+            $organization->setOrgDescription($buyerInfo->getName() . "'s New Business");
+            $organization->setPurchaseInfo($buyerInfo->getId());
+            $app['orm.em']->persist($organization);
             try {
                 $app['orm.em']->flush();
+
+                $location->setCreatedAt(new \DateTime());
+                $location->setLocAccessKey('smart_' . substr(hash_hmac('sha256', $buyerInfo->getName(), 'dty4523grtuy'), 0, 20));
+                $location->setLocSecret(hash_hmac('md5', 'smartpro_' . $buyerInfo->getName() . rand(), 'dty4523grtuyh745t45htg487gh'));
+                $location->setLocAddress($buyerInfo->getShippingAddress1());
+                $location->setLocCountry($app['orm.em']->getRepository('Entities\Countries')->find($buyerInfo->getShippingCountry()));
+                $location->setLocState($app['orm.em']->getRepository('Entities\States')->find($buyerInfo->getShippingState()));
+                $location->setLocZip($buyerInfo->getShippingZip());
+                $location->setLocCity($buyerInfo->getShippingCity());
+                $location->setLocName($buyerInfo->getName() . '\'s location');
+                $location->setOrg($organization);
+                $location->setIsmonitored($buyerInfo->getIsmonitored());
+                $app['orm.em']->persist($location);
+                try {
+                    $app['orm.em']->flush();
+                } catch (\Exception $exc) {
+                    echo $exc->getTraceAsString();
+                }
+                $user->setAccess('organizer');
+                $user->setActivationKey(hash_hmac('sha256', $buyerInfo->getName(), 'dty4523grtuy'));
+                $user->setEmail($buyerInfo->getEmail());
+                $user->setLoc($location);
+                $user->setOrg($organization);
+                $user->setRoles('ROLE_MASTER');
+                $user->setStatus('inactive');
+                $user->setUsername('smart_' . substr(hash_hmac('sha256', $buyerInfo->getEmail(), 'dty4523grtuy'), 0, 12));
+                $user->setPassword($app['security.encoder.digest']->encodePassword($buyerInfo->getEmail(), ''));
+                $app['orm.em']->persist($user);
+                try {
+                    $app['orm.em']->flush();
+                } catch (\Exception $exc) {
+                    echo $exc->getTraceAsString();
+                }
             } catch (\Exception $exc) {
                 echo $exc->getTraceAsString();
             }
-        } catch (\Exception $exc) {
-            echo $exc->getTraceAsString();
         }
+        return $user;
     }
 
-    public function activateBusinessAction(Application $app, $userId, Request $request) {
-        $user = $app['orm.em']->getRepository('Entities\Users')->find($userId);
+    public function activateBusinessAction(Application $app, $key, Request $request) {
+        $user = $app['orm.em']->getRepository('Entities\Users')->findOneBy(array('activationKey' => $key));
+        if (!$user) {
+            return $app->redirect($app['url_generator']->generate('homepage'));
+            //throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('The specified details not exist');
+        }
         $form = $app['form.factory']->create(new \Smart\Form\businessType($app), $user);
         if ($request->isMethod('POST')) {
-               $oldPassword =  $user->getPassword();
+            $oldPassword = $user->getPassword();
             if ($form->submit($request)->isValid()) {
                 $formData = $form->getData();
                 $user->setEmail($user->getEmail());
                 $user->setAccess('organizer');
                 $user->setStatus('active');
                 $user->setActivationKey('');
-                $newPassword    =   $formData->getPassword();
-                if(!$newPassword){
-                   
+                $newPassword = $formData->getPassword();
+                if (!$newPassword) {
                     $user->setPassword($oldPassword);
-                }  else {
-                    
+                } else {
                     $user->setPassword($app['security.encoder.digest']->encodePassword($formData->getPassword(), ''));
                 }
                 try {
                     $app['orm.em']->flush();
+                    return $app->redirect($app['url_generator']->generate('login'));
                 } catch (\Exception $exc) {
                     echo $exc->getTraceAsString();
                 }
             }
         }
-         return $app['twig']->render('businessInfo.html.twig', array('form' => $form->createView()));
+        return $app['twig']->render('businessInfo.html.twig', array('form' => $form->createView()));
     }
-    
 
 }

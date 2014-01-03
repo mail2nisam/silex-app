@@ -85,16 +85,6 @@ class Users
     private $roles;
 
     /**
-     * @var \Locations
-     *
-     * @ORM\ManyToOne(targetEntity="Locations")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="loc_id", referencedColumnName="id")
-     * })
-     */
-    private $loc;
-
-    /**
      * @var \Organization
      *
      * @ORM\ManyToOne(targetEntity="Organization")
@@ -103,6 +93,16 @@ class Users
      * })
      */
     private $org;
+
+    /**
+     * @var \Locations
+     *
+     * @ORM\ManyToOne(targetEntity="Locations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="loc_id", referencedColumnName="id")
+     * })
+     */
+    private $loc;
 
 
 }

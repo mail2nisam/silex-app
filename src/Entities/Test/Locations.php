@@ -92,14 +92,11 @@ class Locations
     private $updatedAt;
 
     /**
-     * @var \Organization
+     * @var boolean
      *
-     * @ORM\ManyToOne(targetEntity="Organization")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="isMonitored", type="boolean", nullable=false)
      */
-    private $org;
+    private $ismonitored;
 
     /**
      * @var \Countries
@@ -130,6 +127,16 @@ class Locations
      * })
      */
     private $timeZone;
+
+    /**
+     * @var \Organization
+     *
+     * @ORM\ManyToOne(targetEntity="Organization")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="org_id", referencedColumnName="id")
+     * })
+     */
+    private $org;
 
 
 
@@ -374,26 +381,26 @@ class Locations
     }
 
     /**
-     * Set org
+     * Set ismonitored
      *
-     * @param \Organization $org
+     * @param boolean $ismonitored
      * @return Locations
      */
-    public function setOrg(\Organization $org = null)
+    public function setIsmonitored($ismonitored)
     {
-        $this->org = $org;
+        $this->ismonitored = $ismonitored;
 
         return $this;
     }
 
     /**
-     * Get org
+     * Get ismonitored
      *
-     * @return \Organization 
+     * @return boolean 
      */
-    public function getOrg()
+    public function getIsmonitored()
     {
-        return $this->org;
+        return $this->ismonitored;
     }
 
     /**
@@ -463,5 +470,28 @@ class Locations
     public function getTimeZone()
     {
         return $this->timeZone;
+    }
+
+    /**
+     * Set org
+     *
+     * @param \Organization $org
+     * @return Locations
+     */
+    public function setOrg(\Organization $org = null)
+    {
+        $this->org = $org;
+
+        return $this;
+    }
+
+    /**
+     * Get org
+     *
+     * @return \Organization 
+     */
+    public function getOrg()
+    {
+        return $this->org;
     }
 }

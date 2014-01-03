@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Organization
  *
- * @ORM\Table(name="organization", uniqueConstraints={@ORM\UniqueConstraint(name="new_fk_constraint_2", columns={"state"})}, indexes={@ORM\Index(name="new_fk_constraint_1", columns={"country"})})
+ * @ORM\Table(name="organization", indexes={@ORM\Index(name="new_fk_constraint_1", columns={"country"}), @ORM\Index(name="new_fk_constraint_2", columns={"state"})})
  * @ORM\Entity
  */
 class Organization
@@ -83,6 +83,13 @@ class Organization
      * @ORM\Column(name="mobile_phone", type="string", length=100, nullable=true)
      */
     private $mobilePhone;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="purchase_info", type="integer", nullable=false)
+     */
+    private $purchaseInfo;
 
     /**
      * @var \Countries
@@ -321,6 +328,29 @@ class Organization
     public function getMobilePhone()
     {
         return $this->mobilePhone;
+    }
+
+    /**
+     * Set purchaseInfo
+     *
+     * @param integer $purchaseInfo
+     * @return Organization
+     */
+    public function setPurchaseInfo($purchaseInfo)
+    {
+        $this->purchaseInfo = $purchaseInfo;
+
+        return $this;
+    }
+
+    /**
+     * Get purchaseInfo
+     *
+     * @return integer 
+     */
+    public function getPurchaseInfo()
+    {
+        return $this->purchaseInfo;
     }
 
     /**

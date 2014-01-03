@@ -115,9 +115,23 @@ class BuyerInfo
     /**
      * @var string
      *
-     * @ORM\Column(name="ship_n_bill", type="string", nullable=true)
+     * @ORM\Column(name="ship_n_bill", type="string", length=20, nullable=true)
      */
-    private $shipNBill = 'No';
+    private $shipNBill = '0';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="no_of_probes", type="integer", nullable=false)
+     */
+    private $noOfProbes;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isMonitored", type="boolean", nullable=false)
+     */
+    private $ismonitored;
 
     /**
      * @var \Countries
@@ -491,6 +505,52 @@ class BuyerInfo
     public function getShipNBill()
     {
         return $this->shipNBill;
+    }
+
+    /**
+     * Set noOfProbes
+     *
+     * @param integer $noOfProbes
+     * @return BuyerInfo
+     */
+    public function setNoOfProbes($noOfProbes)
+    {
+        $this->noOfProbes = $noOfProbes;
+
+        return $this;
+    }
+
+    /**
+     * Get noOfProbes
+     *
+     * @return integer 
+     */
+    public function getNoOfProbes()
+    {
+        return $this->noOfProbes;
+    }
+
+    /**
+     * Set ismonitored
+     *
+     * @param boolean $ismonitored
+     * @return BuyerInfo
+     */
+    public function setIsmonitored($ismonitored)
+    {
+        $this->ismonitored = $ismonitored;
+
+        return $this;
+    }
+
+    /**
+     * Get ismonitored
+     *
+     * @return boolean 
+     */
+    public function getIsmonitored()
+    {
+        return $this->ismonitored;
     }
 
     /**
