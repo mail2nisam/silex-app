@@ -61,14 +61,14 @@ $app['security.authentication.success_handler.main'] = $app->share(function ($ap
     return new Smart\Handler\successHandler($app);
 });
 $app['security.smart.user'] = $app->share(function ($app) {
-    if($app['security']->getToken()){
-        
-    $token = $app['security']->getToken();
-    $currentUser = $token->getUser();
-    $user = $app['orm.em']->getRepository('Entities\Users')->findByUsername($currentUser->getUsername());
-    return $user[0];
-    }  else {
-        return FALSE;    
+    if ($app['security']->getToken()) {
+
+        $token = $app['security']->getToken();
+        $currentUser = $token->getUser();
+        $user = $app['orm.em']->getRepository('Entities\Users')->findByUsername($currentUser->getUsername());
+        return $user[0];
+    } else {
+        return FALSE;
     }
 });
 
@@ -154,5 +154,15 @@ $app->register(new DoctrineOrmServiceProvider, array(
             ),
         ),
     ),
+));
+//$app->register(new Silex\Provider\SwiftmailerServiceProvider());
+$app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
+    'swiftmailer.options' => array(
+        'host' => 'smtp.gmail.com',
+        'port' => 465,
+        'username' => 'mail2nisam@gmail.com',
+        'password' => 'same2you',
+        'encryption' => 'ssl',
+        'auth_mode' => 'login')
 ));
 return $app;

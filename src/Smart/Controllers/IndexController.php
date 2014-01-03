@@ -31,6 +31,13 @@ use PayPal\Service\PayPalAPIInterfaceServiceService,
 class IndexController {
 
     public function homeAction(Application $app, Request $request) {
+//        $message = \Swift_Message::newInstance()
+//        ->setSubject('[test] Feedback')
+//        ->setFrom(array('noreply@yoursite.com'))
+//        ->setTo(array('mail2nisam@gmail.com'))
+//        ->setBody('fadfsdf');
+//
+//    $app['mailer']->send($message);
         //  echo date("Y-m-d\TH:i:s:000\Z", strtotime(date('Y-m-d')));
         //  echo date('Y-m-dTH:M:SZ');//2014-01-01T00:00:00:000Z 2014-01-02T00:00:00.000Z ­
 //        $app['session']->getFlashBag()->add('warning', 'Warning flash message');

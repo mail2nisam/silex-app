@@ -45,6 +45,13 @@ $app['db.options'] = array(
     'user'     => 'root',
     'password' => 'calpine',
 );
-
+//$app['swiftmailer.options'] = array(
+//    'host' => 'smtp.gmail.com',
+//    'port' => '465',
+//    'username' => 'mail2nisam@gmail.com',
+//    'password' => 'same2you',
+//    'encryption' => null,
+//    'auth_mode' => null
+//);
 // User
 $app['security.users'] = array('username' => array('ROLE_USER', 'password'));
