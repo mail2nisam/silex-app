@@ -174,6 +174,13 @@ class BuyerInfo {
     private $shippingState;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="subscription_response", type="string", length=1000, nullable=true)
+     */
+    private $subscriptionResponse;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -600,6 +607,27 @@ class BuyerInfo {
      */
     public function getIsmonitored() {
         return $this->ismonitored;
+    }
+
+    /**
+     * Set subscriptionResponse
+     *
+     * @param string $subscriptionResponse
+     * @return BuyerInfo
+     */
+    public function setSubscriptionResponse($subscriptionResponse) {
+        $this->subscriptionResponse = $subscriptionResponse;
+
+        return $this;
+    }
+
+    /**
+     * Get subscriptionResponse
+     *
+     * @return string 
+     */
+    public function getSubscriptionResponse() {
+        return $this->subscriptionResponse;
     }
 
 }

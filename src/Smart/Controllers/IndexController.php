@@ -31,19 +31,6 @@ use PayPal\Service\PayPalAPIInterfaceServiceService,
 class IndexController {
 
     public function homeAction(Application $app, Request $request) {
-//        $message = \Swift_Message::newInstance()
-//        ->setSubject('[test] Feedback')
-//        ->setFrom(array('noreply@yoursite.com'))
-//        ->setTo(array('mail2nisam@gmail.com'))
-//        ->setBody('fadfsdf');
-//
-//    $app['mailer']->send($message);
-        //  echo date("Y-m-d\TH:i:s:000\Z", strtotime(date('Y-m-d')));
-        //  echo date('Y-m-dTH:M:SZ');//2014-01-01T00:00:00:000Z 2014-01-02T00:00:00.000Z ­
-//        $app['session']->getFlashBag()->add('warning', 'Warning flash message');
-//        $app['session']->getFlashBag()->add('info', 'Info flash message');
-//        $app['session']->getFlashBag()->add('success', 'Success flash message');
-//        $app['session']->getFlashBag()->add('error', 'Error flash message');
         $builder = $app['form.factory']->createBuilder('form');
         $form = $builder->add('probe', 'choice', array('choices' => array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 'label' => ''))
                 ->add('subscription', 'checkbox', array('label' => 'Subscrbe', 'required' => false,))
@@ -58,6 +45,8 @@ class IndexController {
                 $profile_date = $formData['profile_date'];
                 if ($profile_date) {
                     $formatted_profile_date = date("Y-m-d\TH:i:s:000\Z", strtotime($profile_date));
+                } else {
+                    $formatted_profile_date = '';
                 }
                 $subscription_period = $formData['subscription_period'];
                 $no_of_probes = $formData['probe'];
@@ -184,37 +173,7 @@ class IndexController {
         return $app['twig']->render('states.html.twig', array('states' => $countryObj));
     }
 
-    public function newLocationAction(Application $app, Request $request) {
-        // $builder = $app['form.factory']->createBuilder('form');
-        $form = $app['form.factory']->create(new \Smart\Form\locationType());
-
-        if ($request->isMethod('POST')) {
-            if ($form->submit($request)->isValid()) {
-                $currentUser = $app['session']->get('user');
-                $formData = $form->getData();
-                $location = new \Entities\Locations();
-                $location->setCreatedAt(new \DateTime());
-                $location->setLocAccessKey('smart_' . substr(hash_hmac('sha256', $formData->getlocName(), 'dty4523grtuy'), 0, 20));
-                $location->setLocAddress($formData->getLocAddress());
-                $location->setLocCity($formData->getLocCity());
-                $location->setLocCountry($formData->getLocCountry());
-                $location->setLocLatitude($formData->getLocLatitude());
-                $location->setLocLongitude($formData->getLocLongitude());
-                $location->setLocName($formData->getLocName());
-                $location->setLocSecret(hash_hmac('md5', 'smartpro_' . $formData->getLocName() . rand(), 'dty4523grtuyh745t45htg487gh'));
-                $location->setLocState($formData->getLocState());
-                $location->setLocZip($formData->getLocZip());
-                $location->setUpdatedAt(new \DateTime());
-                $location->setTimeZone($formData->getTimeZone());
-                $location->setOrg($app['orm.em']->getRepository('Entities\Organization')->find($currentUser->__org_id));
-                $app['orm.em']->persist($location);
-                if ($app['orm.em']->flush()) {
-                    return $app['session']->getFlashBag()->add('success', 'New Business Added Succesfully');
-                }
-            }
-        }
-        return $app['twig']->render('new-location.html.twig', array('form' => $form->createView()));
-    }
+    
 
     public function testAction(Application $app) {
         $userModel = new userModel($app);
@@ -307,12 +266,23 @@ class IndexController {
             try {
 
                 $response = $paypalService->DoExpressCheckoutPayment($doExpressCheckoutPaymentReq);
+                $response->DoExpressCheckoutPaymentResponseDetails;
+                $DoExpressCheckoutPaymentResponseDetails = $response->DoExpressCheckoutPaymentResponseDetails;
+
+
+                $paymentInfoArray = $DoExpressCheckoutPaymentResponseDetails->PaymentInfo;
+
+                $paymentInfo = $paymentInfoArray[0];
+                $transactionId = $paymentInfo->TransactionID;
+                $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($app['session']->get('buyer_info_id'));
+                $transactionResponse = array('token' => $DoExpressCheckoutPaymentResponseDetails->Token, 'PaymentDate' => $paymentInfo->PaymentDate, 'grossamount' => $paymentInfo->GrossAmount, 'feeamount' => $paymentInfo->FeeAmount);
+                $buyerInfo->setTransactionId($transactionId);
+                $buyerInfo->setTransactionResponse(serialize($transactionResponse));
+                $app['orm.em']->flush();
             } catch (Exception $ex) {
                 
             }
-            if ($response->Ack == "Success") {
-                
-            }
+
             if ($response->Ack == "Success") {
                 $newUser = $this->registerNewBusinessUser($app);
                 //$app['session']->remove('probuct_n_subscription');
@@ -345,14 +315,25 @@ class IndexController {
 
 
                     $createRPProfileResponse = $paypalService->CreateRecurringPaymentsProfile($createRPProfileReq);
+                    $CreateRecurringPaymentsProfileResponseDetails = $createRPProfileResponse->CreateRecurringPaymentsProfileResponseDetails;
+                    $profileId = $CreateRecurringPaymentsProfileResponseDetails->ProfileID;
+                    $ProfileStatus = $CreateRecurringPaymentsProfileResponseDetails->ProfileStatus;
+                    $BillingStartDate = $profileDetails->BillingStartDate;
+                    $subscriptionDetails = serialize(array('profileId' => $profileId, 'profileStatus' => $ProfileStatus, 'billingStartDate' => $BillingStartDate, 'billing' => $paymentBillingPeriod));
+                    $buyerInfo->setSubscriptionResponse($subscriptionDetails);
+                    $app['orm.em']->flush();
+
                     if ($createRPProfileResponse->Ack == 'Success') {
                         if ($app['security.smart.user']) {
+                            $this->sendMailNotification($app);
+                            exit;
                             return $app->redirect($app['url_generator']->generate('payment_thanks')); //payment Thanks with Subscription notification
                         } else {
                             return $app->redirect($app['url_generator']->generate('activate_user', array('key' => $newUser->getActivationKey())));
                         }
                     }
                 } else {
+
                     return $app->redirect($app['url_generator']->generate('payment_thanks')); //payment Thanks without Subscription notification
                 }
             } else {
@@ -450,7 +431,6 @@ class IndexController {
         if ($getExpressCheckoutResponse->Ack == "Success") {
             $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($app['session']->get('buyer_info_id'));
             $buyerInfo->setTransactionResponse($setECResponse->Token);
-            // $app['orm.em']->persist($buyerInfo);
             $app['orm.em']->flush();
             header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=' . $setECResponse->Token);
             //return $app->redirect('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $setECResponse->Token,301);
@@ -509,7 +489,7 @@ class IndexController {
         $user = new \Entities\Users();
         $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($app['session']->get('buyer_info_id'));
         $location = new \Entities\Locations();
-        if ($userExist->getOrg()) {
+        if ($userExist) {
             $organization = $userExist->getOrg();
             $location->setCreatedAt(new \DateTime());
             $location->setLocAccessKey('smart_' . substr(hash_hmac('sha256', $buyerInfo->getName(), 'dty4523grtuy'), 0, 20));
@@ -521,6 +501,7 @@ class IndexController {
             $location->setLocCity($buyerInfo->getShippingCity());
             $location->setLocName($buyerInfo->getName() . '\'s location');
             $location->setIsmonitored($buyerInfo->getIsmonitored());
+            $location->setPrchaseid($app['session']->get('buyer_info_id'));
             $location->setOrg($organization);
             $app['orm.em']->persist($location);
             try {
@@ -553,6 +534,7 @@ class IndexController {
                 $location->setLocName($buyerInfo->getName() . '\'s location');
                 $location->setOrg($organization);
                 $location->setIsmonitored($buyerInfo->getIsmonitored());
+                $location->setPrchaseid($app['session']->get('buyer_info_id'));
                 $app['orm.em']->persist($location);
                 try {
                     $app['orm.em']->flush();
@@ -588,14 +570,18 @@ class IndexController {
             //throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('The specified details not exist');
         }
         $form = $app['form.factory']->create(new \Smart\Form\businessType($app), $user);
+
+
         if ($request->isMethod('POST')) {
             $oldPassword = $user->getPassword();
             if ($form->submit($request)->isValid()) {
+                $Location = $user->getLoc();
                 $formData = $form->getData();
                 $user->setEmail($user->getEmail());
                 $user->setAccess('organizer');
                 $user->setStatus('active');
                 $user->setActivationKey('');
+                $Location->setIsmonitored(1);
                 $newPassword = $formData->getPassword();
                 if (!$newPassword) {
                     $user->setPassword($oldPassword);
@@ -611,6 +597,154 @@ class IndexController {
             }
         }
         return $app['twig']->render('businessInfo.html.twig', array('form' => $form->createView()));
+    }
+
+    protected function sendMailNotification(Application $app) {
+        $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($app['session']->get('buyer_info_id'));
+        $message = \Swift_Message::newInstance()
+                ->setSubject('Thakyou for payment')
+                ->setFrom(array('noreply@smartprobe.com.au'))
+                ->setTo(array('mail2nisam@gmail.com'));
+
+
+
+        if ($app['security.smart.user'] && $buyerInfo->getSubscriptionResponse()) {
+            $message->setBody('Thanks for payment');
+            //Normal Thankyou mail
+        } elseif (!$app['security.smart.user'] && $buyerInfo->getSubscriptionResponse()) {
+            $message->setBody('Thanks for payment');
+            //Normal Thankyou mail with user activation link
+        } else {
+            $message->setBody('http://localhost/newsilex/web/index_dev.php/' . $buyerInfo->getTransactionId());
+            //Thanks mail with transactio id
+        }
+        $app['mailer']->send($message);
+        var_dump($buyerInfo);
+    }
+
+    public function buyMonitoringAction(Application $app, Request $request, $transactionid) {
+
+
+        $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->findOneBy(array('transactionId' => $transactionid));
+        if (!$buyerInfo) {
+            return $app->redirect($app['url_generator']->generate('homepage'));
+        }
+        $buyerId = $buyerInfo->getId();
+        $location = $app['orm.em']->getRepository('Entities\Locations')->findOneBy(array('prchaseid' => $buyerId));
+        $user = $app['orm.em']->getRepository('Entities\Users')->findOneBy(array('org' => $location->getOrg(), 'roles' => 'ROLE_MASTER'));
+        if ($request->isMethod('POST')) {
+            $subscription = $request->request->get('subscription');
+            $noofprobes = $request->request->get('noofprobes');
+            $profileStartDate = $request->request->get('subscription_date');
+            switch ($subscription) {
+                case 'weekly':
+                    $BillingPeriod = 'Week';
+                    $sub_prize = 0.50;
+
+                    break;
+                case 'monthly':
+                    $BillingPeriod = 'Month';
+                    $sub_prize = 1.50;
+
+                    break;
+                case 'yearly':
+                    $BillingPeriod = 'Year';
+                    $sub_prize = 12.00;
+
+                    break;
+            }
+            $subscriptionFee = $noofprobes * $sub_prize;
+            $app['session']->set('new_bill_period', $BillingPeriod);
+            $app['session']->set('new_subscription_fee', $subscriptionFee);
+            $app['session']->set('new_user_id', $user->getId());
+            $app['session']->set('profile_start_date', $profileStartDate);
+            $app['session']->set('buyer_info_id', $buyerInfo->getId());
+
+
+
+            $paypalService = new PayPalAPIInterfaceServiceService($app['paypal.config']);
+            $paymentDetails = new PaymentDetailsType();
+
+
+            $orderTotal = new BasicAmountType();
+            $orderTotal->currencyID = 'AUD';
+            $orderTotal->value = 0;
+
+            $paymentDetails->OrderTotal = $orderTotal;
+            $paymentDetails->PaymentAction = 'Sale';
+
+            $setECReqDetails = new SetExpressCheckoutRequestDetailsType();
+            $setECReqDetails->PaymentDetails[0] = $paymentDetails;
+            $setECReqDetails->CancelURL = 'https://devtools-paypal.com/guide/recurring_payment_ec/php?cancel=true';
+            $setECReqDetails->ReturnURL = 'http://localhost/newsilex/web/index_dev.php/subscription-response/';
+
+            $billingAgreementDetails = new BillingAgreementDetailsType('RecurringPayments');
+            $billingAgreementDetails->BillingAgreementDescription = 'recurringbilling';
+            $setECReqDetails->BillingAgreementDetails = array($billingAgreementDetails);
+
+            $setECReqType = new SetExpressCheckoutRequestType();
+            $setECReqType->Version = '104.0';
+            $setECReqType->SetExpressCheckoutRequestDetails = $setECReqDetails;
+
+            $setECReq = new SetExpressCheckoutReq();
+            $setECReq->SetExpressCheckoutRequest = $setECReqType;
+
+            $setECResponse = $paypalService->SetExpressCheckout($setECReq);
+
+            header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $setECResponse->Token);
+            exit;
+        }
+        return $app['twig']->render('userInfo.html.twig', array('user' => $user, 'history' => $buyerInfo));
+    }
+
+    public function subscriptionResponseAction(Application $app, Request $request) {
+        $period = $app['session']->get('new_bill_period');
+        $startDate = $app['session']->get('profile_start_date');
+        $profileStartDate = ($startDate) ? date("Y-m-d\TH:i:s:000\Z", strtotime($startDate)) : date("Y-m-d\TH:i:s:000\Z", 86400 + strtotime(date('Y-m-d')));
+
+        $subscriptionFee = $app['session']->get('new_subscription_fee');
+        $paypalService = new PayPalAPIInterfaceServiceService($app['paypal.config']);
+        $token = $request->query->get('token');
+        $profileDetails = new RecurringPaymentsProfileDetailsType();
+        $profileDetails->BillingStartDate = "$profileStartDate";
+
+        $paymentBillingPeriod = new BillingPeriodDetailsType();
+        $paymentBillingPeriod->BillingFrequency = 1;
+        $paymentBillingPeriod->BillingPeriod = "$period";
+        $paymentBillingPeriod->Amount = new BasicAmountType("AUD", "$subscriptionFee");
+
+        $scheduleDetails = new ScheduleDetailsType();
+        $scheduleDetails->Description = "recurringbilling";
+        $scheduleDetails->PaymentPeriod = $paymentBillingPeriod;
+
+        $createRPProfileRequestDetails = new CreateRecurringPaymentsProfileRequestDetailsType();
+        $createRPProfileRequestDetails->Token = $token;
+
+        $createRPProfileRequestDetails->ScheduleDetails = $scheduleDetails;
+        $createRPProfileRequestDetails->RecurringPaymentsProfileDetails = $profileDetails;
+
+        $createRPProfileRequest = new CreateRecurringPaymentsProfileRequestType();
+        $createRPProfileRequest->CreateRecurringPaymentsProfileRequestDetails = $createRPProfileRequestDetails;
+
+        $createRPProfileReq = new CreateRecurringPaymentsProfileReq();
+        $createRPProfileReq->CreateRecurringPaymentsProfileRequest = $createRPProfileRequest;
+
+
+        $createRPProfileResponse = $paypalService->CreateRecurringPaymentsProfile($createRPProfileReq);
+        $CreateRecurringPaymentsProfileResponseDetails = $createRPProfileResponse->CreateRecurringPaymentsProfileResponseDetails;
+        $profileId = $CreateRecurringPaymentsProfileResponseDetails->ProfileID;
+        $ProfileStatus = $CreateRecurringPaymentsProfileResponseDetails->ProfileStatus;
+        $BillingStartDate = $profileDetails->BillingStartDate;
+        $subscriptionDetails = serialize(array('profileId' => $profileId, 'profileStatus' => $ProfileStatus, 'billingStartDate' => $BillingStartDate, 'billing' => $paymentBillingPeriod));
+        $buyerInfo = $app['orm.em']->getRepository('Entities\BuyerInfo')->find($app['session']->get('buyer_info_id'));
+        $buyerInfo->setSubscriptionResponse($subscriptionDetails);
+        $buyerInfo->setIsmonitored(1);
+        $app['orm.em']->flush();
+        if ($createRPProfileResponse->Ack == 'Success') {
+
+            $user = $app['orm.em']->getRepository('Entities\Users')->find($app['session']->get('new_user_id'));
+            return $app->redirect($app['url_generator']->generate('activate_user', array('key' => $user->getActivationKey())));
+        }
     }
 
 }

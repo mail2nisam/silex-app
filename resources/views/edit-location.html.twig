@@ -1,0 +1,122 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'location' %}
+{%block subhead%}
+{%endblock%}
+{% block content %}
+<legend>Access Info</legend>
+
+<div class="pull-left" style="padding-right: 35px">
+    <div class="control-group">
+        <label for="location_loc_name" class="control-label required">Access Key</label>
+        <div class="controls">
+            <input style="width: 250px" readonly="readonly" type="text" id="loc_access_key" name="latitude" value="{{form.vars.value.locAccessKey}}"/>
+
+        </div>
+    </div>
+</div>
+<div class="pull-left">
+    <div class="control-group">
+        <label for="location_loc_name" class="control-label required">Secret</label>
+        <div class="controls">
+            
+            <input style="width: 250px;margin-right: 10px" id="loc_access_secret" readonly="readonly" type="text" name="latitude" value="{{form.vars.value.locSecret}}"/>
+<i id="refresh_secret" class="icon-large icon-refresh cursor_pointer "></i>
+<i  class="hide ajax-loader"><img src="{{ app.request.basepath }}/img/495.GIF"/></i>
+        </div>
+    </div>
+    
+
+</div>
+<legend class="clear">Update Location</legend>
+
+
+
+{{ form_start(form,{'form_type': 'horizontal', 'attr': {'id': 'add_loc_frm','class': 'form-horizontal'} }) }}
+    {{ form_errors(form) }}
+
+<div class="pull-left" style="padding-right: 35px">
+         {{ form_row(form.loc_name,{ 'attr': {'tabindex': '1'} }) }}
+         {{ form_row(form.loc_address,{ 'attr': {'tabindex': '3'} }) }}
+         {{ form_row(form.locCountry,{ 'attr': {'tabindex': '5'} }) }}
+         {{ form_row(form.timeZone,{ 'attr': {'tabindex': '7'} }) }}
+</div>
+<div class="pull-left">
+         {{ form_row(form.locCity,{ 'attr': {'tabindex': '2'} }) }}
+         {{ form_row(form.locZip,{ 'attr': {'tabindex': '4'} }) }}
+         {{ form_row(form.locState,{ 'attr': {'tabindex': '6'} }) }}
+</div>
+
+{{ form_rest(form) }}
+<div class="form-actions"><button class="btn btn-primary"  id="location_submit" type="submit">Submit</button></div>
+
+{{ form_end(form) }}
+<legend class="clear">Your Location</legend>
+
+<div class="clearfix">
+    <div id="map-canvas"class="map-canvas"></div>
+</div>
+{% endblock %}
+{% block scriptblock %}
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script>
+    var geocoder;
+    var map;
+    var marker = null;
+    var lat = null;
+    var lng = null;
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+            zoom: 10,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    }
+
+    function codeAddress(addr) {
+        var address = addr;
+        geocoder.geocode({'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                if (marker)
+                    marker.setMap(null);
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+                lat = results[0].geometry.location.lat();
+                lng = results[0].geometry.location.lng();
+                $('#location_locLatitude').val(lat);
+                $('#location_locLongitude').val(lng);
+
+            } else {
+                // alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    $('#add_loc_frm input,#add_loc_frm select').not('#location_loc_name,#location_locZip,#org_id,#location_timeZone,#location_submit').change(function() {
+        var country = '';
+        var state = '';
+        var city = '';
+        var add = '';
+        if ($('#location_locCountry').val()) {
+            country = ', ' + $('#location_locCountry').find(':selected').text();
+        }
+        if ($('#location_locState').val()) {
+            state = ', ' + $('#location_locState').find(':selected').text();
+        }
+        if ($('#location_locCity').val()) {
+            city = ', ' + $('#location_locCity').val();
+        }
+        if ($('#location_loc_address').val()) {
+            add = $('#location_loc_address').val();
+        }
+        var address = add + city + country + state;
+        codeAddress(address);
+    });
+</script>
+            {% endblock %}

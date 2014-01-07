@@ -48,7 +48,7 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
         array('^/login', 'IS_AUTHENTICATED_ANONYMOUSLY'),
         array('^/register', 'IS_AUTHENTICATED_ANONYMOUSLY'),
         array('^/admin', 'ROLE_ADMIN'),
-    //array('^/.*$', 'ROLE_USER'),
+        array('^/locations', 'ROLE_USER'),
     ),
     'security.role_hierarchy' => array(
         'ROLE_MANAGER' => array('ROLE_USER'),
@@ -61,8 +61,7 @@ $app['security.authentication.success_handler.main'] = $app->share(function ($ap
     return new Smart\Handler\successHandler($app);
 });
 $app['security.smart.user'] = $app->share(function ($app) {
-    if ($app['security']->getToken()) {
-
+    if ($app['security']->isGranted('ROLE_USER')) {
         $token = $app['security']->getToken();
         $currentUser = $token->getUser();
         $user = $app['orm.em']->getRepository('Entities\Users')->findByUsername($currentUser->getUsername());

@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'location' %}
+
+{% block content %}
+<legend>Locations</legend>
+<div class="table-responsive">
+  <table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Acess Key</th>
+      <th>Secret</th>
+      <th>Monitoring</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      {%  for location in locations %}
+     
+      {% if location.ismonitored==1%}
+      {% set class ='active'%}
+      {% set icon ='icon-ban'%}
+      {%else%}
+      {% set class ='inactive'%}
+      {% set icon ='icon-ok'%}
+      {%endif%}
+      <tr class="{{class}}">
+      <td>{{location.id}}</td>
+      <td>{{location.locName}}</td>
+      <td>{{location.locAddress}}</td>
+      <td>{{location.locCity}}</td>
+      <td>{{location.locAccessKey}}</td>
+      <td>{{location.locSecret}}</td>
+      <td><i id="" class="icon-large {{icon}}"></i></td>
+  <td> <a href="{{ path('new_location', {'id': location.id}) }}"><i id="" class="icon-large pull-right  icon-edit"></i></a></td>
+    </tr>
+    {%endfor%}
+  </tbody>
+  </table>
+</div>
+
+{% endblock %}

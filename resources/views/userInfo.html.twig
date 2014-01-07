@@ -1,0 +1,71 @@
+{% extends 'layout.html.twig' %}
+{% set active = 'form' %}
+
+{% block content %}
+
+
+
+
+
+<div class="billing_address"  style="padding-right: 35px">
+    <legend>Purchase History</legend>
+    <div class="pull-left">
+        You were purchased A master probe unit and {{ history.noOfProbes}} probes, but not subscribed for probe monitoring.
+
+
+    </div>
+    <legend class="clear">User Details</legend>
+    <div class="pull-left">
+         {{ user.email }}
+
+    </div>
+
+    <legend class="clear">Business Details</legend>
+    <div class="pull-left">
+         {{ user.org.orgName }}<br/>
+         {{ user.org.address}}<br/>
+         {{ user.org.country.countryName}}<br/>
+         {{ user.org.state.stateName}}<br/>
+         {{ user.org.zipCode}}<br/>
+         {{ user.org.mobilePhone}}
+
+    </div>
+    <legend class="clear">Subscription Details</legend>
+    <div class="pull-left" id="updated-sub-info">
+
+    </div>
+    <div class="pull-left clear">
+        <form name="subscribe" method="POST">
+            <div class="control-group">
+                <label for="form_address" class="control-label required">Subscription period</label>
+                <div class="controls">
+                    <select name="subscription" id="update-order-subscription">
+                        <option value="">No Probe Monitoring</option>
+                        <option  value="weekly">Weekly Subscription</option>
+                        <option value="monthly">Monthly Subscription</option>
+                        <option value="yearly">Yearly Subscription</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="form_address" class="control-label required">Subscription start date</label>
+                <div class="controls">
+                    <input type="text" name="subscription_date" id="subscription_date"/>
+                </div>
+            </div>
+
+            <input type="hidden" name="noofprobes" id="no_of_probes" value="{{ history.noOfProbes}}"/>
+            <div class="control-group">
+
+                <div class="controls">
+                    <input type="submit" id="update-info" name="update" value="Subdcribe for Probe monitoring" class="btn btn-primary"/>
+                </div></div>
+        </form>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

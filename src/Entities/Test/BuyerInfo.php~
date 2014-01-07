@@ -134,6 +134,13 @@ class BuyerInfo
     private $ismonitored;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="subscription_response", type="string", length=1000, nullable=true)
+     */
+    private $subscriptionResponse;
+
+    /**
      * @var \Countries
      *
      * @ORM\ManyToOne(targetEntity="Countries")

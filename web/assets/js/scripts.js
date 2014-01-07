@@ -2330,6 +2330,9 @@
     $('#form_profile_date').datepicker({
         minDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
     });
+    $('#subscription_date').datepicker({
+        minDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+    });
     $('#domestic_back').click(function() {
         var effect = 'slide';
         var options = {direction: 'left'};
@@ -2351,10 +2354,29 @@
         doStateAjax(this, 'business_org_state');
 
     });
-    $('#location_locState').empty();
-    if ($('#location_locCountry').val()) {
-        doStateAjax($('#location_locCountry'), 'location_locState');
-    }
+    $('#refresh_secret').click(function() {
+        if (confirm('Are you sure you want to reset secret key?')) {
+            $(this).hide();
+            $('.ajax-loader').show();
+             var resetAccessKeyRoute = resetAccessKey.replace('accesskey', $('#loc_access_key').val());
+            $.ajax({
+                type: "GET",
+                url: resetAccessKeyRoute,
+                dataType: 'json',
+                success: function(data) {
+                    $('#loc_access_secret').val(data);
+                     $('#refresh_secret').show();
+                        $('.ajax-loader').hide();
+                }
+            });
+        } else {
+            return false;
+        }
+    })
+    // $('#location_locState').empty();
+//    if ($('#location_locCountry').val()) {
+//        doStateAjax($('#location_locCountry'), 'location_locState');
+//    }
     $('#BuyerInfo_billingCountry').change(function() {
         doStateAjax(this, 'BuyerInfo_billingState');
 
@@ -2434,6 +2456,31 @@
     });
     $('#changebuy').click(function() {
         $('.new-order').slideToggle('slow');
+    });
+    $('#update-order-subscription').change(function() {
+        var no_of_probes = parseInt($('#no_of_probes').val());
+        var sub_period = $('#update-order-subscription').val();
+        switch (sub_period) {
+            case 'weekly':
+                var sub_prize = 0.50;
+
+                break;
+            case 'monthly':
+                var sub_prize = 1.50;
+
+                break;
+            case 'yearly':
+                var sub_prize = 12.00;
+
+                break;
+        }
+        subscription_fee = sub_period + ' (' + no_of_probes + 'x' + parseFloat(sub_prize) + ') = $' + (no_of_probes * parseFloat(sub_prize));
+        if (sub_period) {
+            $('#updated-sub-info').html('You have to pay $' + (no_of_probes * parseFloat(sub_prize)) + ' by ' + sub_period);
+        } else {
+            $('#updated-sub-info').html('');
+
+        }
     });
     $('#update-info').click(function() {
         var new_order_route = ajaxOrder;

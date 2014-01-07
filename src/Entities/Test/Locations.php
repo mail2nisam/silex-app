@@ -99,6 +99,13 @@ class Locations
     private $ismonitored;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="prchaseId", type="integer", nullable=true)
+     */
+    private $prchaseid;
+
+    /**
      * @var \Countries
      *
      * @ORM\ManyToOne(targetEntity="Countries")
@@ -401,6 +408,29 @@ class Locations
     public function getIsmonitored()
     {
         return $this->ismonitored;
+    }
+
+    /**
+     * Set prchaseid
+     *
+     * @param integer $prchaseid
+     * @return Locations
+     */
+    public function setPrchaseid($prchaseid)
+    {
+        $this->prchaseid = $prchaseid;
+
+        return $this;
+    }
+
+    /**
+     * Get prchaseid
+     *
+     * @return integer 
+     */
+    public function getPrchaseid()
+    {
+        return $this->prchaseid;
     }
 
     /**

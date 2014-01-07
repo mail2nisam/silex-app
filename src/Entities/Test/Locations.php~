@@ -99,6 +99,13 @@ class Locations
     private $ismonitored;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="prchaseId", type="integer", nullable=true)
+     */
+    private $prchaseid;
+
+    /**
      * @var \Countries
      *
      * @ORM\ManyToOne(targetEntity="Countries")

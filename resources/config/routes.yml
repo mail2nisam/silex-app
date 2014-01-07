@@ -15,10 +15,10 @@ admin_index:
   defaults: { _controller: 'Smart\Controllers\IndexController::testAction' }
 locations:
   path: /locations
-  defaults: { _controller: 'Smart\Controllers\IndexController::listLocationAction' }
+  defaults: { _controller: 'Smart\Controllers\BusinessController::listLocationAction' }
 new_location:
-  path: /new-location
-  defaults: { _controller: 'Smart\Controllers\IndexController::newLocationAction' }
+  path: /locations/{id}
+  defaults: { _controller: 'Smart\Controllers\BusinessController::editLocationAction' }
 managers:
   path: /managers
   defaults: { _controller: 'Smart\Controllers\IndexController::listManagersAction' }
@@ -46,5 +46,14 @@ activate_user:
 payment_thanks:
   path: /payment/thanks
   defaults: { _controller: 'Smart\Controllers\IndexController::paymentThanksAction'}
+buy_subscription:
+  path: /probe-monitoring/{transactionid}
+  defaults: { _controller: 'Smart\Controllers\IndexController::buyMonitoringAction' }
+subscription_response:
+  path: /subscription-response/
+  defaults: { _controller: 'Smart\Controllers\IndexController::subscriptionResponseAction' }
+resetAccessKey:
+  path: /ajax/reste-key/{accesskey}/
+  defaults: { _controller: 'Smart\Controllers\BusinessController::resetAccessKeyAction' }
     
     

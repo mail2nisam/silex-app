@@ -6636,13 +6636,9 @@ tr td {
   width: 427px;
 }
 .map-canvas {
-  background-color: #e5e3df;
   height: 333px;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
-  top: 275px;
-  width: 505px;
+  position: relative;
+  width: 924px;
 }
 .clearfix:after,
 .content:after {
@@ -6943,4 +6939,7 @@ tr td {
 }
 .parcel_post .prcel_details {
   float: left;
+}
+.cursor_pointer {
+  cursor: pointer;
 }
